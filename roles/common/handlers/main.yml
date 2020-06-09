@@ -1,0 +1,4 @@
+---
+
+- name: import ntp handlers
+  import_tasks: ntp.yml

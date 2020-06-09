@@ -1,0 +1,21 @@
+---
+
+- name: install my bash_profile
+  copy:
+    src: bash_profile
+    dest: /home/dennis/.bash_profile
+    
+- name: install tools
+  apt:
+    pkg:
+      - curl
+      - make
+      - screen
+    update_cache: yes
+  become: yes
+
+- import_tasks: ntp.yml
+  become: yes
+
+- import_tasks: docker.yml
+  become: yes

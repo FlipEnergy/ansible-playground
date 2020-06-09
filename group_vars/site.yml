@@ -1,0 +1,17 @@
+---
+
+all:
+  children:
+    myserver:
+      hosts:
+        myserver.tgp
+    mysurface3:
+      hosts:
+        mysurface3.tgp
+    mysurfacego:
+      hosts:
+        mysurfacego.tgp
+  vars:
+    USER: dennis
+    CTOP_VERSION: "0.7.3"
+    DOCKER_COMPOSE_VERSION: "1.26.0" 

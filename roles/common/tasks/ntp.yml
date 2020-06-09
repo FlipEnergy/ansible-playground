@@ -1,0 +1,22 @@
+---
+# Install and setup ntp. Must run with become.
+
+- name: install ntp
+  apt:
+    pkg:
+      - ntp
+      - ntpdate
+    update_cache: yes
+  
+
+- name: Copy over the NTP configuration
+  copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
+  notify: restart ntp service
+
+- name: enable and start ntp
+  service:
+    name: ntp
+    state: started
+    enabled: yes

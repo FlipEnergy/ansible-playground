@@ -30,12 +30,18 @@
     update_cache: yes
     force_apt_get: yes
 
+- name: disable and stop docker
+  service:
+    name: docker
+    state: stopped
+    enabled: no
+
 - name: Create docker group
   group:
     name: docker
     state: present
 
-- name: Adding user {{ USER }} to docker group  
+- name: Adding user {{ USER }} to docker group
   user:
     name: "{{ USER }}"
     groups: docker

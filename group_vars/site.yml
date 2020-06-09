@@ -14,4 +14,5 @@ all:
   vars:
     USER: dennis
     CTOP_VERSION: "0.7.3"
-    DOCKER_COMPOSE_VERSION: "1.26.0" 
+    DOCKER_COMPOSE_VERSION: "1.26.0"
+    MICROK8S_CHANNEL: "1.18/stable"

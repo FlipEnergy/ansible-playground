@@ -7,7 +7,6 @@
       - ntp
       - ntpdate
     update_cache: yes
-  
 
 - name: Copy over the NTP configuration
   copy:

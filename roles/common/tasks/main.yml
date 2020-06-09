@@ -4,7 +4,7 @@
   copy:
     src: bash_profile
     dest: /home/dennis/.bash_profile
-    
+
 - name: install tools
   apt:
     pkg:
@@ -18,4 +18,7 @@
   become: yes
 
 - import_tasks: docker.yml
+  become: yes
+
+- import_tasks: microk8s.yml
   become: yes

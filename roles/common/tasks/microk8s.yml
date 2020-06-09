@@ -1,0 +1,19 @@
+---
+
+- name: Install MicroK8s
+  snap:
+    name: microk8s
+    classic: yes
+    channel: "{{ MICROK8S_CHANNEL }}"
+
+- name: add registry to docker
+  copy:
+    src: docker_daemon.json
+    dest: /etc/docker/daemon.json
+  notify: restart docker service
+
+- name: add alt_name to microk8s template
+  lineinfile:
+    path: /var/snap/microk8s/current/certs/csr.conf.template
+    insertbefore: '^IP.1 ='
+    line: DNS.6 = {{ inventory_hostname }}

@@ -1,7 +1,7 @@
 ---
 # Install and setup ntp. Must run with become.
 
-- name: install ntp
+- name: Install ntp
   apt:
     pkg:
       - ntp
@@ -14,7 +14,7 @@
     dest: /etc/ntp.conf
   notify: restart ntp service
 
-- name: enable and start ntp
+- name: Enable and start ntp
   service:
     name: ntp
     state: started

@@ -6,14 +6,23 @@
     classic: yes
     channel: "{{ MICROK8S_CHANNEL }}"
 
-- name: add registry to docker
+- name: Add registry to docker
   copy:
     src: docker_daemon.json
     dest: /etc/docker/daemon.json
   notify: restart docker service
 
-- name: add alt_name to microk8s template
+- name: Add alt_name to microk8s template
   lineinfile:
     path: /var/snap/microk8s/current/certs/csr.conf.template
     insertbefore: '^IP.1 ='
     line: DNS.6 = {{ inventory_hostname }}
+
+- name: Get enabled MicroK8s addons
+  shell: microk8s status | grep enabled | awk -F ':' '{print $1}'
+  register: microk8s_enabled_addons
+
+- name: Enable MicroK8s addons
+  command: microk8s enable {{ item }}
+  loop: "{{ MICROK8S_ADDONS }}"
+  when: item not in microk8s_enabled_addons.stdout_lines

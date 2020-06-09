@@ -1,7 +1,5 @@
 ---
 
-- name: import ntp handlers
-  import_tasks: ntp.yml
+- import_tasks: ntp.yml
 
-- name: import docker handlers
-  import_tasks: docker.yml
+- import_tasks: docker.yml

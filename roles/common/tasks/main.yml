@@ -1,11 +1,11 @@
 ---
 
-- name: install my bash_profile
+- name: Install my bash_profile
   copy:
     src: bash_profile
     dest: /home/dennis/.bash_profile
 
-- name: install tools
+- name: Install tools
   apt:
     pkg:
       - curl

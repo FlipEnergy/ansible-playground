@@ -17,7 +17,7 @@
     url: https://download.docker.com/linux/ubuntu/gpg
 
 - name: Save the current Ubuntu release version into a variable
-  shell: lsb_release -cs
+  command: lsb_release -cs
   register: ubuntu_version
 
 - name: Add Docker Repository
@@ -30,7 +30,7 @@
     update_cache: yes
     force_apt_get: yes
 
-- name: disable and stop docker
+- name: Disable and stop docker
   service:
     name: docker
     state: stopped

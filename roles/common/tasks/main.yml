@@ -14,6 +14,17 @@
     update_cache: yes
   become: yes
 
+- name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+  command: swapoff -a
+  become: yes
+
+- name: Disable SWAP in fstab since kubernetes can't work with swap enabled (2/2)
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+  become: yes
+
 - name: Update DNS nameservers
   lineinfile:
     path: /etc/netplan/00-installer-config.yaml

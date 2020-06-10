@@ -12,6 +12,12 @@
     dest: /etc/docker/daemon.json
   notify: restart docker service
 
+- name: Adding user {{ USER }} to microk8s group
+  user:
+    name: "{{ USER }}"
+    groups: microk8s
+    append: yes
+
 - name: Add alt_name to microk8s template
   lineinfile:
     path: /var/snap/microk8s/current/certs/csr.conf.template

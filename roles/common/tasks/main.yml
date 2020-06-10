@@ -14,6 +14,14 @@
     update_cache: yes
   become: yes
 
+- name: Update DNS nameservers
+  lineinfile:
+    path: /etc/netplan/00-installer-config.yaml
+    regex: '^        addresses: \['
+    line: "        addresses: [{{ PIHOLE_SERVER_IP }}, 8.8.8.8, 8.8.4.4]"
+  become: yes
+  notify: Apply Netplan
+
 - import_tasks: ntp.yml
   become: yes
 

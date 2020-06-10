@@ -13,11 +13,12 @@ all:
         mysurfacego.tgp
   vars:
     USER: dennis
-    CTOP_VERSION: "0.7.3"
-    DOCKER_COMPOSE_VERSION: "1.26.0"
-    MICROK8S_CHANNEL: "1.18/stable"
+    CTOP_VERSION: 0.7.3
+    DOCKER_COMPOSE_VERSION: 1.26.0
+    MICROK8S_CHANNEL: 1.18/stable
     MICROK8S_ADDONS:
       - helm3
       - dns
       - ingress
       - metrics-server
+    PIHOLE_SERVER_IP: 192.168.1.11

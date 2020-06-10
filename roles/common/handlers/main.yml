@@ -1,5 +1,9 @@
 ---
 
+- name: Apply Netplan
+  command: netplan apply
+  become: yes
+
 - import_tasks: ntp.yml
 
 - import_tasks: docker.yml

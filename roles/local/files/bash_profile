@@ -1,0 +1,8 @@
+# Use vim for editor
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+# This must be set for PGP decryption
+export GPG_TTY=$(tty)
+
+alias k='kubectl'

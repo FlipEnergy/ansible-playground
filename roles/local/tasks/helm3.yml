@@ -1,0 +1,18 @@
+---
+# install helm3 and plugins
+
+- name: Check if helm is installed
+  command: which helm
+  register: helm_installed
+
+- name: Install Helm3
+  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  when: helm_installed.rc != 0
+
+- name: Check if helm secrets is installed
+  shell: helm plugin list | grep secrets
+  register: helm_secrets_installed
+
+- name: Install helm secrets
+  command: helm plugin install https://github.com/futuresimple/helm-secrets
+  when: helm_secrets_installed.rc !=0

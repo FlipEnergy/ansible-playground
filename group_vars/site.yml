@@ -20,4 +20,6 @@ all:
       - dns
       - ingress
       - metrics-server
+      - metallb
+      - prometheus
     PIHOLE_SERVER_IP: 192.168.1.11

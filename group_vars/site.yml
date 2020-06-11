@@ -18,6 +18,5 @@ all:
     MICROK8S_CHANNEL: 1.18/stable
     MICROK8S_ADDONS:
       - dns
-      - ingress
       - metrics-server
     PIHOLE_SERVER_IP: 192.168.1.11

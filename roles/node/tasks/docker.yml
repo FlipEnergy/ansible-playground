@@ -30,11 +30,11 @@
     update_cache: yes
     force_apt_get: yes
 
-- name: Disable and stop docker
+- name: Start and enable
   service:
     name: docker
-    state: stopped
-    enabled: no
+    state: started
+    enabled: yes
 
 - name: Create docker group
   group:

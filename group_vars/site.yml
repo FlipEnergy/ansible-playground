@@ -8,6 +8,8 @@ all:
     mysurface3:
       hosts:
         mysurface3.tgp
+      vars:
+        INSTALL_DOCKER: true
   vars:
     USER: dennis
     CTOP_VERSION: 0.7.3

@@ -4,3 +4,5 @@ export EDITOR="$VISUAL"
 
 alias k='microk8s kubectl'
 alias kubectl='k'
+
+alias k9s='docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s'

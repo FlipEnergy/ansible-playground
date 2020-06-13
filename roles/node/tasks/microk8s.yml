@@ -10,7 +10,7 @@
   copy:
     src: docker_daemon.json
     dest: /etc/docker/daemon.json
-  notify: restart docker service
+  notify: Restart docker service
 
 - name: Adding user {{ USER }} to microk8s group
   user:

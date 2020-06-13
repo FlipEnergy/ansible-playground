@@ -25,11 +25,17 @@
     replace: '# \1'
   become: yes
 
+- name: Get netplan files
+  command: find /etc/netplan/ -type f -name "*.yaml"
+  register: netplan_confs
+  become: yes
+
 - name: Update DNS nameservers
-  lineinfile:
-    path: /etc/netplan/00-installer-config.yaml
-    regex: '^        addresses: \['
-    line: "        addresses: [{{ PIHOLE_SERVER_IP }}, 8.8.8.8, 8.8.4.4]"
+  replace:
+    path: "{{ item }}"
+    regexp: 'addresses: [.*].*$'
+    replace: "addresses: [{{ PIHOLE_SERVER_IP }}, 8.8.8.8, 8.8.4.4]"
+  with_items: "{{ netplan_confs.stdout_lines }}"
   become: yes
   notify: Apply Netplan
 
@@ -38,7 +44,7 @@
 
 - import_tasks: docker.yml
   become: yes
-  when: INSTALL_DOCKER is true
+  when: INSTALL_DOCKER|default(False) == True
 
 - import_tasks: microk8s.yml
   become: yes

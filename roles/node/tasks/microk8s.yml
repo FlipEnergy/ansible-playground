@@ -11,6 +11,7 @@
     src: docker_daemon.json
     dest: /etc/docker/daemon.json
   notify: Restart docker service
+  when: INSTALL_DOCKER|default(False)
 
 - name: Adding user {{ USER }} to microk8s group
   user:

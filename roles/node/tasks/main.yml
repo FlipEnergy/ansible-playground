@@ -48,3 +48,7 @@
 
 - import_tasks: microk8s.yml
   become: yes
+
+- import_tasks: k9s.yml
+  become: yes
+  when: INSTALL_K9S|default(False)

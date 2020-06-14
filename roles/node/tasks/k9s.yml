@@ -1,0 +1,15 @@
+---
+# Install and setup k9s
+
+- name: Install k9s
+  unarchive:
+    src: https://github.com/derailed/k9s/releases/download/v0.20.5/k9s_Linux_x86_64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Set execute permissions for k9s
+  file:
+    path: /usr/local/bin/k9s
+    mode: u+x
+    modification_time: preserve
+    access_time: preserve

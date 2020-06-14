@@ -18,11 +18,21 @@
     groups: microk8s
     append: yes
 
-- name: Add alt_name to microk8s template
-  lineinfile:
-    path: /var/snap/microk8s/current/certs/csr.conf.template
-    insertbefore: '^IP.1 ='
-    line: DNS.6 = {{ inventory_hostname }}
+- name: Get Join node command
+  shell: microk8s add-node | grep 'Join node with:' | awk -F ':' '{ print $2 }'
+  register: join_node_command
+  when: IS_K8S_MASTER|default(False)
+
+- name: Get current node state
+  shell: microk8s status | head -n 1
+  register: node_status
+
+- name: Non-masters join node
+  command: "{{ join_node_command.stdout }}"
+  when:
+    - not IS_K8S_MASTER|default(False)
+    - node_status.stdout == "microk8s is running"
+
 
 - name: Get enabled MicroK8s addons
   shell: microk8s status | grep enabled | awk -F ':' '{print $1}'
@@ -50,18 +60,3 @@
     # line: --config=/etc/kubelet.conf
     line: --resolv-conf=/run/systemd/resolve/resolv.conf
   notify: Restart kubelet service
-
-- name: Get Join node command
-  shell: microk8s add-node | grep 'Join node with:' | awk -F ':' '{ print $2 }'
-  register: join_node_command
-  when: IS_K8S_MASTER|default(False)
-
-- name: Get current node state
-  shell: microk8s status | head -n 1
-  register: node_status
-
-- name: Non-masters join node
-  command: "{{ join_node_command.stdout }}"
-  when:
-    - not IS_K8S_MASTER|default(False)
-    - node_status.stdout == "microk8s is running"

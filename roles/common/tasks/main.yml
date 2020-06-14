@@ -1,0 +1,4 @@
+---
+
+- import_tasks: kubectl.yml
+  become: yes

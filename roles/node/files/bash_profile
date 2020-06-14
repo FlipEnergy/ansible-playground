@@ -2,5 +2,4 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-alias k='microk8s kubectl'
-alias kubectl='k'
+alias k='kubectl'

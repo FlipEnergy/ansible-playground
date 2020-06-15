@@ -46,6 +46,15 @@
   when:
     - K8S_MASTER == inventory_hostname
     - item not in microk8s_enabled_addons.stdout_lines
+    - item != 'metallb'
+
+- name: Enable metallb MicroK8s addon
+  command: microk8s enable metallb
+  args:
+    stdin: "{{ METALLB_IP_RANGE }}"
+  when:
+    - K8S_MASTER == inventory_hostname
+    - '"metallb" in MICROK8S_ADDONS'
 
 # TODO: --resolv-conf to be deprecated but currently doesn't work
 # https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/

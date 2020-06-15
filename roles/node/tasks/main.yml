@@ -55,7 +55,3 @@
     dest: /usr/local/bin/k8s_metrics
     mode: a+x
   become: yes
-
-- import_tasks: k9s.yml
-  become: yes
-  when: INSTALL_K9S|default(False)

@@ -20,31 +20,31 @@
     append: yes
 
 - name: Get Join node command
-  shell: microk8s add-node | grep 'Join node with:' | awk -F ':' '{ print $2 }'
+  shell: microk8s add-node | grep 'Join node with:' | cut -d ' ' -f4-6
   register: join_node_command
-  when: IS_K8S_MASTER|default(False)
+  when: K8S_MASTER == inventory_hostname
 
 - name: Get current node state
   shell: microk8s status | head -n 1
   register: node_status
 
 - name: Non-masters join node
-  command: "{{ join_node_command.stdout }}"
+  command: "{{ hostvars[K8S_MASTER]['join_node_command'].stdout }}"
   when:
-    - not IS_K8S_MASTER|default(False)
-    - node_status.stdout == "microk8s is running"
+    - K8S_MASTER != inventory_hostname
+    - node_status.stdout == 'microk8s is running'
 
 
 - name: Get enabled MicroK8s addons
   shell: microk8s status | grep enabled | awk -F ':' '{print $1}'
   register: microk8s_enabled_addons
-  when: IS_K8S_MASTER|default(False)
+  when: K8S_MASTER == inventory_hostname
 
 - name: Enable MicroK8s addons
   command: microk8s enable {{ item }}
   loop: "{{ MICROK8S_ADDONS }}"
   when:
-    - IS_K8S_MASTER|default(False)
+    - K8S_MASTER == inventory_hostname
     - item not in microk8s_enabled_addons.stdout_lines
 
 # TODO: --resolv-conf to be deprecated but currently doesn't work
@@ -60,4 +60,11 @@
     path: /var/snap/microk8s/current/args/kubelet
     # line: --config=/etc/kubelet.conf
     line: --resolv-conf=/run/systemd/resolve/resolv.conf
+  notify: Restart kubelet service
+
+- name: Remove Microk8s cluster dns flag
+  lineinfile:
+    path: /var/snap/microk8s/current/args/kubelet
+    state: absent
+    regexp: '^--cluster-dns='
   notify: Restart kubelet service

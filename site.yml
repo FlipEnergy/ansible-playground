@@ -3,11 +3,11 @@
 
 - hosts: loadbalancer
   roles:
-    - common
-    - ubuntu
-    - ntp
+    # - common
+    # - ubuntu
+    # - ntp
     # - haproxy
-    # - dnscrypt
+    - dns_crypt
 
 - hosts: kubernetes
   roles:

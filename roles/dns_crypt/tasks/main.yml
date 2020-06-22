@@ -1,0 +1,57 @@
+---
+
+- name: Check if DNS Crypt is Installed
+  stat:
+    path: /opt/dnscrypt-proxy
+  register: install_dir
+  become: yes
+
+- name: Install DNS Crypt Proxy
+  unarchive:
+    src: https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.0.44/dnscrypt-proxy-linux_x86_64-2.0.44.tar.gz
+    dest: /opt
+    remote_src: yes
+  become: yes
+  when: not install_dir.stat.exists
+
+- name: Rename folder
+  command: mv -vf /opt/linux-x86_64 /opt/dnscrypt-proxy
+  become: yes
+  when: not install_dir.stat.exists
+
+- name: Remove tar file
+  file:
+    path: /opt/dnscrypt-proxy-linux_x86_64-2.0.44.tar.gz
+    state: absent
+  become: yes
+
+- name: Check if DNS Crypt config is copied
+  stat:
+    path: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
+  register: config
+  become: yes
+
+- name: Copy default configuration
+  command: cp /opt/dnscrypt-proxy/example-dnscrypt-proxy.toml /opt/dnscrypt-proxy/dnscrypt-proxy.toml
+  become: yes
+  when: not config.stat.exists
+
+- name: Get service facts
+  service_facts:
+
+- name: Install DNS Crypt Proxy service
+  command: /opt/dnscrypt-proxy/dnscrypt-proxy -service install
+  when: not ansible_facts.services["dnscrypt-proxy.service"] is defined
+
+- name: Start DNS Crypt Proxy service
+  service:
+    name: dnscrypt-proxy
+    state: started
+
+- name: Set require_dnssec to True
+  lineinfile:
+    path: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
+    regexp: '^require_dnssec = false$'
+    line: require_dnssec = true
+  notify: Restart DNS Crypt Proxy service
+  become: yes

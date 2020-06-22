@@ -2,10 +2,10 @@
 
 all:
   children:
-    myserver:
+    kubernetes:
       hosts:
         myserver.tgp
-    mysurface3:
+    loadbalancer:
       hosts:
         mysurface3.tgp
   vars:

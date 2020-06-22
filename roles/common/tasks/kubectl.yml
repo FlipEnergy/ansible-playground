@@ -1,12 +1,12 @@
 ---
 # Install kubectl
 
-- name: Add an apt signing key for Kubernetes
+- name: Add an apt signing key for kubectl
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
-- name: Adding apt repository for Kubernetes
+- name: Adding apt repository for kubectl
   apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
 

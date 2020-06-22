@@ -7,15 +7,18 @@
       - ntp
       - ntpdate
     update_cache: yes
+  become: yes
 
 - name: Copy over the NTP configuration
   copy:
     src: ntp.conf
     dest: /etc/ntp.conf
   notify: Restart ntp service
+  become: yes
 
 - name: Enable and start ntp
   service:
     name: ntp
     state: started
     enabled: yes
+  become: yes

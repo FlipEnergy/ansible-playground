@@ -14,17 +14,6 @@
     update_cache: yes
   become: yes
 
-- name: Disable swap for k8s
-  command: swapoff -a
-  become: yes
-
-- name: Remove swap from fstab
-  replace:
-    path: /etc/fstab
-    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
-    replace: '# \1'
-  become: yes
-
 - name: Get netplan files
   command: find /etc/netplan/ -type f -name "*.yaml"
   register: netplan_confs
@@ -38,20 +27,3 @@
   with_items: "{{ netplan_confs.stdout_lines }}"
   become: yes
   notify: Apply Netplan
-
-- import_tasks: ntp.yml
-  become: yes
-
-- import_tasks: docker.yml
-  become: yes
-  when: INSTALL_DOCKER|default(False)
-
-- import_tasks: microk8s.yml
-  become: yes
-
-- name: Install k8s_metrics.sh
-  copy:
-    src: k8s_metrics.sh
-    dest: /usr/local/bin/k8s_metrics
-    mode: a+x
-  become: yes

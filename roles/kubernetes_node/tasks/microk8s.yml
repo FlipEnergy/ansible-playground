@@ -6,13 +6,6 @@
     classic: yes
     channel: "{{ MICROK8S_CHANNEL }}"
 
-- name: Add registry to docker
-  copy:
-    src: docker_daemon.json
-    dest: /etc/docker/daemon.json
-  notify: Restart docker service
-  when: INSTALL_DOCKER|default(False)
-
 - name: Adding user {{ USER }} to microk8s group
   user:
     name: "{{ USER }}"

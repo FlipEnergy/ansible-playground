@@ -5,9 +5,11 @@ export EDITOR="$VISUAL"
 # This must be set for PGP decryption
 export GPG_TTY=$(tty)
 
-cd ~
-
 alias k='kubectl'
+
+cheat() {
+    curl cheat.sh/${1}
+}
 
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr

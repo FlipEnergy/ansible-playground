@@ -3,3 +3,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 alias k='kubectl'
+
+cheat() {
+    curl cheat.sh/${1}
+}

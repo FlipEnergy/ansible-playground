@@ -4,6 +4,7 @@
 - name: Check if helm is installed
   command: which helm
   register: helm_installed
+  ignore_errors: yes
 
 - name: Install Helm3
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
@@ -12,6 +13,7 @@
 - name: Check if helm secrets is installed
   shell: helm plugin list | grep secrets
   register: helm_secrets_installed
+  ignore_errors: yes
 
 - name: Install helm secrets
   command: helm plugin install https://github.com/futuresimple/helm-secrets

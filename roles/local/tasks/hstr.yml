@@ -1,0 +1,13 @@
+---
+# install hstr
+
+- name: Add hstr Repository
+  apt_repository:
+    repo: ppa:ultradvorka/ppa
+  become: yes
+
+- name: Install hstr
+  apt:
+    name: hstr
+    update_cache: yes
+  become: yes

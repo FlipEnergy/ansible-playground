@@ -20,3 +20,4 @@ all:
       - metallb
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     PIHOLE_SERVER_IP: 192.168.1.11
+    BAT_VERSION: 0.15.4

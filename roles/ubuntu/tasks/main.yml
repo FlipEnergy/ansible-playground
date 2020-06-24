@@ -19,22 +19,21 @@
       - curl
       - make
       - screen
+      - resolvconf
     update_cache: yes
   become: yes
 
-- name: Get netplan files
-  command: find /etc/netplan/ -type f -name "*.yaml"
-  register: netplan_confs
+- name: Place resolve conf
+  copy:
+    src: resolvconf_head
+    dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
 
-- name: Update DNS nameservers
-  replace:
-    path: "{{ item }}"
-    regexp: 'addresses: \[.*\].*$'
-    replace: "addresses: [{{ PIHOLE_SERVER_IP }}, 8.8.8.8, 8.8.4.4]"
-  with_items: "{{ netplan_confs.stdout_lines }}"
+- name: Start and enable resolvconf
+  service:
+    name: resolvconf
+    state: started
+    enabled: yes
   become: yes
 
-- name: Apply Netplan
-  command: netplan apply
-  become: yes
+- import_tasks: bat.yml

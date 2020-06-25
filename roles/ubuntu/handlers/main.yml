@@ -1,0 +1,7 @@
+---
+
+- name: Restart systemd-logind
+  service:
+    name: systemd-logind
+    state: restarted
+  become: yes

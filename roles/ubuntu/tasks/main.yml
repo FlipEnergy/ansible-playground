@@ -37,3 +37,13 @@
   become: yes
 
 - import_tasks: bat.yml
+
+- name: Disable sleep on lid close
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    line: '{{ item }}'
+  with_items:
+    - HandleLidSwitch=ignore
+    - HandleLidSwitchDocked=ignore
+  notify: Restart systemd-logind
+  become: yes

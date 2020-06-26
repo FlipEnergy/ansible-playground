@@ -1,0 +1,11 @@
+# /etc/systemd/system/pihole-status-blink.service
+
+[Unit]
+Description=Run PiHole Status Blink
+
+[Service]
+Type=simple
+ExecStart=/opt/pihole_status_blink.sh
+
+[Install]
+WantedBy=multi-user.target

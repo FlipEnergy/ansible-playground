@@ -25,16 +25,12 @@
     state: absent
   become: yes
 
-- name: Check if DNS Crypt config is copied
-  stat:
-    path: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
-  register: config
-  become: yes
-
 - name: Copy default configuration
-  command: cp /opt/dnscrypt-proxy/example-dnscrypt-proxy.toml /opt/dnscrypt-proxy/dnscrypt-proxy.toml
+  copy:
+    src: dnscrypt-proxy.toml
+    dest: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
   become: yes
-  when: not config.stat.exists
+  notify: Restart DNS Crypt Proxy service
 
 - name: Get service facts
   service_facts:
@@ -48,10 +44,3 @@
     name: dnscrypt-proxy
     state: started
 
-- name: Set require_dnssec to True
-  lineinfile:
-    path: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
-    regexp: '^require_dnssec = false$'
-    line: require_dnssec = true
-  notify: Restart DNS Crypt Proxy service
-  become: yes

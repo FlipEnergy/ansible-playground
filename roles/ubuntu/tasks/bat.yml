@@ -1,7 +1,7 @@
 ---
 
 - name: Check if Bat version is installed
-  shell: bat --version | awk '{print $1}'
+  shell: bat --version | awk '{print $2}'
   register: bat_version
   ignore_errors: yes
 

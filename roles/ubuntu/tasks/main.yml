@@ -48,3 +48,11 @@
     - HandleLidSwitchDocked=ignore
   notify: Restart systemd-logind
   become: yes
+
+- name: Set consoleblank after 1 min
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=""'
+    line: GRUB_CMDLINE_LINUX_DEFAULT="consoleblank=1"
+  notify: Restart host
+  become: yes

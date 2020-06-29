@@ -2,9 +2,6 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# turn off screen in 1 min
-setterm --blank 1 > /dev/null 2>&1
-
 alias k='kubectl'
 
 cheat() {

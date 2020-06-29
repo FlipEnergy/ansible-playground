@@ -12,3 +12,7 @@
     state: restarted
   become: yes
 
+- name: Restart host
+  reboot:
+    reboot_timeout: 60
+  become: yes

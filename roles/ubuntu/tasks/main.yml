@@ -24,10 +24,11 @@
   become: yes
 
 - name: Place resolve conf
-  copy:
-    src: resolvconf_head
+  template:
+    src: resolvconf_head.j2
     dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
+  notify: Restart resolvconf
 
 - name: Start and enable resolvconf
   service:

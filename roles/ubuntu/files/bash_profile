@@ -2,8 +2,10 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+# turn off screen in 1 min
+setterm --blank 1
+
 alias k='kubectl'
-alias screenoff='setterm --blank 1; echo "Screen will turn off in 1 min"'
 
 cheat() {
     curl cheat.sh/${1}

@@ -1,7 +1,14 @@
 ---
 
+- name: Restart resolvconf
+  service:
+    name: resolvconf
+    state: restarted
+  become: yes
+
 - name: Restart systemd-logind
   service:
     name: systemd-logind
     state: restarted
   become: yes
+

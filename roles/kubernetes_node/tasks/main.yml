@@ -13,3 +13,9 @@
 
 - import_tasks: microk8s.yml
   become: yes
+
+- name: Populate Persistent Volume for statping
+  copy:
+    src: statping-app-data
+    dest: /mnt/
+  become: yes

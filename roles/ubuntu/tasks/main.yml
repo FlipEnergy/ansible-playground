@@ -37,8 +37,6 @@
     enabled: yes
   become: yes
 
-- import_tasks: bat.yml
-
 - name: Disable sleep on lid close
   lineinfile:
     path: /etc/systemd/logind.conf
@@ -57,4 +55,10 @@
     group: root
     mode: 777
   notify: Restart host
+  become: yes
+
+- import_tasks: bat.yml
+  become: yes
+
+- import_tasks: ntp.yml
   become: yes

@@ -1,0 +1,13 @@
+---
+
+- import_tasks: haproxy.yml
+  become: yes
+  when: '"haproxy" in ADD_ROLES'
+
+- import_tasks: dns_crypt.yml
+  become: yes
+  when: '"dns_crypt" in ADD_ROLES'
+
+- import_tasks: k8s_node.yml
+  become: yes
+  when: '"k8s_node" in ADD_ROLES'

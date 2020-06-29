@@ -5,9 +5,16 @@ all:
     kubernetes:
       hosts:
         myserver.tgp
+      vars:
+        ADD_ROLES:
+          - k8s_node
     loadbalancer:
       hosts:
         mysurface3.tgp
+      vars:
+        ADD_ROLES:
+          - haproxy
+          - dns_crypt
   vars:
     USER: dennis
     CTOP_VERSION: 0.7.3

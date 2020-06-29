@@ -1,17 +1,8 @@
 ---
 # This Playbook will setup ubuntu hosts to my liking
 
-- hosts: loadbalancer
+- hosts: all
   roles:
     - common
     - ubuntu
-    - ntp
-    - haproxy
-    - dns_crypt
-
-- hosts: kubernetes
-  roles:
-    - common
-    - ubuntu
-    - ntp
-    - kubernetes_node
+    - site_node

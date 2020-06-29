@@ -16,3 +16,5 @@
   reboot:
     reboot_timeout: 60
   become: yes
+
+- import_tasks: ntp.yml

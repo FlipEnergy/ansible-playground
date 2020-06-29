@@ -48,6 +48,7 @@
   when:
     - K8S_MASTER == inventory_hostname
     - '"metallb" in MICROK8S_ADDONS'
+    - '"metallb" not in microk8s_enabled_addons.stdout_lines'
 
 # TODO: --resolv-conf to be deprecated but currently doesn't work
 # https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/

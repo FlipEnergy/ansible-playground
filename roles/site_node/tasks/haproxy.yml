@@ -5,17 +5,14 @@
     pkg:
       - haproxy
     update_cache: yes
-  become: yes
 
 - name: Place config file
   copy:
     src: haproxy.cfg
     dest: /etc/haproxy/haproxy.cfg
-  become: yes
 
 - name: Start and enable
   service:
     name: haproxy
     state: started
     enabled: yes
-  become: yes

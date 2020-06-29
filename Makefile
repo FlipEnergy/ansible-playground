@@ -1,5 +1,5 @@
 local:
-	ansible-playbook --connection=local $(options) -K local.yml
+	time ansible-playbook --connection=local $(options) -K local.yml
 
 site:
-	ansible-playbook -i group_vars/site.yml $(options) -K site.yml
+	time ansible-playbook -i group_vars/site.yml $(options) -K site.yml

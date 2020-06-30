@@ -19,6 +19,6 @@
 
 - name: Populate Persistent Volume for syncthing
   copy:
-    src: syncthing-config
+    src: config
     dest: /mnt/syncthing-data/config
     force: no

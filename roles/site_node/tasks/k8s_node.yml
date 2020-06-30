@@ -16,3 +16,9 @@
     src: statping-app-data
     dest: /mnt/
     force: no
+
+- name: Populate Persistent Volume for syncthing
+  copy:
+    src: syncthing-config
+    dest: /mnt/syncthing-data/config
+    force: no

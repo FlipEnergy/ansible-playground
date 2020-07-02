@@ -57,8 +57,5 @@
   notify: Restart host
   become: yes
 
-- import_tasks: bat.yml
-  become: yes
-
 - import_tasks: ntp.yml
   become: yes

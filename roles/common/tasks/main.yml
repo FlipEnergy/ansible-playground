@@ -12,3 +12,6 @@
     dest: /usr/local/bin/k8s_metrics
     mode: a+x
   become: yes
+
+- import_tasks: bat.yml
+  become: yes

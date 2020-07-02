@@ -1,15 +1,25 @@
 # Ansible-Playground
 Repo for my Ansible stuff.
 
-# Installing Ansible
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
+# requirements
+Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
+Sops (installed with Helm Secrets plugin): https://github.com/mozilla/sops
 
+# Installing Ansible
+```
+make
+```
+
+# set up local machine
+```
+make local
+```
 
 # Setup my site
 ```
-make
+make site
 
 # or with options to the ansible-playbook command
 
-make options='-l myserver -v'
+make site options='-l myserver -v'
 ```

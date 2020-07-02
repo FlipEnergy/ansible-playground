@@ -1,0 +1,29 @@
+---
+
+- name: Add Telegraf apt Key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+
+- name: Add Telegraf Repository
+  apt_repository:
+    repo: deb https://repos.influxdata.com/ubuntu bionic stable
+
+- name: Install Telegraf
+  apt:
+    name: telegraf
+    update_cache: yes
+
+- name: Start and enable
+  service:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: Copy Telegraf Conf
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Telegraf service

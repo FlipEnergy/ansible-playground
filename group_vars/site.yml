@@ -16,15 +16,17 @@ all:
           - haproxy
           - dns_crypt
   vars:
-    USER: dennis
+    BAT_VERSION: 0.15.4
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
+    INFLUXDB_URL: http://influxdb.tgp:8086
+    INFLUXDB_DBNAME: homelab
     K8S_MASTER: myserver.tgp
+    METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_CHANNEL: 1.18/stable
+    USER: dennis
     MICROK8S_ADDONS:
       - dns
       - metrics-server
       - metallb
-    METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     PIHOLE_SERVER_IP: 192.168.1.11
-    BAT_VERSION: 0.15.4

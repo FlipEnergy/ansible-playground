@@ -1,1 +1,2 @@
 roles/site_node/files/config
+*.dec.yml

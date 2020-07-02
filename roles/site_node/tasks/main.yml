@@ -1,5 +1,8 @@
 ---
 
+- import_tasks: telegraf.yml
+  become: yes
+
 - import_tasks: haproxy.yml
   become: yes
   when: '"haproxy" in ADD_ROLES'

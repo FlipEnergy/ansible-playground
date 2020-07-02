@@ -1,0 +1,11 @@
+connection: sqlite3
+host: ""
+user: ""
+password: ""
+database: ""
+port: 0
+api_secret: ""
+language: en
+send_reports: true
+location: /app
+sqlfile: /app/statping.db

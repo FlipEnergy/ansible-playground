@@ -1,7 +1,9 @@
 ---
 # This Playbook will setup ubuntu hosts to my liking
 
-- hosts: all
+- hosts:
+    - loadbalancer
+    - kubernetes
   roles:
     - common
     - ubuntu

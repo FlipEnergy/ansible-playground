@@ -2,12 +2,9 @@
 
 all:
   children:
-    kubernetes:
+    localhost:
       hosts:
-        myserver.tgp
-      vars:
-        ADD_ROLES:
-          - k8s_node
+        127.0.0.1
     loadbalancer:
       hosts:
         mysurface3.tgp
@@ -15,6 +12,12 @@ all:
         ADD_ROLES:
           - haproxy
           - dns_crypt
+    kubernetes:
+      hosts:
+        myserver.tgp
+      vars:
+        ADD_ROLES:
+          - k8s_node
   vars:
     BAT_VERSION: 0.15.4
     CTOP_VERSION: 0.7.3

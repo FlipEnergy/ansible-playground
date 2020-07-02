@@ -1,0 +1,65 @@
+---
+
+- name: Install software-properties-common
+  apt:
+    pkg:
+      - software-properties-common
+    update_cache: yes
+
+- name: Add Repository
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Install certbot
+  apt:
+    pkg:
+      - certbot
+    update_cache: yes
+
+- name: Run Certbot
+  command:
+    cmd: "certbot certonly --standalone -n --agree-tos --preferred-challenges http --http-01-port 80 -d {{ MY_DOMAIN }} -d www.{{ MY_DOMAIN }} -m dennis.zhang.nrg@gmail.com"
+    creates: "/etc/letsencrypt/live/{{ MY_DOMAIN }}"
+
+- name: Make dir /etc/haproxy/certs
+  file:
+    path: /etc/haproxy/certs
+    state: directory
+
+- name: Place certs for HAProxy
+  shell:
+    cmd: "cat /etc/letsencrypt/live/{{ MY_DOMAIN }}/fullchain.pem /etc/letsencrypt/live/{{ MY_DOMAIN }}/privkey.pem > /etc/haproxy/certs/{{ MY_DOMAIN }}.pem"
+    creates: "/etc/haproxy/certs/{{ MY_DOMAIN }}.pem"
+
+- name: Set cert permissions
+  file:
+    path: /etc/haproxy/certs
+    owner: haproxy
+    group: haproxy
+    mode: 600
+    recurse: yes
+    force: yes
+
+- name: Update certbot config
+  lineinfile:
+    path: "/etc/letsencrypt/renewal/{{ MY_DOMAIN }}.conf"
+    regexp: '^http01_port ='
+    line: http01_port = 54321
+
+- name: Place renew_cert.sh
+  template:
+    src: renew_cert.sh.j2
+    dest: /usr/local/bin/renew.sh
+
+- name: Set renew_cert.sh permissions
+  file:
+    path: /usr/local/bin/renew.sh
+    mode: u+x
+
+
+- name: Cron renew_cert
+  cron:
+    name: "renew certbot cert"
+    minute: "0"
+    hour: "9"
+    job: "/usr/bin/certbot renew --renew-hook '/usr/local/bin/renew.sh' >> /var/log/le-renewal.log"

@@ -5,3 +5,5 @@
 - import_tasks: microk8s.yml
 
 - import_tasks: telegraf.yml
+
+- import_tasks: haproxy.yml

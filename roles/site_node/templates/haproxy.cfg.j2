@@ -8,6 +8,9 @@ global
         group haproxy
         daemon
 
+        maxconn 2048
+        tune.ssl.default-dh-param 2048
+
         # Default SSL material locations
         ca-base /etc/ssl/certs
         crt-base /etc/ssl/private
@@ -25,6 +28,8 @@ defaults
         mode    http
         option  httplog
         option  dontlognull
+        option  forwardfor
+        option  http-server-close
         timeout connect 5000
         timeout client  50000
         timeout server  50000
@@ -36,9 +41,16 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend dennis_site
+frontend dennis_site_http
         bind *:80
-        mode http
+        reqadd X-Forwarded-Proto:\ http
+        default_backend dennis_site_k8s_service
+
+frontend dennis_site_https
+        bind *:443 ssl crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem
+        reqadd X-Forwarded-Proto:\ https
+        acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+        use_backend letsencrypt-backend if letsencrypt-acl
         default_backend dennis_site_k8s_service
 
 frontend openvpn
@@ -49,13 +61,11 @@ frontend openvpn
         default_backend openvpn_k8s_service
 
 backend dennis_site_k8s_service
-        mode http
-        balance roundrobin
-        option forwardfor
-        http-request set-header X-Forwarded-Port %[dst_port]
-        http-request add-header X-Forwarded-Proto https if { ssl_fc }
-        option httpchk HEAD / HTTP/1.1\r\nHost:localhost
-        server k8s 192.168.1.52:80 check
+        redirect scheme https if !{ ssl_fc }
+        server k8s {{ DENNIS_SITE_IP }}:80 check
+
+backend letsencrypt-backend
+        server letsencrypt 127.0.0.1:54321
 
 backend openvpn_k8s_service
         mode tcp
@@ -63,4 +73,4 @@ backend openvpn_k8s_service
         balance roundrobin
         timeout connect 10s
         timeout server 1m
-        server k8s 192.168.1.53:1194 check
+        server k8s {{ OPENVPN_IP }}:1194 check

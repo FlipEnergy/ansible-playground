@@ -21,5 +21,5 @@ make site
 
 # or with options to the ansible-playbook command
 
-make site options='-l myserver -v'
+make site options='-l kubernetes -v'
 ```

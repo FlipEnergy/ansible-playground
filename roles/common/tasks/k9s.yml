@@ -1,11 +1,17 @@
 ---
 # Install and setup k9s
 
-- name: Install k9s
+- name: Check if K9s version is installed
+  command: k9s version
+  register: k9s_version
+  ignore_errors: yes
+
+- name: Install K9s
   unarchive:
-    src: https://github.com/derailed/k9s/releases/download/v0.20.5/k9s_Linux_x86_64.tar.gz
+    src: "https://github.com/derailed/k9s/releases/download/v{{ K9S_VERSION }}/k9s_Linux_x86_64.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
+  when: k9s_version.rc != 0 or K9S_VERSION not in k9s_version.stdout
 
 - name: Set execute permissions for k9s
   file:
@@ -13,3 +19,4 @@
     mode: u+x
     modification_time: preserve
     access_time: preserve
+  when: k9s_version.rc != 0 or K9S_VERSION not in k9s_version.stdout

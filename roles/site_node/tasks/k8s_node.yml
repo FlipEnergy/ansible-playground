@@ -17,8 +17,41 @@
     dest: /mnt/
     force: no
 
+- name: Set permissions for statping volume
+  file:
+    path: /mnt/statping-app-data
+    owner: '500'
+    group: '500'
+    recurse: yes
+    force: yes
+
 - name: Populate Persistent Volume for syncthing
   copy:
     src: config
     dest: /mnt/syncthing-data/config
     force: no
+
+- name: Set permissions for syncthing volume
+  file:
+    path: /mnt/syncthing-data
+    owner: dennis
+    group: dennis
+    recurse: yes
+    force: yes
+
+- name: Set permissions for influxdb volume
+  file:
+    path: /mnt/influxdb
+    owner: '501'
+    group: '501'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for folding-at-home volume
+  file:
+    path: /mnt/folding-at-home
+    owner: '502'
+    group: '502'
+    recurse: yes
+    force: yes
+

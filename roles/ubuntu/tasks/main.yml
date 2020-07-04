@@ -59,3 +59,19 @@
 
 - import_tasks: ntp.yml
   become: yes
+
+- name: Install Canonical Livepatch
+  snap:
+    name: canonical-livepatch
+  become: yes
+
+- name: Check if Canonical Livepatch is Enabled
+  command: canonical-livepatch status
+  register: livepatch_status
+  become: yes
+  ignore_errors: yes
+
+- name: Enable Canonical Livepatch
+  command: "canonical-livepatch enable {{ CANONICAL_LIVEPATCH_KEY }}"
+  when: "'Machine is not enabled' in livepatch_status.stdout"
+  become: yes

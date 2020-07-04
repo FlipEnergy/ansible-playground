@@ -26,7 +26,7 @@ all:
     INFLUXDB_URL: http://influxdb.tgp:8086
     INFLUXDB_DBNAME: homelab
     K8S_MASTER: myserver.tgp
-    K9S_VERSION: 0.21.1
+    K9S_VERSION: 0.21.2
     OPENVPN_IP: 192.168.1.53
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_CHANNEL: 1.18/stable

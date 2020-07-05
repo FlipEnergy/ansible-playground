@@ -42,19 +42,19 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 
 frontend dennis_site_http
-        bind *:80
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80
         reqadd X-Forwarded-Proto:\ http
         default_backend dennis_site_k8s_service
 
 frontend dennis_site_https
-        bind *:443 ssl crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem
         reqadd X-Forwarded-Proto:\ https
         acl letsencrypt-acl path_beg /.well-known/acme-challenge/
         use_backend letsencrypt-backend if letsencrypt-acl
         default_backend dennis_site_k8s_service
 
 frontend openvpn
-        bind *:1194
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:1194
         mode tcp
         option tcplog
         timeout client 1m

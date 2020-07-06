@@ -2,13 +2,13 @@
 # install helm3 and plugins
 
 - name: Check if helm is installed
-  command: which helm
-  register: helm_installed
+  command: helm version
+  register: helm_version
   ignore_errors: yes
 
 - name: Install Helm3
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-  when: helm_installed.rc != 0
+  when: helm_version.rc != 0 or HELM_VERSION not in helm_version.stdout
 
 - name: Check if helm secrets is installed
   shell: helm plugin list | grep secrets
@@ -23,3 +23,29 @@
   copy:
     src: sops.yaml
     dest: /home/dennis/.sops.yaml
+
+- name: Check if helm diff is installed
+  shell: helm plugin list | grep diff
+  register: helm_diff_installed
+  ignore_errors: yes
+
+- name: Install helm diff
+  command: helm plugin install https://github.com/databus23/helm-diff --version master
+  when: helm_diff_installed.rc !=0
+
+- name: Check if Helmsman is installed
+  command: helmsman version
+  register: helmsman_version
+  ignore_errors: yes
+
+- name: Download Helmsman
+  unarchive:
+    src: "https://github.com/Praqma/helmsman/releases/download/v{{ HELMSMAN_VERSION }}/helmsman_{{ HELMSMAN_VERSION }}_linux_amd64.tar.gz"
+    dest: /tmp
+    remote_src: yes
+  when: helmsman_version.rc != 0 or HELMSMAN_VERSION not in helmsman_version.stdout
+
+- name: Install Helmsman
+  command: mv -f /tmp/helmsman /usr/local/bin/helmsman
+  when: helmsman_version.rc != 0 or HELMSMAN_VERSION not in helmsman_version.stdout
+  become: yes

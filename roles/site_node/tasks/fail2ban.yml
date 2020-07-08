@@ -1,0 +1,25 @@
+---
+
+- name: Install fail2ban
+  apt:
+    pkg:
+      - fail2ban
+    update_cache: yes
+
+- name: Place filter file
+  template:
+    src: dennis_site_filter.conf.j2
+    dest: /etc/fail2ban/filter.d/dennis_site_filter.conf
+  notify: Restart fail2ban service
+
+- name: Place jail file
+  template:
+    src: dennis_site_jail.conf.j2
+    dest: /etc/fail2ban/jail.d/dennis_site_jail.conf
+  notify: Restart fail2ban service
+
+- name: Start and enable
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes

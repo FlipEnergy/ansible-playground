@@ -15,6 +15,10 @@
   become: yes
   when: '"haproxy" in ADD_ROLES'
 
+- import_tasks: fail2ban.yml
+  become: yes
+  when: '"haproxy" in ADD_ROLES'
+
 - import_tasks: k8s_node.yml
   become: yes
   when: '"k8s_node" in ADD_ROLES'

@@ -264,3 +264,14 @@
 # Read Network
 [[inputs.net]]
   interfaces = ["e*"]
+
+{% if "haproxy" in ADD_ROLES %}
+# Read metrics of HAProxy, via socket or HTTP stats page
+[[inputs.haproxy]]
+  servers = ["/run/haproxy/admin.sock"]
+
+# Read metrics from fail2ban.
+[[inputs.fail2ban]]
+  ## Use sudo to run fail2ban-client
+  use_sudo = true
+{% endif %}

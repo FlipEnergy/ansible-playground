@@ -27,3 +27,12 @@
     group: root
     mode: 0644
   notify: Restart Telegraf service
+
+- name: Set sudoers for fail2ban
+  copy:
+    dest: /etc/sudoers.d/telegraf
+    content: |
+      Cmnd_Alias FAIL2BAN = /usr/bin/fail2ban-client status, /usr/bin/fail2ban-client status *
+      telegraf  ALL=(root) NOEXEC: NOPASSWD: FAIL2BAN
+      Defaults!FAIL2BAN !logfile, !syslog, !pam_session
+  when: '"haproxy" in ADD_ROLES'

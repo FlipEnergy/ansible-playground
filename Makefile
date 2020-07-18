@@ -4,10 +4,16 @@ init:
 	sudo apt install ansible
 
 apt-upgrade-servers:
-	ansible servers -i group_vars/site.yml -m apt -ba "upgrade=yes update_cache=yes" -K
+	ansible servers -i group_vars/site.yml -m apt -K -ba "upgrade=yes update_cache=yes"
+
+ping-servers:
+	ansible servers -i group_vars/site.yml -m ping
 
 reboot-servers:
-	ansible servers -i group_vars/site.yml -m command -ba "reboot" -K
+	ansible servers -i group_vars/site.yml -m command -K -ba "reboot"
+
+shutdown-servers:
+	ansible servers -i group_vars/site.yml -m command -K -ba "shutdown now"
 
 local:
 	time ansible-playbook --connection=local -i group_vars/site.yml -l localhost $(options) -K local.yml

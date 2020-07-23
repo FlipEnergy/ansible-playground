@@ -49,28 +49,8 @@ frontend dennis_site_http
 frontend dennis_site_https
         bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem
         reqadd X-Forwarded-Proto:\ https
-        acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-        use_backend letsencrypt-backend if letsencrypt-acl
         default_backend dennis_site_k8s_service
-
-frontend openvpn
-        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:1194
-        mode tcp
-        option tcplog
-        timeout client 1m
-        default_backend openvpn_k8s_service
 
 backend dennis_site_k8s_service
         redirect scheme https if !{ ssl_fc }
         server k8s {{ DENNIS_SITE_IP }}:80 check
-
-backend letsencrypt-backend
-        server letsencrypt 127.0.0.1:54321
-
-backend openvpn_k8s_service
-        mode tcp
-        option log-health-checks
-        balance roundrobin
-        timeout connect 10s
-        timeout server 1m
-        server k8s {{ OPENVPN_IP }}:1194 check

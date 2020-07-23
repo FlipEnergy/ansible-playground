@@ -1,0 +1,10 @@
+---
+
+- name: Check if oneshot is installed
+  command: oneshot --version
+  register: oneshot_version
+  ignore_errors: yes
+
+- name: Install oneshot
+  shell: curl -L https://github.com/raphaelreyna/oneshot/raw/master/install.sh | bash
+  when: oneshot_version.rc != 0

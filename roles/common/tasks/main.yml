@@ -13,5 +13,9 @@
     mode: a+x
   become: yes
 
+- name: Install oneshot
+  shell: curl -L https://github.com/raphaelreyna/oneshot/raw/master/install.sh | bash
+  become: yes
+
 - import_tasks: bat.yml
   become: yes

@@ -23,6 +23,12 @@ global
         ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!MD5:!DSS
         ssl-default-bind-options no-sslv3
 
+        # Followed guide: https://www.suse.com/c/speeding-ssl-need-know-haproxy/
+        # launch 5 process
+        # process 1 for plain routing
+        # process 2-5 for SSL
+        nbproc 5
+
 defaults
         log     global
         mode    http
@@ -41,16 +47,33 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
+        # by default use process 1
+        bind-process 1
+
+listen ssl
+        # bind processes 2-5
+        bind-process 2-5
+
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 tfo ssl no-sslv3 crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem process 2
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 tfo ssl no-sslv3 crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem process 3
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 tfo ssl no-sslv3 crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem process 4
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 tfo ssl no-sslv3 crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem process 5
+
+        option tcp-smart-connect
+
+        server http 127.0.0.1:84 send-proxy-v2
+
 frontend dennis_site_http
-        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80
-        reqadd X-Forwarded-Proto:\ http
-        default_backend dennis_site_k8s_service
+        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80 tfo
+
+        redirect scheme https code 301
 
 frontend dennis_site_https
-        bind {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl crt /etc/haproxy/certs/{{ MY_DOMAIN }}.pem
-        reqadd X-Forwarded-Proto:\ https
+        bind 127.0.0.1:84 tfo accept-proxy
+        acl is_ssl fc_rcvd_proxy
+
         default_backend dennis_site_k8s_service
 
 backend dennis_site_k8s_service
-        redirect scheme https if !{ ssl_fc }
+        option forwardfor
         server k8s {{ DENNIS_SITE_IP }}:80 check

@@ -83,35 +83,33 @@ http {
 
 
         server {
-                listen 80 default_server;
-                allow {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }};
-                allow 192.168.1.1/24;
-                deny all;
-
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80 default_server;
+                allow       192.168.1.1/24;
+                deny        all;
                 server_name _;
 
                 return 301 https://$host$request_uri;
         }
 
         server {
-                listen              443 ssl;
-                allow {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }};
-                allow 192.168.1.1/24;
-                deny all;
-                server_name         {{ MY_DOMAIN }} *.{{ MY_DOMAIN }};
-                access_log          /var/log/nginx/{{ MY_DOMAIN }}.access.log;
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
+                allow       192.168.1.1/24;
+                deny        all;
+                server_name {{ MY_DOMAIN }} *.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/{{ MY_DOMAIN }}.access.log;
 
                 location / {
-                        proxy_pass          http://{{ DENNIS_SITE_IP }};
+                        proxy_pass http://{{ DENNIS_SITE_IP }};
                 }
         }
 }
 
 stream {
         server {
-                allow {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }};
-                deny all;
-                listen              51820 udp;
-                proxy_pass              {{ WIREGUARD_TRAFFIC_IP }}:51820;
+                allow  192.168.1.1/24;
+                deny   all;
+                listen {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:51820 udp;
+                
+                proxy_pass {{ WIREGUARD_TRAFFIC_IP }}:51820;
         }
 }

@@ -265,10 +265,10 @@
 [[inputs.net]]
   interfaces = ["e*"]
 
-{% if "haproxy" in ADD_ROLES %}
-# Read metrics of HAProxy, via socket or HTTP stats page
-[[inputs.haproxy]]
-  servers = ["/run/haproxy/admin.sock"]
+{% if "nginx" in ADD_ROLES %}
+# Read metrics of Nginx
+[[inputs.nginx]]
+  urls = ["http://localhost:9090/nginx_status"]
 
 # Read metrics from fail2ban.
 [[inputs.fail2ban]]

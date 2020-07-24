@@ -4,6 +4,5 @@ bantime  = 1200
 findtime = 120
 maxretry = 6
 filter   = dennis_site_filter
-logpath  = /var/log/haproxy.log
-port     = http,https
-ignoreip = 192.168.1.0/24
+action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
+logpath  = /var/log/nginx/*error.log

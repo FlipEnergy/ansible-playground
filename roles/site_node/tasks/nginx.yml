@@ -1,0 +1,24 @@
+---
+
+- name: Install Nginx
+  apt:
+    pkg:
+      - nginx
+    update_cache: yes
+
+- name: remove default site
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Place site conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: Reload nginx
+
+- name: Start and enable
+  service:
+    name: nginx
+    state: started
+    enabled: yes

@@ -12,8 +12,11 @@ all:
             mysurface3.tgp
           vars:
             ADD_ROLES:
-              - haproxy
+              - nginx
               - dns_crypt
+            MY_DOMAIN: pleasenoddos.com
+            # BITWARDEN_IP: 192.168.1.57
+            WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:
           hosts:
             myserver.tgp
@@ -30,11 +33,10 @@ all:
     INFLUXDB_URL: http://influxdb.tgp:8086
     INFLUXDB_DBNAME: homelab
     K8S_MASTER: myserver.tgp
-    K9S_VERSION: 0.21.2
+    K9S_VERSION: 0.21.4
     OPENVPN_IP: 192.168.1.53
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_CHANNEL: 1.18/stable
-    MY_DOMAIN: pleasenoddos.com
     USER: dennis
     MICROK8S_ADDONS:
       - dns

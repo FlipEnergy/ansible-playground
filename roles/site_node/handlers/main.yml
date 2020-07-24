@@ -6,6 +6,6 @@
 
 - import_tasks: telegraf.yml
 
-- import_tasks: haproxy.yml
+- import_tasks: nginx.yml
 
 - import_tasks: fail2ban.yml

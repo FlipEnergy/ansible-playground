@@ -81,11 +81,8 @@ http {
                 }
         }
 
-
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80 default_server;
-                allow       192.168.1.1/24;
-                deny        all;
                 server_name _;
 
                 return 301 https://$host$request_uri;
@@ -93,23 +90,30 @@ http {
 
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
-                allow       192.168.1.1/24;
-                deny        all;
                 server_name {{ MY_DOMAIN }} *.{{ MY_DOMAIN }};
                 access_log  /var/log/nginx/{{ MY_DOMAIN }}.access.log;
 
                 location / {
-                        proxy_pass http://{{ DENNIS_SITE_IP }};
+                        proxy_pass http://{{ DENNIS_SITE_IP }}:80;
                 }
         }
 }
 
 stream {
         server {
-                listen {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:51820 udp;
-                allow  192.168.1.1/24;
-                deny   all;
+                listen     {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:53 udp;
+                error_log /var/log/nginx/dns.error.log;
 
-                proxy_pass {{ WIREGUARD_TRAFFIC_IP }}:51820;
+                proxy_pass      127.0.0.1:5353;
+                proxy_responses 1;
+                proxy_timeout   1s;
+        }
+
+        server {
+                listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:51820 udp;
+                error_log /var/log/nginx/wireguard.error.log;
+
+                proxy_pass      {{ WIREGUARD_TRAFFIC_IP }}:51820;
+                proxy_timeout   1s;
         }
 }

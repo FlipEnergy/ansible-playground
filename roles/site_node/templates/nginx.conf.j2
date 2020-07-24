@@ -99,6 +99,17 @@ http {
                 }
         }
 
+        # BitWarden
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
+                server_name bitwarden.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/bitwarden.{{ MY_DOMAIN }}.access.log;
+
+                location / {
+                        proxy_pass http://{{ BITWARDEN_IP }}:80;
+                }
+        }
+
         # My site and default
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;

@@ -14,9 +14,9 @@ all:
             ADD_ROLES:
               - nginx
               - dns_crypt
-            DENNIS_SITE_IP: 192.168.1.52
             MY_DOMAIN: pleasenoddos.com
-            # BITWARDEN_IP: 192.168.1.57
+            DENNIS_SITE_IP: 192.168.1.52
+            BITWARDEN_IP: 192.168.1.57
             KUBE_OPS_VIEW_IP: 192.168.1.51
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:

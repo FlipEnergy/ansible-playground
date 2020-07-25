@@ -110,6 +110,17 @@ http {
                 }
         }
 
+        # Kube Ops View
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
+                server_name whoogle.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/whoogle.{{ MY_DOMAIN }}.access.log;
+
+                location / {
+                        proxy_pass http://{{ WHOOGLE_IP }}:80;
+                }
+        }
+
         # My site and default
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;

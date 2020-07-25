@@ -14,10 +14,11 @@ all:
             ADD_ROLES:
               - nginx
               - dns_crypt
-            MY_DOMAIN: pleasenoddos.com
-            DENNIS_SITE_IP: 192.168.1.52
             BITWARDEN_IP: 192.168.1.57
+            DENNIS_SITE_IP: 192.168.1.52
             KUBE_OPS_VIEW_IP: 192.168.1.51
+            MY_DOMAIN: pleasenoddos.com
+            WHOOGLE_IP: 192.168.1.60
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:
           hosts:
@@ -31,16 +32,17 @@ all:
     DOCKER_COMPOSE_VERSION: 1.26.0
     HELM_VERSION: 3.2.4
     HELMSMAN_VERSION: 3.4.4
-    INFLUXDB_URL: http://influxdb.tgp:8086
     INFLUXDB_DBNAME: homelab
+    INFLUXDB_URL: http://influxdb.tgp:8086
     K8S_MASTER: myserver.tgp
     K9S_VERSION: 0.21.4
-    OPENVPN_IP: 192.168.1.53
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
-    MICROK8S_CHANNEL: 1.18/stable
-    USER: dennis
     MICROK8S_ADDONS:
       - dns
       - metrics-server
       - metallb
+    MICROK8S_CHANNEL: 1.18/stable
+
+    OPENVPN_IP: 192.168.1.53
     PIHOLE_SERVER_IP: 192.168.1.11
+    USER: dennis

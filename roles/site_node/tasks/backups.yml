@@ -1,0 +1,23 @@
+---
+
+- name: create directory /opt/admin
+  file:
+    dest: /opt/admin
+    state: directory
+    owner: root
+    group: root
+
+- name: Place backup script
+  copy:
+    src: backup_to_syncthing.sh
+    dest: /opt/admin/backup_to_syncthing.sh
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Cron backup script
+  cron:
+    name: "Backup to syncthing"
+    minute: "0"
+    hour: "*/4"
+    job: "/opt/admin/backup_to_syncthing.sh >> /var/log/backup_to_syncthing.log"

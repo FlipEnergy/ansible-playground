@@ -99,7 +99,7 @@ http {
                 }
         }
 
-        # BitWarden
+        # Bitwarden
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
                 server_name bitwarden.{{ MY_DOMAIN }};

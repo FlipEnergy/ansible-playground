@@ -11,20 +11,6 @@
 
 - import_tasks: microk8s.yml
 
-- name: Populate Persistent Volume for statping
-  copy:
-    src: statping-app-data
-    dest: /mnt/
-    force: no
-
-- name: Set permissions for statping volume
-  file:
-    path: /mnt/statping-app-data
-    owner: '500'
-    group: '500'
-    recurse: yes
-    force: yes
-
 - name: Populate Persistent Volume for syncthing
   copy:
     src: config
@@ -54,4 +40,3 @@
     group: '502'
     recurse: yes
     force: yes
-

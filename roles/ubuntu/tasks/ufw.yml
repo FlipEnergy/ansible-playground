@@ -1,0 +1,21 @@
+---
+
+- name: Set default incoming policies
+  ufw:
+    default: deny
+    direction: incoming
+
+- name: Set default outgoing policies
+  ufw:
+    default: allow
+    direction: outgoing
+
+- name: Allow all access from LAN and wireguard and enable
+  ufw:
+    rule: allow
+    src: '{{ item }}'
+    state: enabled
+  with_items:
+    - 192.168.1.0/24
+    - 192.168.2.0/24
+    - 10.44.0.0/24 # Wireguard

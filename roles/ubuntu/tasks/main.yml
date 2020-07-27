@@ -21,6 +21,7 @@
       - make
       - screen
       - resolvconf
+      - ufw
     update_cache: yes
   become: yes
 
@@ -75,4 +76,7 @@
 - name: Enable Canonical Livepatch
   command: "canonical-livepatch enable {{ CANONICAL_LIVEPATCH_KEY }}"
   when: "'Machine is not enabled' in livepatch_status.stdout"
+  become: yes
+
+- import_tasks: ufw.yml
   become: yes

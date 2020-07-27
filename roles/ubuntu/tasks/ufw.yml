@@ -10,6 +10,23 @@
     default: allow
     direction: outgoing
 
+- name: Allow http and https
+  ufw:
+    rule: allow
+    port: '{{ item }}'
+    proto: tcp
+  with_items:
+    - '80'
+    - '443'
+  when: '"nginx" in ADD_ROLES'
+
+- name: Allow Wireguard
+  ufw:
+    rule: allow
+    port: '51820'
+    proto: udp
+  when: '"nginx" in ADD_ROLES'
+
 - name: Allow all access from LAN and wireguard and enable
   ufw:
     rule: allow

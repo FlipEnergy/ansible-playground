@@ -20,6 +20,7 @@
 - name: Set permissions for syncthing volume
   file:
     path: /mnt/syncthing-data
+    state: directory
     owner: dennis
     group: dennis
     recurse: yes
@@ -28,6 +29,7 @@
 - name: Set permissions for influxdb volume
   file:
     path: /mnt/influxdb
+    state: directory
     owner: '501'
     group: '501'
     recurse: yes
@@ -36,7 +38,17 @@
 - name: Set permissions for folding-at-home volume
   file:
     path: /mnt/folding-at-home
+    state: directory
     owner: '502'
     group: '502'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for rocketchat mongodb volume
+  file:
+    path: /mnt/rocketchat-mongodb
+    state: directory
+    owner: '503'
+    group: '503'
     recurse: yes
     force: yes

@@ -111,6 +111,17 @@ http {
                 }
         }
 
+        # Rocketchat
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
+                server_name rocketchat.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/rocketchat.{{ MY_DOMAIN }}.access.log;
+
+                location / {
+                        proxy_pass http://{{ ROCKETCHAT_IP }}:80;
+                }
+        }
+
         # Whoogle
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;

@@ -57,17 +57,3 @@
     src: kubelet.conf
     dest: /etc/kubelet.conf
   notify: Restart kubelet service
-
-# - name: Update MicroK8s resolve-conf
-#   lineinfile:
-#     path: /var/snap/microk8s/current/args/kubelet
-#     # line: --config=/etc/kubelet.conf
-#     line: --resolv-conf=/run/systemd/resolve/resolv.conf
-#   notify: Restart kubelet service
-
-- name: Remove Microk8s cluster dns flag
-  lineinfile:
-    path: /var/snap/microk8s/current/args/kubelet
-    state: absent
-    regexp: '^--cluster-dns='
-  notify: Restart kubelet service

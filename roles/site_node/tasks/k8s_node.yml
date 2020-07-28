@@ -43,12 +43,3 @@
     group: '502'
     recurse: yes
     force: yes
-
-- name: Set permissions for rocketchat mongodb volume
-  file:
-    path: /mnt/rocketchat-mongodb
-    state: directory
-    owner: '503'
-    group: '503'
-    recurse: yes
-    force: yes

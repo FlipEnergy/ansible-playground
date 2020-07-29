@@ -43,3 +43,21 @@
     group: '502'
     recurse: yes
     force: yes
+
+- name: Set permissions for mattermost data volume
+  file:
+    path: /mnt/mattermost-data
+    state: directory
+    owner: '2000'
+    group: '2000'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for mattermost plugins volume
+  file:
+    path: /mnt/mattermost-plugins
+    state: directory
+    owner: '2000'
+    group: '2000'
+    recurse: yes
+    force: yes

@@ -18,7 +18,7 @@ all:
             DENNIS_SITE_IP: 192.168.1.52
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com
-            UNUSED_IP: 192.168.1.56
+            MATTERMOST_IP: 192.168.1.56
             WHOOGLE_IP: 192.168.1.60
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:

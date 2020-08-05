@@ -15,6 +15,7 @@ all:
               - nginx
               - dns_crypt
             BITWARDEN_IP: 192.168.1.57
+            VSCODE_IP: 192.168.1.61
             DENNIS_SITE_IP: 192.168.1.52
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com

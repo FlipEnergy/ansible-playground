@@ -11,6 +11,17 @@
     dest: /etc/nginx/sites-enabled/default
     state: absent
 
+- name: update file descriptor limits
+  lineinfile:
+    path: /etc/security/limits.conf
+    line: '{{ item }}'
+  with_items:
+    - nginx       soft    nofile  30000
+    - nginx       hard    nofile  50000
+  notify: Restart nginx
+  become: yes
+
+
 - name: Place conf file
   template:
     src: nginx.conf.j2

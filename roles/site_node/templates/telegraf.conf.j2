@@ -253,8 +253,12 @@
 
 # Read metrics about system load & uptime
 [[inputs.system]]
-  ## Uncomment to remove deprecated metrics.
-  # fielddrop = ["uptime_format"]
+  # Uncomment to remove deprecated metrics.
+   fielddrop = ["uptime_format"]
+
+# Provides Linux sysctl fs metrics
+[[inputs.linux_sysctl_fs]]
+  # no configuration
 
 # Read Network
 [[inputs.net]]

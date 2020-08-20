@@ -7,4 +7,4 @@
 
 - name: Install oneshot
   shell: curl -L https://github.com/raphaelreyna/oneshot/raw/master/install.sh | bash
-  when: oneshot_version.rc != 0
+  when: oneshot_version.rc != 0 or ONESHOT_VERSION not in oneshot_version.stdout

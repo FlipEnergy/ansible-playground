@@ -29,6 +29,7 @@ all:
             ADD_ROLES:
               - k8s_node
   vars:
+    ansible_python_interpreter: /usr/bin/python3
     BAT_VERSION: 0.15.4
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0

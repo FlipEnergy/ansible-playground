@@ -1,5 +1,11 @@
 ---
 
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+  become: yes
+
 - name: Restart resolvconf
   service:
     name: resolvconf

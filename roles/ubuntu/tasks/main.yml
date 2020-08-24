@@ -14,6 +14,14 @@
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDgQsNsmdhcDiRQLi1T6EuFpTjuOmvNWk4tYuGMdp6AeTYLuFf81kuCF2nJ978uTaiq1dLruhLmevTSrtCizK5ncD7LaNq+B07ufYm8MfTQoMAy1i2WhpNr3eR7BoTasyWC3+Y01/TSXN6oE2KGB6AzsS1WUbwSXMjzZSlXfqUE0dZ5sOzBw/mVMh5ds93Lsw+f5nNqdTFM+98C+oF2axREaGOEG+GheUUa6qJEEBgSK3gDh4o/FSaGC4+mibqB+Wn/sBRedd+5kT8NPRDDPNYrARAynv7zhmoF73YgfwxaT9tNVDvgkCoJs4mjKWkb2i+E+qzinUs1I3TVs0DbYeRpslgZl5iz73iQhs3JQ26mZg22OrjJSJITKnfD3gcJEAxlp8XLnV2oo3cpbuwxLDN6Exf0vBP396ZJi+h62JaoU95SXptgLr8htHUpzrsTYmFavtgxkapDN44n4+WW82tdW3fctVKIN5dC7M0j4Oeil/+tBv9R5TixAU7NKiwWQZWCKXGstL6PmdyRq0+sLPZu4H0OgbuBU9Ybt+Z+lc4HJix6q6/+aFnHBWy96XbDzeh+66v1qjJQQKiq1CvQkFdOhIWFfOpYByDdoDVC6jJp2xszf5FZTdKNlYQKUDTnr8DMtJJnTzqyChtw0rASKhBG8/kt1zM8CJlwDicpJOEN/Q== surfacego2"
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsmibbw0jcyLi2eXaUsWp7r+DyuMCVz6jDy02yuSTHKiS7UkwPQO6YqdOQoOzC/HwcAFGXJAPgJxOe7L3syeKMf8rqVRTByr800Acss+Y24oGzlRJrD7TNg/ILP+hY2HBpjaXVaXYXfHgyWbVEIhIUo96zLALV51CiNfbKotvy9emHdV/+DrEh6UTMFRaXghXrM0Nf93HJlJLG6APSpst2+agtAYv8yhJh/CTy9mHXWHhsmc2HNW5aqSozklLbR6horcXtzQ86d7/R4sCk+21nc5b/T9vQSMv/HZaC1sWMv+xh40uH3NzkIIP7BQYhZZNKPSztBrX/UCU/eFc/VJL7eRSKmghgXXN728TWBZ0zMl+c2xRNZUSa8jWo2GlnwAQtTdkJt+KMrSv7+PAooAVGs0eOjjWTi39l0TRmUt9krBfWFnfEAv17h7Uy+OlGuU5U5SoWpRgdp1G4AnKzzagmc/E+AP4pR5sfwT2oiAiSoI1IKodzofZ2ROHraKRt+6ag5t8sHBkl+9PhSMh6SZXJZyh2y/Ca9aZYVmLuD0Dwkt9hchPtEYIIqAKzfa2M7DAHoYsMgndrmSG03VCzQetwlMbu7ItOyQzAVRdPnTTleyD46C1Q/+i8qeSO9KxGO/fVhrY9kdEVD1NYjwdfCShuEuuwB3vmI5npVv2bSC9t2Q== gaming_laptop"
 
+- name: Disable password ssh login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication yes'
+    line: PasswordAuthentication no
+  become: yes
+  notify: Restart sshd
+
 - name: Install tools
   apt:
     pkg:

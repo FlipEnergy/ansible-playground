@@ -6,6 +6,7 @@ export EDITOR="$VISUAL"
 export GPG_TTY=$(tty)
 
 alias k='kubectl'
+alias a='ansible -i group_vars/site.yml'
 
 cheat() {
     curl cheat.sh/${1}
@@ -24,4 +25,3 @@ export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
 if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-

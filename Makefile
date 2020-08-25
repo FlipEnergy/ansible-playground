@@ -3,9 +3,6 @@ init:
 	sudo apt update
 	sudo apt install ansible
 
-apt-upgrade-servers:
-	ansible servers -i group_vars/site.yml -m apt -K -ba "upgrade=yes update_cache=yes"
-
 ping-servers:
 	ansible servers -i group_vars/site.yml -m ping
 

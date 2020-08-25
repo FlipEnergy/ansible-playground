@@ -6,6 +6,9 @@
     classic: yes
     channel: "{{ MICROK8S_CHANNEL }}"
 
+- name: Update snaps nightly
+  command: snap set system refresh.timer=8:00-10:00
+
 - name: Adding user {{ USER }} to microk8s group
   user:
     name: "{{ USER }}"

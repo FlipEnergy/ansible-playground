@@ -20,7 +20,7 @@
     regexp: '^PasswordAuthentication yes'
     line: PasswordAuthentication no
   become: yes
-  notify: Restart sshd
+  notify: Restart sshd service
 
 - name: Install tools
   apt:
@@ -29,6 +29,7 @@
       - iotop
       - screen
       - resolvconf
+      - traceroute
       - ufw
     update_cache: yes
   become: yes
@@ -38,7 +39,7 @@
     src: resolvconf_head.j2
     dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
-  notify: Restart resolvconf
+  notify: Restart resolvconf service
 
 - name: Start and enable resolvconf
   service:
@@ -54,7 +55,7 @@
   with_items:
     - HandleLidSwitch=ignore
     - HandleLidSwitchDocked=ignore
-  notify: Restart systemd-logind
+  notify: Restart systemd-logind service
   become: yes
 
 - name: Place rc.local
@@ -87,4 +88,10 @@
   become: yes
 
 - import_tasks: ufw.yml
+  become: yes
+
+- import_tasks: mailx.yml
+  become: yes
+
+- import_tasks: unattended-packages.yml
   become: yes

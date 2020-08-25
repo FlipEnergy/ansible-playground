@@ -1,0 +1,28 @@
+---
+
+- name: Install mailx
+  apt:
+    pkg: bsd-mailx
+    update_cache: yes
+
+- name: Place mailrc
+  template:
+    src: mailrc
+    dest: /root/.mailrc
+    mode: 600
+
+- name: Place postfix gmail token
+  template:
+    src: postfix_sasl_passwd
+    dest: /etc/postfix/sasl_passwd
+    mode: 600
+  notify: Restart postfix service
+
+- name: Hash postfix password
+  command: postmap /etc/postfix/sasl_passwd
+
+- name: Place postfix main conf
+  template:
+    src: postfix_main.cf
+    dest: /etc/postfix/main.cf
+  notify: Restart postfix service

@@ -1,18 +1,18 @@
 ---
 
-- name: Restart sshd
+- name: Restart sshd service
   service:
     name: sshd
     state: restarted
   become: yes
 
-- name: Restart resolvconf
+- name: Restart resolvconf service
   service:
     name: resolvconf
     state: restarted
   become: yes
 
-- name: Restart systemd-logind
+- name: Restart systemd-logind service
   service:
     name: systemd-logind
     state: restarted
@@ -24,3 +24,7 @@
   become: yes
 
 - import_tasks: ntp.yml
+
+- import_tasks: mailx.yml
+
+- import_tasks: unattended-packages.yml

@@ -33,3 +33,8 @@
     name: nginx
     state: started
     enabled: yes
+
+- name: Chmod on logrorate
+  file:
+    dest: /etc/logrotate.d/nginx
+    mode: 0644

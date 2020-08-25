@@ -22,6 +22,13 @@
   become: yes
   notify: Restart sshd service
 
+- name: Place logrotate conf
+  copy:
+    src: logrotate_nginx
+    dest: /etc/logrotate.conf
+    mode: 0644
+  become: yes
+
 - name: Install tools
   apt:
     pkg:
@@ -64,7 +71,7 @@
     dest: /etc/rc.local
     owner: root
     group: root
-    mode: 777
+    mode: 0777
   notify: Restart host
   become: yes
 

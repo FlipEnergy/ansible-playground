@@ -32,6 +32,11 @@
     path: /usr/local/bin/renew.sh
     mode: u+x
 
+- name: Disable MAILTO
+  cron:
+    name: MAILTO
+    env: yes
+    job: ""
 
 - name: Cron renew_cert
   cron:

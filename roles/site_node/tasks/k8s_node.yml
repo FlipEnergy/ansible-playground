@@ -1,7 +1,13 @@
 ---
 
+- name: Check if swap is enabled
+  command: swapon --show
+  register: swap_files
+  changed_when: False
+
 - name: Disable swap for k8s
   command: swapoff -a
+  when: swap_files.stdout != ""
 
 - name: Remove swap from fstab
   replace:

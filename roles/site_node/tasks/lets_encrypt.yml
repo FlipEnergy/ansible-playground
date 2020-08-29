@@ -20,7 +20,7 @@
   debug:
     msg:
       - "certbot is installed. You need to run the following manually and set the DNS TXT record for _acme-challenge.{{ MY_DOMAIN }}"
-      - "certbot certonly --manual --agree-tos --preferred-challenges dns-01 -d {{ MY_DOMAIN }} -d *.{{ MY_DOMAIN }} -m dennis.zhang.nrg@gmail.com"
+      - "certbot certonly --manual --agree-tos --preferred-challenges dns-01 -d {{ MY_DOMAIN }} -d *.{{ MY_DOMAIN }} -m {{ MY_EMAIL }}"
 
 - name: Place renew_cert.sh
   template:

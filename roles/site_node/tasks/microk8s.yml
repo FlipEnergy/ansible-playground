@@ -6,8 +6,14 @@
     classic: yes
     channel: "{{ MICROK8S_CHANNEL }}"
 
+- name: Get snap refresh schedule
+  shell: 'snap refresh --time | grep "timer: 8:00-10:00"'
+  register: snap_refresh_time_command
+  changed_when: False
+
 - name: Update snaps nightly
   command: snap set system refresh.timer=8:00-10:00
+  when: snap_refresh_time_command.rc != 0
 
 - name: Adding user {{ USER }} to microk8s group
   user:
@@ -19,10 +25,12 @@
   shell: microk8s add-node | grep 'Join node with:' | cut -d ' ' -f4-6
   register: join_node_command
   when: K8S_MASTER == inventory_hostname
+  changed_when: False
 
 - name: Get current node state
-  shell: microk8s status | head -n 1
+  shell: microk8s status | grep microk8s
   register: node_status
+  changed_when: False
 
 - name: Non-masters join node
   command: "{{ hostvars[K8S_MASTER]['join_node_command'].stdout }}"
@@ -32,9 +40,10 @@
 
 
 - name: Get enabled MicroK8s addons
-  shell: microk8s status | grep enabled | awk -F ':' '{print $1}'
+  shell: microk8s status --format short | grep enabled | awk -F ':' '{print $1}'
   register: microk8s_enabled_addons
   when: K8S_MASTER == inventory_hostname
+  changed_when: False
 
 - name: Enable MicroK8s addons
   command: microk8s enable {{ item }}

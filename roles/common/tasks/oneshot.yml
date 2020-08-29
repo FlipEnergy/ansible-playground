@@ -1,10 +1,18 @@
 ---
 
 - name: Check if oneshot is installed
-  command: oneshot --version
-  register: oneshot_version
+  shell: oneshot --version | grep version
+  register: oneshot_version_command
   ignore_errors: yes
+  changed_when: False
+
+- name: set oneshot version fact
+  set_fact:
+    oneshot_version: "{{ oneshot_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: '[0-9]+\.[0-9]+\.[0-9]+'
+    cacheable: yes
 
 - name: Install oneshot
   shell: curl -L https://github.com/raphaelreyna/oneshot/raw/master/install.sh | bash
-  when: oneshot_version.rc != 0 or ONESHOT_VERSION not in oneshot_version.stdout
+  when: oneshot_version_command.rc != 0 or ONESHOT_VERSION != oneshot_version

@@ -88,6 +88,7 @@
   register: livepatch_status
   become: yes
   ignore_errors: yes
+  changed_when: False
 
 - name: Enable Canonical Livepatch
   command: "canonical-livepatch enable {{ CANONICAL_LIVEPATCH_KEY }}"

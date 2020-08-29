@@ -1,27 +1,35 @@
 ---
 
 - name: Check if DNS Crypt is Installed
-  stat:
-    path: /opt/dnscrypt-proxy
-  register: install_dir
+  command: /opt/dnscrypt-proxy/dnscrypt-proxy --version
+  register: dnscrypt_version_command
+  ignore_errors: yes
+  changed_when: False
+
+- name: set DNS Crypt version fact
+  set_fact:
+    dns_crypt_version: "{{ dnscrypt_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: '[0-9]+\.[0-9]+\.[0-9]+'
+    cacheable: yes
 
 - name: Install DNS Crypt Proxy
   unarchive:
-    src: https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/2.0.44/dnscrypt-proxy-linux_x86_64-2.0.44.tar.gz
+    src: https://github.com/DNSCrypt/dnscrypt-proxy/releases/download/{{ DNS_CRYPT_VERSION }}/dnscrypt-proxy-linux_x86_64-{{ DNS_CRYPT_VERSION }}.tar.gz
     dest: /opt
     remote_src: yes
-  when: not install_dir.stat.exists
+  when: dnscrypt_version_command.rc != 0 or DNS_CRYPT_VERSION != dns_crypt_version
 
 - name: Rename folder
   command: mv -vf /opt/linux-x86_64 /opt/dnscrypt-proxy
-  when: not install_dir.stat.exists
+  when: dnscrypt_version_command.rc != 0 or DNS_CRYPT_VERSION != dns_crypt_version
 
 - name: Remove tar file
   file:
-    path: /opt/dnscrypt-proxy-linux_x86_64-2.0.44.tar.gz
+    path: /opt/dnscrypt-proxy-linux_x86_64-{{ DNS_CRYPT_VERSION }}.tar.gz
     state: absent
 
-- name: Copy default configuration
+- name: Copy DNS Crypt configuration
   copy:
     src: dnscrypt-proxy.toml
     dest: /opt/dnscrypt-proxy/dnscrypt-proxy.toml
@@ -38,4 +46,3 @@
   service:
     name: dnscrypt-proxy
     state: started
-

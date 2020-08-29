@@ -1,1 +1,1 @@
-[smtp.gmail.com]:587    dennis.zhang.nrg@gmail.com:{{ MAILX_SMTP_AUTH_PASS }}
+[smtp.gmail.com]:587    {{ MY_EMAIL }}:{{ MAILX_SMTP_AUTH_PASS }}

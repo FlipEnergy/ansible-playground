@@ -7,8 +7,8 @@
   become: yes
 
 - name: Place conf
-  copy:
-    src: roles/ubuntu/files/50unattended-upgrades
+  template:
+    src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
   notify: Restart unattended-upgrades
 

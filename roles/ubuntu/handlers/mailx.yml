@@ -5,3 +5,8 @@
     name: postfix
     state: restarted
   become: yes
+
+- name: New Alias handler
+  command: newaliases
+  notify: Restart postfix service
+  become: yes

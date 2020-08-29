@@ -18,11 +18,23 @@
     mode: 0600
   notify: Restart postfix service
 
+- name: Check if postfix_sasl_passwd is hashsed
+  stat:
+    path: /etc/postfix/sasl_passwd.db
+  register: sasl_passwd_hashed
+
 - name: Hash postfix password
   command: postmap /etc/postfix/sasl_passwd
+  when: not sasl_passwd_hashed.stat.exists
 
 - name: Place postfix main conf
   template:
     src: postfix_main.cf
     dest: /etc/postfix/main.cf
   notify: Restart postfix service
+
+- name: set default email for root
+  lineinfile:
+    path: /etc/aliases
+    line: "root: {{ MY_EMAIL }}"
+  notify: New Alias handler

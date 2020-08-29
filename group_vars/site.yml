@@ -29,10 +29,12 @@ all:
             ADD_ROLES:
               - k8s_node
   vars:
+    MY_EMAIL: dennis.zhang.nrg@gmail.com
     ansible_python_interpreter: /usr/bin/python3
     BAT_VERSION: 0.15.4
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
+    DNS_CRYPT_VERSION: 2.0.44
     HELM_VERSION: 3.3.0
     HELMSMAN_VERSION: 3.4.4
     INFLUXDB_DBNAME: homelab

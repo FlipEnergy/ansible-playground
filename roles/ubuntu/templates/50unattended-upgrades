@@ -10,5 +10,5 @@ Unattended-Upgrade::Allowed-Origins {
 //	"${distro_id}:${distro_codename}-proposed";
 //	"${distro_id}:${distro_codename}-backports";
 };
-Unattended-Upgrade::Mail "dennis.zhang.nrg@gmail.com";
+Unattended-Upgrade::Mail "{{ MY_EMAIL }}";
 Unattended-Upgrade::MailOnlyOnError "false";

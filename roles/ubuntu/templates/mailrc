@@ -2,6 +2,6 @@ set smtp-use-starttls
 set ssl-verify=ignore
 set smtp-auth=login
 set smtp=smtp://smtp.gmail.com:587
-set from="dennis.zhang.nrg@gmail.com(Unattended Packages)"
-set smtp-auth-user=dennis.zhang.nrg@gmail.com
+set from="{{ MY_EMAIL }}(Unattended Packages)"
+set smtp-auth-user={{ MY_EMAIL }}
 set smtp-auth-password={{ MAILX_SMTP_AUTH_PASS }}

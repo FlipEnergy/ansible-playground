@@ -2,16 +2,24 @@
 # Install and setup k9s
 
 - name: Check if K9s version is installed
-  command: k9s version
-  register: k9s_version
+  shell: k9s version | grep Version
+  register: k9s_version_command
   ignore_errors: yes
+  changed_when: False
+
+- name: set K9s version fact
+  set_fact:
+    k9s_version: "{{ k9s_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: '[0-9]+\.[0-9]+\.[0-9]+'
+    cacheable: yes
 
 - name: Install K9s
   unarchive:
     src: "https://github.com/derailed/k9s/releases/download/v{{ K9S_VERSION }}/k9s_Linux_x86_64.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
-  when: k9s_version.rc != 0 or K9S_VERSION not in k9s_version.stdout
+  when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version
 
 - name: Set execute permissions for k9s
   file:
@@ -19,4 +27,4 @@
     mode: u+x
     modification_time: preserve
     access_time: preserve
-  when: k9s_version.rc != 0 or K9S_VERSION not in k9s_version.stdout
+  when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version

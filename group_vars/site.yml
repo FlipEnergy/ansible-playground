@@ -44,7 +44,8 @@ all:
       - dns
       - metrics-server
       - metallb
-    MICROK8S_CHANNEL: 1.18/stable
+      - storage
+    MICROK8S_CHANNEL: 1.19/stable
     ONESHOT_VERSION: 1.2.0
     PIHOLE_SERVER_IP: 192.168.1.11
     USER: dennis

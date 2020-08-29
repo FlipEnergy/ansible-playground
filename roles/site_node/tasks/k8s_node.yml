@@ -35,15 +35,6 @@
     recurse: yes
     force: yes
 
-- name: Set permissions for folding-at-home volume
-  file:
-    path: /mnt/folding-at-home
-    state: directory
-    owner: '502'
-    group: '502'
-    recurse: yes
-    force: yes
-
 - name: Set permissions for mattermost data volume
   file:
     path: /mnt/mattermost-data

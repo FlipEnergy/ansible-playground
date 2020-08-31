@@ -17,6 +17,7 @@
 - name: Install Helm3
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
   when: helm_version_command.rc != 0 or HELM_VERSION != helm_version
+  warn: false
 
 - name: Check if helm secrets is installed
   shell: helm plugin list | grep secrets

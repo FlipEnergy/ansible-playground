@@ -59,15 +59,6 @@
     recurse: yes
     force: yes
 
-- name: Set permissions for code-server volume
-  file:
-    path: /mnt/code-server
-    state: directory
-    owner: '503'
-    group: '503'
-    recurse: yes
-    force: yes
-
 - name: Set permissions for bitwarden volume
   file:
     path: /mnt/bitwarden

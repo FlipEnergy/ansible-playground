@@ -63,7 +63,7 @@
   file:
     path: /mnt/bitwarden
     state: directory
-    owner: '504'
-    group: '504'
+    owner: '503'
+    group: '503'
     recurse: yes
     force: yes

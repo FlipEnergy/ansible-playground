@@ -67,3 +67,12 @@
     group: '503'
     recurse: yes
     force: yes
+
+- name: Set permissions for invidious postgres volume
+  file:
+    path: /mnt/invidious-postgresql
+    state: directory
+    owner: '1001'
+    group: '1001'
+    recurse: yes
+    force: yes

@@ -41,7 +41,7 @@ listen_addresses = ['0.0.0.0:5353']
 
 ## Maximum number of simultaneous client connections to accept
 
-max_clients = 250
+max_clients = 500
 
 
 ## Switch to a different system user after listening sockets have been created.
@@ -109,7 +109,7 @@ force_tcp = false
 ## increase this. Startup may be slower if you do so.
 ## Don't increase it too much. 10000 is the highest reasonable value.
 
-timeout = 5000
+timeout = 2000
 
 
 ## Keepalive for HTTP (HTTPS, HTTP/2) queries, in seconds
@@ -342,12 +342,12 @@ cache = true
 
 ## Cache size
 
-cache_size = 4096
+cache_size = 8192
 
 
 ## Minimum TTL for cached entries
 
-cache_min_ttl = 2400
+cache_min_ttl = 4800
 
 
 ## Maximum TTL for cached entries

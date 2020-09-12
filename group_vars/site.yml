@@ -16,7 +16,6 @@ all:
               - dns_crypt
             BITWARDEN_IP: 192.168.1.57
             DENNIS_SITE_IP: 192.168.1.52
-            INVIDIOUS_IP: 192.168.1.61
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com
             MATTERMOST_IP: 192.168.1.56

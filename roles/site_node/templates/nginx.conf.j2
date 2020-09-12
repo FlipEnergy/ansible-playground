@@ -103,21 +103,6 @@ http {
                 }
         }
 
-        # Invidious
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name invidious.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/invidious.{{ MY_DOMAIN }}.access.log;
-
-                location / {
-                        proxy_pass http://{{ INVIDIOUS_IP }}:80;
-                        proxy_set_header X-Forwarded-For $remote_addr;
-                        proxy_set_header Host $host;	# so Invidious knows domain
-                        proxy_http_version 1.1;		# to keep alive
-                        proxy_set_header Connection "";	# to keep alive
-	        }
-        }
-
         # Kube Ops View
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;

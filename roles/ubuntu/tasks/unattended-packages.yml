@@ -10,7 +10,7 @@
   template:
     src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
-  notify: Restart unattended-upgrades
+  notify: Restart unattended-upgrades service
 
 - name: Start unattended-upgrades service
   service:

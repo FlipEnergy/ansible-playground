@@ -100,6 +100,10 @@ http {
 
                 location / {
                         proxy_pass http://{{ BITWARDEN_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
                 }
         }
 
@@ -111,6 +115,10 @@ http {
 
                 location / {
                         proxy_pass http://{{ KUBE_OPS_VIEW_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
                 }
         }
 
@@ -168,6 +176,51 @@ http {
                 }
         }
 
+        # Nextcloud
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
+                server_name nextcloud.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/nextcloud.{{ MY_DOMAIN }}.access.log;
+                server_tokens off;
+                proxy_hide_header X-Powered-By;
+
+                rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
+                rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+                rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+
+                location = /.well-known/carddav {
+                        return 301 $scheme://$host/remote.php/dav;
+                }
+                location = /.well-known/caldav {
+                        return 301 $scheme://$host/remote.php/dav;
+                }
+
+                location = /robots.txt {
+                        proxy_pass http://{{ NEXTCLOUD_IP }}:80;
+                        allow all;
+                        log_not_found off;
+                        access_log off;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+                location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+                        deny all;
+                }
+                location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+                        deny all;
+                }
+
+                location / {
+                        proxy_pass http://{{ NEXTCLOUD_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+        }
+
         # Whoogle
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
@@ -176,6 +229,10 @@ http {
 
                 location / {
                         proxy_pass http://{{ WHOOGLE_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
                 }
         }
 
@@ -187,6 +244,10 @@ http {
 
                 location / {
                         proxy_pass http://{{ DENNIS_SITE_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
 
                         # kill cache
                         add_header Last-Modified $date_gmt;

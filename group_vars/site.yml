@@ -19,6 +19,7 @@ all:
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com
             MATTERMOST_IP: 192.168.1.56
+            NEXTCLOUD_IP: 192.168.1.61
             WHOOGLE_IP: 192.168.1.60
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:

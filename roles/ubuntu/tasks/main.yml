@@ -101,5 +101,5 @@
 - import_tasks: mailx.yml
   become: yes
 
-- import_tasks: unattended-packages.yml
+- import_tasks: unattended-upgrades.yml
   become: yes

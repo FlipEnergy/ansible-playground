@@ -6,11 +6,16 @@
     update_cache: yes
   become: yes
 
-- name: Place conf
+- name: Place unattended-upgrades conf
   template:
     src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
   notify: Restart unattended-upgrades service
+
+- name: Place apt conf
+  copy:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
 
 - name: Start unattended-upgrades service
   service:

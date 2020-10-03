@@ -64,10 +64,15 @@ http {
         # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
         ##
-        # Request limitimg Settings
+        # Request limiting Settings
         ##
 
         limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+
+        ##
+        # File Upload size limiting Settings
+        ##
+        client_max_body_size 100M;
 
         ##
         # Virtual Host Configs

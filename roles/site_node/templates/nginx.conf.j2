@@ -283,14 +283,6 @@ http {
 
 stream {
         server {
-                listen     {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:53 udp;
-                error_log /var/log/nginx/dns.error.log;
-
-                proxy_pass      127.0.0.1:5353;
-                proxy_timeout   1s;
-        }
-
-        server {
                 listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:51820 udp;
                 error_log /var/log/nginx/wireguard.error.log;
 

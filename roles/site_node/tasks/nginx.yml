@@ -21,7 +21,6 @@
   notify: Restart nginx service
   become: yes
 
-
 - name: Place conf file
   template:
     src: nginx.conf.j2

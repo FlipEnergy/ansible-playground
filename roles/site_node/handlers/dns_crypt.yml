@@ -1,7 +1,0 @@
----
-
-- name: Restart DNS Crypt Proxy service
-  service:
-    name: dnscrypt-proxy
-    state: restarted
-  become: yes

@@ -3,10 +3,6 @@
 - import_tasks: telegraf.yml
   become: yes
 
-- import_tasks: dns_crypt.yml
-  become: yes
-  when: '"dns_crypt" in ADD_ROLES'
-
 - import_tasks: lets_encrypt.yml
   become: yes
   when: '"nginx" in ADD_ROLES'

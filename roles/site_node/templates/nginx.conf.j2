@@ -241,6 +241,21 @@ http {
                 }
         }
 
+        # Xyzzy
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
+                server_name xyzzy.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/xyzzy.{{ MY_DOMAIN }}.access.log;
+
+                location / {
+                        proxy_pass http://{{ XYZZY_IP }}:80;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+        }
+
         # My site and default
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;

@@ -53,19 +53,19 @@
     dest: /etc/kubelet.conf
   notify: Restart kubelet service
 
-- name: Get Join node command
-  shell: microk8s add-node | grep 'microk8s join ' | head -n 1
-  register: join_node_command
-  when: inventory_hostname == K8S_MASTER
-  changed_when: False
+# - name: Get Join node command
+#   shell: microk8s add-node | grep 'microk8s join ' | head -n 1
+#   register: join_node_command
+#   when: inventory_hostname == K8S_MASTER
+#   changed_when: False
 
-- name: Get current node state
-  shell: microk8s status | grep microk8s
-  register: node_status
-  changed_when: False
+# - name: Get current node state
+#   shell: microk8s status | grep microk8s
+#   register: node_status
+#   changed_when: False
 
-- name: Non-masters join node
-  command: "{{ hostvars[K8S_MASTER]['join_node_command'].stdout }}"
-  when:
-    - K8S_MASTER != inventory_hostname
-    - node_status.stdout == 'microk8s is running'
+# - name: Non-masters join node
+#   command: "{{ hostvars[K8S_MASTER]['join_node_command'].stdout }}"
+#   when:
+#     - K8S_MASTER != inventory_hostname
+#     - node_status.stdout == 'microk8s is running'

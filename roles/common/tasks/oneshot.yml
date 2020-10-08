@@ -12,6 +12,7 @@
   vars:
     regexp: '[0-9]+\.[0-9]+\.[0-9]+'
     cacheable: yes
+  when: oneshot_version_command.rc == 0
 
 - name: Install oneshot
   shell: curl -L https://github.com/raphaelreyna/oneshot/raw/master/install.sh | bash

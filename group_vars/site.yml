@@ -9,7 +9,7 @@ all:
       children:
         loadbalancer:
           hosts:
-            mysurface3.tgp
+            loadbalancer-1.tgp
           vars:
             ADD_ROLES:
               - nginx

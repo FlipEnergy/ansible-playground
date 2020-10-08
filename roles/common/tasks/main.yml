@@ -1,18 +1,5 @@
 ---
 
-- import_tasks: kubectl.yml
-  become: yes
-
-- import_tasks: k9s.yml
-  become: yes
-
-- name: Install k8s_metrics.sh
-  copy:
-    src: k8s_metrics.sh
-    dest: /usr/local/bin/k8s_metrics
-    mode: a+x
-  become: yes
-
 - import_tasks: oneshot.yml
   become: yes
 

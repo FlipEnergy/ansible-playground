@@ -14,6 +14,12 @@
     update_cache: yes
   become: yes
 
+- import_tasks: kubectl.yml
+  become: yes
+
+- import_tasks: k9s.yml
+  become: yes
+
 - import_tasks: helm3.yml
 
 - import_tasks: hstr.yml

@@ -9,7 +9,7 @@ all:
       children:
         loadbalancer:
           hosts:
-            loadbalancer-1.tgp
+            load-balancer-1.tgp
           vars:
             ADD_ROLES:
               - nginx
@@ -24,7 +24,8 @@ all:
             XYZZY_IP: 192.168.1.63
         kubernetes:
           hosts:
-            myserver.tgp
+            k8s-node-1.tgp
+            k8s-node-2.tgp
           vars:
             ADD_ROLES:
               - k8s_node
@@ -38,7 +39,7 @@ all:
     HELMSMAN_VERSION: 3.4.4
     INFLUXDB_DBNAME: homelab
     INFLUXDB_URL: http://influxdb.tgp:8086
-    K8S_MASTER: myserver.tgp
+    K8S_MASTER: k8s-node-1.tgp
     K9S_VERSION: 0.22.0
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_ADDONS:

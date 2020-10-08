@@ -21,4 +21,4 @@
 
 - import_tasks: backups.yml
   become: yes
-  when: '"k8s_node" in ADD_ROLES'
+  when: K8S_MASTER == inventory_hostname

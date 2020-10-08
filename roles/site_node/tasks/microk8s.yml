@@ -10,6 +10,7 @@
   shell: 'snap refresh --time | grep "timer: 8:00-10:00"'
   register: snap_refresh_time_command
   changed_when: False
+  ignore_errors: yes
 
 - name: Update snaps nightly
   command: snap set system refresh.timer=8:00-10:00
@@ -21,10 +22,41 @@
     groups: microk8s
     append: yes
 
+- name: Get enabled MicroK8s addons
+  shell: microk8s status --format short | grep enabled | awk -F ':' '{print $1}'
+  register: microk8s_enabled_addons
+  when: inventory_hostname == K8S_MASTER
+  changed_when: False
+
+- name: Enable MicroK8s addons
+  command: microk8s enable {{ item }}
+  loop: "{{ MICROK8S_ADDONS }}"
+  when:
+    - inventory_hostname == K8S_MASTER
+    - item not in microk8s_enabled_addons.stdout_lines
+    - item != 'metallb'
+
+- name: Enable metallb MicroK8s addon
+  command: microk8s enable metallb
+  args:
+    stdin: "{{ METALLB_IP_RANGE }}"
+  when:
+    - inventory_hostname == K8S_MASTER
+    - '"metallb" in MICROK8S_ADDONS'
+    - '"metallb" not in microk8s_enabled_addons.stdout_lines'
+
+# https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
+# https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file
+- name: Copy kubelet config
+  copy:
+    src: kubelet.conf
+    dest: /etc/kubelet.conf
+  notify: Restart kubelet service
+
 - name: Get Join node command
-  shell: microk8s add-node | grep 'Join node with:' | cut -d ' ' -f4-6
+  shell: microk8s add-node | grep 'microk8s join ' | head -n 1
   register: join_node_command
-  when: K8S_MASTER == inventory_hostname
+  when: inventory_hostname == K8S_MASTER
   changed_when: False
 
 - name: Get current node state
@@ -37,35 +69,3 @@
   when:
     - K8S_MASTER != inventory_hostname
     - node_status.stdout == 'microk8s is running'
-
-
-- name: Get enabled MicroK8s addons
-  shell: microk8s status --format short | grep enabled | awk -F ':' '{print $1}'
-  register: microk8s_enabled_addons
-  when: K8S_MASTER == inventory_hostname
-  changed_when: False
-
-- name: Enable MicroK8s addons
-  command: microk8s enable {{ item }}
-  loop: "{{ MICROK8S_ADDONS }}"
-  when:
-    - K8S_MASTER == inventory_hostname
-    - item not in microk8s_enabled_addons.stdout_lines
-    - item != 'metallb'
-
-- name: Enable metallb MicroK8s addon
-  command: microk8s enable metallb
-  args:
-    stdin: "{{ METALLB_IP_RANGE }}"
-  when:
-    - K8S_MASTER == inventory_hostname
-    - '"metallb" in MICROK8S_ADDONS'
-    - '"metallb" not in microk8s_enabled_addons.stdout_lines'
-
-# https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
-# https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file
-- name: Copy kubelet config
-  copy:
-    src: kubelet.conf
-    dest: /etc/kubelet.conf
-  notify: Restart kubelet service

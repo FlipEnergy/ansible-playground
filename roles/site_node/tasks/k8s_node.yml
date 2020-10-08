@@ -22,6 +22,8 @@
     src: config
     dest: /mnt/syncthing-data/config
     force: no
+  when:
+    - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for syncthing volume
   file:
@@ -31,6 +33,8 @@
     group: dennis
     recurse: yes
     force: yes
+  when:
+    - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for influxdb volume
   file:
@@ -40,6 +44,8 @@
     group: '501'
     recurse: yes
     force: yes
+  when:
+    - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for mattermost data volume
   file:
@@ -49,6 +55,8 @@
     group: '2000'
     recurse: yes
     force: yes
+  when:
+    - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for mattermost plugins volume
   file:
@@ -58,6 +66,8 @@
     group: '2000'
     recurse: yes
     force: yes
+  when:
+    - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for bitwarden volume
   file:
@@ -67,3 +77,5 @@
     group: '503'
     recurse: yes
     force: yes
+  when:
+    - inventory_hostname == K8S_MASTER

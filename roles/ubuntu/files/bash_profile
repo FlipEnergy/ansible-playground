@@ -2,7 +2,8 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-alias k='kubectl'
+alias k='microk8s kubectl'
+alias b='bat'
 
 cheat() {
     curl cheat.sh/${1}

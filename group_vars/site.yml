@@ -25,7 +25,6 @@ all:
         kubernetes:
           hosts:
             k8s-node-1.tgp:
-            k8s-node-2.tgp:
           vars:
             ADD_ROLES:
               - k8s_node
@@ -43,7 +42,6 @@ all:
     K9S_VERSION: 0.22.0
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_ADDONS:
-      - ha-cluster
       - dns
       - metrics-server
       - metallb

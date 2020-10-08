@@ -2,9 +2,9 @@
 
 all:
   children:
-    localhost:
+    local:
       hosts:
-        127.0.0.1
+        localhost:
     servers:
       children:
         loadbalancer:

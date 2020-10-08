@@ -13,7 +13,7 @@ shutdown-servers:
 	ansible servers -i group_vars/site.yml -m command -K -ba "shutdown now"
 
 local:
-	ansible-playbook --connection=local -i group_vars/site.yml -l localhost $(options) -K local.yml
+	ansible-playbook --connection=local -i group_vars/site.yml -l local $(options) -K local.yml
 
 site:
 	cd roles/site_node/files && gpg-zip --decrypt syncthing_config_dir

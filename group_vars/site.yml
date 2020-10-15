@@ -13,6 +13,7 @@ all:
           vars:
             ADD_ROLES:
               - nginx
+              - nginx_stats_lcd
             BITWARDEN_IP: 192.168.1.57
             DENNIS_SITE_IP: 192.168.1.52
             KUBE_OPS_VIEW_IP: 192.168.1.51

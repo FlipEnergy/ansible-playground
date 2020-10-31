@@ -68,14 +68,3 @@
     force: yes
   when:
     - inventory_hostname == K8S_MASTER
-
-- name: Set permissions for bitwarden volume
-  file:
-    path: /mnt/bitwarden
-    state: directory
-    owner: '503'
-    group: '503'
-    recurse: yes
-    force: yes
-  when:
-    - inventory_hostname == K8S_MASTER

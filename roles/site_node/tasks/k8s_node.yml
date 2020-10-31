@@ -20,14 +20,14 @@
 - name: Populate Persistent Volume for syncthing
   copy:
     src: config
-    dest: /mnt/syncthing-data/config
+    dest: /mnt/data/syncthing-data/config
     force: no
   when:
     - inventory_hostname == K8S_MASTER
 
 - name: Set permissions for syncthing volume
   file:
-    path: /mnt/syncthing-data
+    path: /mnt/data/syncthing-data
     state: directory
     owner: dennis
     group: dennis
@@ -38,7 +38,7 @@
 
 - name: Set permissions for influxdb volume
   file:
-    path: /mnt/influxdb
+    path: /mnt/data/influxdb
     state: directory
     owner: '501'
     group: '501'
@@ -49,7 +49,7 @@
 
 - name: Set permissions for mattermost data volume
   file:
-    path: /mnt/mattermost-data
+    path: /mnt/data/mattermost-data
     state: directory
     owner: '2000'
     group: '2000'
@@ -60,7 +60,7 @@
 
 - name: Set permissions for mattermost plugins volume
   file:
-    path: /mnt/mattermost-plugins
+    path: /mnt/data/mattermost-plugins
     state: directory
     owner: '2000'
     group: '2000'

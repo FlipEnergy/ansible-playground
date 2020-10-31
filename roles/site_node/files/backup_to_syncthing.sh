@@ -5,7 +5,7 @@ echo
 
 echo "Backing up Bitwarden..."
 date
-rsync -rog --delete --exclude=.stfolder --chown=dennis:dennis /mnt/bitwarden /mnt/syncthing-data/
+rsync -rog --delete --exclude=.stfolder --chown=dennis:dennis /mnt/data/bitwarden /mnt/data/syncthing-data/
 echo "Done"
 echo
 

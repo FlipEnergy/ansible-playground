@@ -1,7 +1,4 @@
 ---
 
-- import_tasks: oneshot.yml
-  become: yes
-
 - import_tasks: bat.yml
   become: yes

@@ -29,6 +29,8 @@ all:
           vars:
             ADD_ROLES:
               - k8s_node
+              - nfs
+
   vars:
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     ansible_python_interpreter: /usr/bin/python3

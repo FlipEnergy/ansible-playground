@@ -21,4 +21,8 @@
 
 - import_tasks: backups.yml
   become: yes
-  when: K8S_MASTER == inventory_hostname
+  when: '"nfs" in ADD_ROLES'
+
+- import_tasks: nfs.yml
+  become: yes
+  when: '"nfs" in ADD_ROLES'

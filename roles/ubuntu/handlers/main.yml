@@ -12,12 +12,6 @@
     state: restarted
   become: yes
 
-- name: Restart systemd-logind service
-  service:
-    name: systemd-logind
-    state: restarted
-  become: yes
-
 - name: Restart host
   reboot:
     reboot_timeout: 60

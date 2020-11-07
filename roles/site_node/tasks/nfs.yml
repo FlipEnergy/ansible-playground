@@ -26,20 +26,38 @@
     recurse: yes
     force: yes
 
+- name: Set permissions for concourse postgresql volume
+  file:
+    path: /mnt/data/concourse-postgresql
+    state: directory
+    owner: '1001'
+    group: '1001'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for concourse workers tmp volume
+  file:
+    path: /mnt/data/concourse-tmp
+    state: directory
+    owner: nobody
+    group: nogroup
+    recurse: yes
+    force: yes
+
 - name: Populate Persistent Volume for syncthing
   copy:
     src: config
     dest: /mnt/data/syncthing-data/config
     force: no
-    owner: 1000
-    group: 1000
+    owner: '1000'
+    group: '1000'
 
 - name: Set permissions for syncthing volume
   file:
     path: /mnt/data/syncthing-data
     state: directory
-    owner: 1000
-    group: 1000
+    owner: '1000'
+    group: '1000'
     recurse: yes
     force: yes
 
@@ -47,8 +65,8 @@
   file:
     path: /mnt/data/influxdb
     state: directory
-    owner: 501
-    group: 501
+    owner: '501'
+    group: '501'
     recurse: yes
     force: yes
 
@@ -56,8 +74,8 @@
   file:
     path: /mnt/data/mattermost-data
     state: directory
-    owner: 2000
-    group: 2000
+    owner: '2000'
+    group: '2000'
     recurse: yes
     force: yes
 
@@ -65,8 +83,8 @@
   file:
     path: /mnt/data/mattermost-plugins
     state: directory
-    owner: 2000
-    group: 2000
+    owner: '2000'
+    group: '2000'
     recurse: yes
     force: yes
 
@@ -74,8 +92,8 @@
   file:
     path: /mnt/data/mattermost-mysql
     state: directory
-    owner: 2001
-    group: 2001
+    owner: '2001'
+    group: '2001'
     recurse: yes
     force: yes
 

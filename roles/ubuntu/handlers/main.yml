@@ -21,4 +21,4 @@
 
 - import_tasks: mailx.yml
 
-- import_tasks: unattended-packages.yml
+- import_tasks: unattended-upgrades.yml

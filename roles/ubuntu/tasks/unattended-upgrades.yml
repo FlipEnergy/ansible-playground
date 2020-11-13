@@ -22,3 +22,11 @@
     name: unattended-upgrades
     state: started
     enabled: yes
+  when: ENABLE_UNATTENDED_UPGRADES
+
+- name: Stop unattended-upgrades service
+  service:
+    name: unattended-upgrades
+    state: stopped
+    enabled: no
+  when: not ENABLE_UNATTENDED_UPGRADES

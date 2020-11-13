@@ -5,3 +5,4 @@
       name: unattended-upgrades
       state: restarted
     become: yes
+    when: ENABLE_UNATTENDED_UPGRADES

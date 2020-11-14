@@ -6,6 +6,9 @@ init:
 ping-servers:
 	ansible servers -i group_vars/site.yml -m ping
 
+apt-upgrade-servers:
+	ansible servers -i group_vars/site.yml -m apt -K -ba "upgrade=yes update_cache=yes"
+
 reboot-servers:
 	ansible servers -i group_vars/site.yml -m command -K -ba "reboot"
 

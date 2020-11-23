@@ -9,7 +9,7 @@
 
 - name: set helm version fact
   set_fact:
-    helm_version: "{{ helm_version_command.stdout | regex_search(regexp) }}"
+    helm_version: "{{ helm_version_command.stdout | default('0.0.0') | regex_search(regexp) }}"
   vars:
     regexp: '[0-9]+\.[0-9]+\.[0-9]+'
     cacheable: yes
@@ -53,7 +53,7 @@
 
 - name: set Helmsman version fact
   set_fact:
-    helmsman_version: "{{ helmsman_version_command.stdout | regex_search(regexp) }}"
+    helmsman_version: "{{ helmsman_version_command.stdout | default('0.0.0') | regex_search(regexp) }}"
   vars:
     regexp: '[0-9]+\.[0-9]+\.[0-9]+'
     cacheable: yes

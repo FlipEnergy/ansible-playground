@@ -7,6 +7,12 @@ all:
         localhost:
     servers:
       children:
+        pihole:
+          hosts:
+            192.168.1.11:
+            # surface-pihole.tgp:
+          vars:
+            ADD_ROLES: []
         loadbalancer:
           hosts:
             load-balancer-1.tgp:

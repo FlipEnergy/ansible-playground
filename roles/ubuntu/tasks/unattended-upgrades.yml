@@ -12,11 +12,25 @@
     src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
   notify: Restart unattended-upgrades service
+  when: UNATTENDED_UPGRADES_STATE == 'present'
 
 - name: Place apt conf
   copy:
     src: 20auto-upgrades
     dest: /etc/apt/apt.conf.d/20auto-upgrades
+  when: UNATTENDED_UPGRADES_STATE == 'present'
+
+- name: Remove unattended-upgrades conf
+  file:
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    state: absent
+  when: UNATTENDED_UPGRADES_STATE == 'absent'
+
+- name: Remove apt conf
+  file:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    state: absent
+  when: UNATTENDED_UPGRADES_STATE == 'absent'
 
 - name: Start unattended-upgrades service
   service:

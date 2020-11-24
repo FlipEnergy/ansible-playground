@@ -39,7 +39,7 @@ all:
   vars:
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     ansible_python_interpreter: /usr/bin/python3
-    BAT_VERSION: 0.17.0
+    BAT_VERSION: 0.17.1
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
     UNATTENDED_UPGRADES_STATE: absent

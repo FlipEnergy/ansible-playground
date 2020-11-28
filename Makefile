@@ -8,6 +8,9 @@ ping-servers:
 apt-upgrade-servers:
 	ansible servers -i group_vars/site.yml -m apt -K -ba "upgrade=yes update_cache=yes"
 
+check-need-reboot:
+	ansible servers -i group_vars/site.yml -m command -K -ba "bat /var/run/reboot-required"
+
 reboot-servers:
 	ansible servers -i group_vars/site.yml -m command -K -ba "reboot"
 

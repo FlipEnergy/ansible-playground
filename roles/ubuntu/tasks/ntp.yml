@@ -14,6 +14,9 @@
     dest: /etc/ntp.conf
   notify: Restart ntp service
 
+- name: enable timedatectl
+  command: timedatectl set-ntp on
+
 - name: Enable and start ntp
   service:
     name: ntp

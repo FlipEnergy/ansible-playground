@@ -5,7 +5,7 @@ Description=Run nginx_stats_lcd.py script as service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python /opt/nginx_stats_lcd.py
+ExecStart=/opt/lcd/venv/bin/python /opt/lcd/nginx_stats_lcd.py
 
 [Install]
 WantedBy=multi-user.target

@@ -3,31 +3,30 @@
 - name: Install i2c dependencies tools
   apt:
     pkg:
-      - python3-pip
+      - python3-venv
       - i2c-tools
     update_cache: yes
-
-- name: Install setuptools
-  pip:
-    name: setuptools
 
 - name: Install i2c pip dependencies
   pip:
     name:
-      - RPLCD
-      - smbus2
+      - RPLCD==1.3.0
+      - smbus2==0.3.0
+      - requests
+    virtualenv: /opt/lcd/venv
+    virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Copy nginx_stats_lcd.py script
   copy:
     src: nginx_stats_lcd.py
-    dest: /opt/nginx_stats_lcd.py
+    dest: /opt/lcd/nginx_stats_lcd.py
 
 - name: Copy nginx_stats_lcd service
   copy:
     src: nginx_stats_lcd.service
     dest: /etc/systemd/system/nginx_stats_lcd.service
 
-- name: Start and enable nginx_stats_lcd serivce
+- name: Start and enable nginx_stats_lcd service
   service:
     name: nginx_stats_lcd
     state: started

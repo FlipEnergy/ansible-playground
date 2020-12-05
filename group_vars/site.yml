@@ -52,7 +52,7 @@ all:
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.99
     MICROK8S_ADDONS:
       - dns
-      - fluentd
+      # - fluentd
       - metrics-server
       - metallb
       - storage

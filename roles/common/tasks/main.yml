@@ -1,4 +1,13 @@
 ---
 
+- name: Install tools
+  apt:
+    pkg:
+      - curl
+      - screen
+      - unzip
+    update_cache: yes
+  become: yes
+
 - import_tasks: bat.yml
   become: yes

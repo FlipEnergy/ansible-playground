@@ -41,7 +41,7 @@
 - name: Set execute permissions for bat x86_64
   file:
     path: /usr/local/bin/bat
-    mode: u+x
+    mode: a+x
     modification_time: preserve
     access_time: preserve
   when:

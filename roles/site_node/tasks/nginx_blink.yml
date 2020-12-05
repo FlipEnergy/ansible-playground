@@ -1,1 +1,28 @@
-https://github.com/todbot/blink1-tool/releases/download/v2.1.0/blink1-tool-v2.1.0-linux-x86_64.zip
+---
+
+- name: Install blink1-tool
+  unarchive:
+    src: https://github.com/todbot/blink1-tool/releases/download/v2.1.0/blink1-tool-v2.1.0-linux-x86_64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Create /opt/blink1
+  file:
+    path: /opt/blink1
+    state: directory
+
+- name: Place nginx_blink.sh script
+  copy:
+    src: nginx_blink.sh
+    dest: /opt/blink1/nginx_blink.sh
+
+- name: Place nginx_blink.service
+  copy:
+    src: nginx_blink.service
+    dest: /etc/systemd/system/nginx_blink.service
+
+- name: Enable and start nginx_blink service
+  service:
+    name: nginx_blink
+    state: started
+    enabled: yes

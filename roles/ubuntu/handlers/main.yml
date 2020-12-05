@@ -23,8 +23,6 @@
     reboot_timeout: 60
   become: yes
 
-- import_tasks: ntp.yml
-
 - import_tasks: mailx.yml
 
 - import_tasks: unattended-upgrades.yml

@@ -5,12 +5,10 @@
     src: bash_profile
     dest: /home/dennis/.bash_profile
 
-- name: Install tools
+- name: Install local tools
   apt:
     pkg:
-      - curl
       - make
-      - screen
     update_cache: yes
   become: yes
 

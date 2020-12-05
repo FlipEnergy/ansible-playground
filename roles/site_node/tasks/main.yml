@@ -15,6 +15,14 @@
   become: yes
   when: '"nginx" in ADD_ROLES'
 
+- import_tasks: nginx_stats_lcd.yml
+  when: '"nginx_stats_lcd" in ADD_ROLES'
+  become: yes
+
+- import_tasks: nginx_blink.yml
+  when: '"nginx_blink" in ADD_ROLES'
+  become: yes
+
 - import_tasks: k8s_node.yml
   become: yes
   when: '"k8s_node" in ADD_ROLES'

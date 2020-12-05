@@ -83,9 +83,6 @@
   notify: Restart host
   become: yes
 
-- import_tasks: ntp.yml
-  become: yes
-
 - name: Install Canonical Livepatch
   snap:
     name: canonical-livepatch

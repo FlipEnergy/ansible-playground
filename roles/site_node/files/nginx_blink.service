@@ -1,0 +1,11 @@
+# /etc/systemd/system/nginx_blink.service
+
+[Unit]
+Description=Run nginx_blink.sh script as service
+
+[Service]
+Type=simple
+ExecStart=/opt/blink1/nginx_blink.sh
+
+[Install]
+WantedBy=multi-user.target

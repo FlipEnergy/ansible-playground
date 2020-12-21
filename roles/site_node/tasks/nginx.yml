@@ -25,7 +25,7 @@
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-  notify: Reload nginx service
+  notify: Restart nginx service
 
 - name: Start and enable
   service:

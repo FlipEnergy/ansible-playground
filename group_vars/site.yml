@@ -25,9 +25,9 @@ all:
             MY_DOMAIN: pleasenoddos.com
             MATTERMOST_IP: 192.168.1.56
             NEXTCLOUD_IP: 192.168.1.61
+            OWNCAST_IP: 192.168.1.63
             WHOOGLE_IP: 192.168.1.60
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
-            XYZZY_IP: 192.168.1.63
         kubernetes:
           hosts:
             k8s-node-1.tgp:

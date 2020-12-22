@@ -27,7 +27,7 @@
   changed_when: False
 
 - name: Install helm secrets
-  command: helm plugin install https://github.com/futuresimple/helm-secrets
+  command: helm plugin install https://github.com/jkroepke/helm-secrets
   when: helm_secrets_installed.rc !=0
 
 - name: Install my .sops.yaml

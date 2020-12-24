@@ -2,8 +2,7 @@
 
 - name: Install Nginx
   apt:
-    pkg:
-      - nginx
+    pkg: nginx
     update_cache: yes
 
 - name: remove default site

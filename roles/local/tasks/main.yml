@@ -7,8 +7,7 @@
 
 - name: Install local tools
   apt:
-    pkg:
-      - make
+    pkg: make
     update_cache: yes
   become: yes
 

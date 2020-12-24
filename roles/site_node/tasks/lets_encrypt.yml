@@ -2,8 +2,7 @@
 
 - name: Install software-properties-common
   apt:
-    pkg:
-      - software-properties-common
+    pkg: software-properties-common
     update_cache: yes
 
 - name: Add Repository
@@ -12,8 +11,7 @@
 
 - name: Install certbot
   apt:
-    pkg:
-      - certbot
+    pkg: certbot
     update_cache: yes
 
 - name: print cert setup command

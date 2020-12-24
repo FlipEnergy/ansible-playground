@@ -14,10 +14,6 @@
     cacheable: yes
   when: bat_version_command.rc == 0
 
-- name: debug print
-  debug:
-    msg: "{{ ansible_architecture }}"
-
 - name: Download Bat x86_64
   unarchive:
     src: https://github.com/sharkdp/bat/releases/download/v{{ BAT_VERSION }}/bat-v{{ BAT_VERSION }}-x86_64-unknown-linux-gnu.tar.gz

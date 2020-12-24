@@ -2,8 +2,7 @@
 
 - name: Install fail2ban
   apt:
-    pkg:
-      - fail2ban
+    pkg: fail2ban
     update_cache: yes
 
 - name: Place filter file

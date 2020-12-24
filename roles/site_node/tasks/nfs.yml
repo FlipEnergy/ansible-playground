@@ -2,8 +2,7 @@
 
 - name: Install NFS Server
   apt:
-    pkg:
-      - nfs-kernel-server
+    pkg: nfs-kernel-server
     update_cache: yes
 
 - name: Create /mnt/data

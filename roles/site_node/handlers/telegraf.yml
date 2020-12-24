@@ -4,4 +4,3 @@
   service:
     name: telegraf
     state: restarted
-  become: yes

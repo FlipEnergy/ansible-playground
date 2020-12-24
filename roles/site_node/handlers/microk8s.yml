@@ -4,4 +4,3 @@
   service:
     name: snap.microk8s.daemon-kubelet
     state: restarted
-  become: yes

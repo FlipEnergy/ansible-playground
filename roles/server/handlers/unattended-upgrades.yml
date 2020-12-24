@@ -4,5 +4,4 @@
     service:
       name: unattended-upgrades
       state: restarted
-    become: yes
     when: UNATTENDED_UPGRADES_STATE == 'present'

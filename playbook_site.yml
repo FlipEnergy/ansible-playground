@@ -7,5 +7,6 @@
     - kubernetes
   roles:
     - common
+    - server
     - ubuntu
     - site_node

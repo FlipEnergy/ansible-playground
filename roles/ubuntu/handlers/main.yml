@@ -18,11 +18,5 @@
     state: restarted
   become: yes
 
-- name: Restart host
-  reboot:
-    reboot_timeout: 60
-  become: yes
-
 - import_tasks: mailx.yml
-
-- import_tasks: unattended-upgrades.yml
+  become: yes

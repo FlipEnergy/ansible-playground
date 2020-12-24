@@ -2,4 +2,3 @@
 
 - name: Update Exports
   command: exportfs -ra
-  become: yes

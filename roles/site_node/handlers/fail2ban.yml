@@ -4,4 +4,3 @@
   service:
     name: fail2ban
     state: restarted
-  become: yes

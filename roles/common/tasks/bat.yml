@@ -14,6 +14,10 @@
     cacheable: yes
   when: bat_version_command.rc == 0
 
+- name: debug print
+  debug:
+    msg: "{{ ansible_architecture }}"
+
 - name: Download Bat x86_64
   unarchive:
     src: https://github.com/sharkdp/bat/releases/download/v{{ BAT_VERSION }}/bat-v{{ BAT_VERSION }}-x86_64-unknown-linux-gnu.tar.gz
@@ -25,17 +29,28 @@
     - bat_version_command.rc != 0 or BAT_VERSION != bat_version
 
 - name: Download Bat arm64
-  get_url:
-    url: https://github.com/sharkdp/bat/releases/download/v{{ BAT_VERSION }}/bat_{{ BAT_VERSION }}_arm64.deb
-    dest: /tmp/bat.deb
+  unarchive:
+    src: https://github.com/sharkdp/bat/releases/download/v{{ BAT_VERSION }}/bat-v{{ BAT_VERSION }}-aarch64-unknown-linux-gnu.tar.gz
+    dest: /tmp
+    extra_opts: [--strip-components=1]
+    remote_src: yes
   when:
     - ansible_architecture == 'aarch64'
     - bat_version_command.rc != 0 or BAT_VERSION != bat_version
 
-- name: Install Bat x86_64
+- name: Download Bat armv6l
+  unarchive:
+    src: https://github.com/sharkdp/bat/releases/download/v{{ BAT_VERSION }}/bat-v{{ BAT_VERSION }}-arm-unknown-linux-gnueabihf.tar.gz
+    dest: /tmp
+    extra_opts: [--strip-components=1]
+    remote_src: yes
+  when:
+    - ansible_architecture == 'armv6l'
+    - bat_version_command.rc != 0 or BAT_VERSION != bat_version
+
+- name: Install Bat
   command: mv -f /tmp/bat /usr/local/bin/bat
   when:
-    - ansible_architecture == 'x86_64'
     - bat_version_command.rc != 0 or BAT_VERSION != bat_version
 
 - name: Set execute permissions for bat x86_64
@@ -44,12 +59,3 @@
     mode: a+x
     modification_time: preserve
     access_time: preserve
-  when:
-    - ansible_architecture == 'x86_64'
-
-- name: Install Bat arm64
-  apt:
-    deb: /tmp/bat.deb
-  when:
-    - ansible_architecture == 'aarch64'
-    - bat_version_command.rc != 0 or BAT_VERSION != bat_version

@@ -54,6 +54,22 @@
     recurse: yes
     force: yes
 
+- name: Set permissions for navidrome volume
+  file:
+    path: /mnt/data/navidrome-data
+    state: directory
+    owner: '1000'
+    group: '1000'
+    recurse: yes
+    force: yes
+
+- name: Symlink syncthing music to navidrome
+  file:
+    src: /mnt/data/syncthing-data/music
+    dest: /mnt/data/navidrome-data/music
+    state: link
+  ignore_errors: yes
+
 - name: Set permissions for influxdb volume
   file:
     path: /mnt/data/influxdb

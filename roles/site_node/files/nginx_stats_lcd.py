@@ -25,9 +25,10 @@ def _get_nginx_stats():
 if __name__ == "__main__":
     # Find the address (0x27) with `sudo i2cdetect 1`
     lcd = CharLCD('PCF8574', 0x27)
-    lcd.clear()
 
     while True:
+        lcd.clear()
+        sleep(0.1)
         headers = []
         stats = []
         lcd.cursor_pos = (0, 0)

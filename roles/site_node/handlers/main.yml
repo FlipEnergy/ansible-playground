@@ -14,3 +14,7 @@
 
 - import_tasks: nfs.yml
   become: yes
+
+- import_tasks: nginx_stats_lcd.yml
+  when: '"nginx_stats_lcd" in ADD_ROLES'
+  become: yes

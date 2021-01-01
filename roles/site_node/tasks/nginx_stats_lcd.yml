@@ -20,6 +20,7 @@
   copy:
     src: nginx_stats_lcd.py
     dest: /opt/lcd/nginx_stats_lcd.py
+  notify: Restart nginx_stats_lcd service
 
 - name: Copy nginx_stats_lcd service
   copy:

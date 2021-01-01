@@ -1,0 +1,6 @@
+---
+
+- name: Restart nginx_stats_lcd service
+  service:
+    name: nginx_stats_lcd
+    state: restarted

@@ -7,7 +7,7 @@ Sops (installed with Helm Secrets plugin): https://github.com/mozilla/sops
 
 # Installing Ansible
 ```
-make
+make init
 ```
 
 # set up local machine

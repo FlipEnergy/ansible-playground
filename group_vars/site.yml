@@ -28,7 +28,7 @@ all:
             NEXTCLOUD_IP: 192.168.1.61
             NAVIDROME_IP: 192.168.1.64
             OWNCAST_IP: 192.168.1.63
-            WHOOGLE_IP: 192.168.1.60
+            SEARX_IP: 192.168.1.60
             WIREGUARD_TRAFFIC_IP: 192.168.1.59
         kubernetes:
           hosts:

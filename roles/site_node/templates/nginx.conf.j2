@@ -273,14 +273,14 @@ http {
                 }
         }
 
-        # Whoogle
+        # Searx
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name whoogle.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/whoogle.{{ MY_DOMAIN }}.access.log;
+                server_name searx.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/searx.{{ MY_DOMAIN }}.access.log;
 
                 location / {
-                        proxy_pass http://{{ WHOOGLE_IP }}:80;
+                        proxy_pass http://{{ SEARX_IP }}:80;
                         proxy_set_header Host $http_host;
                         proxy_set_header X-Real-IP $remote_addr;
                         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

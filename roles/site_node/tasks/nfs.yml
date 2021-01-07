@@ -27,6 +27,7 @@
   with_items:
     - /mnt/data/bitwarden
     - /mnt/data/wireguard
+    - /mnt/data/freshrss-data
 
 - name: Set permissions for concourse postgresql volume
   file:
@@ -34,15 +35,6 @@
     state: directory
     owner: '1001'
     group: '1001'
-    recurse: yes
-    force: yes
-
-- name: Set permissions for freshrss volume
-  file:
-    path: /mnt/data/freshrss-data
-    state: directory
-    owner: '1000'
-    group: '1000'
     recurse: yes
     force: yes
 

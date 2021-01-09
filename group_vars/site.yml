@@ -20,17 +20,17 @@ all:
             ADD_ROLES:
               - nginx
               - nginx_stats_lcd
-            BITWARDEN_IP: 192.168.1.57
-            DENNIS_SITE_IP: 192.168.1.52
-            FRESHRSS_IP: 192.168.1.65
+            BITWARDEN_IP: 192.168.1.254
+            DENNIS_SITE_IP: 192.168.1.100
+            FRESHRSS_IP: 192.168.1.248
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com
-            MATTERMOST_IP: 192.168.1.56
-            NEXTCLOUD_IP: 192.168.1.61
-            NAVIDROME_IP: 192.168.1.64
-            OWNCAST_IP: 192.168.1.63
-            SEARX_IP: 192.168.1.60
-            WIREGUARD_TRAFFIC_IP: 192.168.1.59
+            MATTERMOST_IP: 192.168.1.252
+            NEXTCLOUD_IP: 192.168.1.XX
+            NAVIDROME_IP: 192.168.1.249
+            OWNCAST_IP: 192.168.1.247
+            SEARX_IP: 192.168.1.253
+            WIREGUARD_TRAFFIC_IP: 192.168.1.251
         kubernetes:
           hosts:
             k8s-node-1.tgp:

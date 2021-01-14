@@ -34,11 +34,12 @@ all:
         kubernetes:
           hosts:
             k8s-node-1.tgp:
-          vars:
-            install_canonical_livepatch: True
-            ADD_ROLES:
-              - k8s_node
-              - nfs
+              install_canonical_livepatch: True
+              ADD_ROLES:
+                - k8s_node
+                - nfs
+            k8s-node-2.tgp:
+              ADD_ROLES: []
 
   vars:
     MY_EMAIL: dennis.zhang.nrg@gmail.com

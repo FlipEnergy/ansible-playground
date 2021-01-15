@@ -44,7 +44,6 @@
       - screen
       - resolvconf
       - traceroute
-      - ufw
     update_cache: yes
   become: yes
 
@@ -80,9 +79,6 @@
     group: root
     mode: 0777
   notify: Restart host
-  become: yes
-
-- import_tasks: ufw.yml
   become: yes
 
 - import_tasks: unattended-upgrades.yml

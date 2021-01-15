@@ -32,16 +32,23 @@ all:
             SEARX_IP: 192.168.1.252
             WIREGUARD_TRAFFIC_IP: 192.168.1.250
         kubernetes:
-          hosts:
-            k8s-node-1.tgp:
-              install_canonical_livepatch: True
-              ADD_ROLES:
-                - k8s_node
-                - nfs
-            k8s-node-2.tgp:
-              ADD_ROLES: []
+          children:
+            large:
+              hosts:
+                k8s-node-1.tgp:
+                  install_canonical_livepatch: True
+              vars:
+                ADD_ROLES:
+                  - k8s_node
+                  - nfs
+            small:
+              hosts:
+                k8s-node-2.tgp:
+                k8s-node-3.tgp:
 
+  # Defaults
   vars:
+    ADD_ROLES: []
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     ansible_python_interpreter: /usr/bin/python3
     BAT_VERSION: 0.17.1

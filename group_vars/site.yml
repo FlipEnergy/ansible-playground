@@ -20,15 +20,6 @@ all:
             ADD_ROLES:
               - nginx
               - nginx_stats_lcd
-            BITWARDEN_IP: 192.168.1.253
-            DENNIS_SITE_IP: 192.168.1.100
-            FRESHRSS_IP: 192.168.1.247
-            KUBE_OPS_VIEW_IP: 192.168.1.51
-            MY_DOMAIN: pleasenoddos.com
-            MATTERMOST_IP: 192.168.1.251
-            NAVIDROME_IP: 192.168.1.248
-            OWNCAST_IP: 192.168.1.246
-            SEARX_IP: 192.168.1.252
             WIREGUARD_TRAFFIC_IP: 192.168.1.250
         kubernetes:
           children:
@@ -56,13 +47,15 @@ all:
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
-    HELM_VERSION: 3.4.2
-    HELMSMAN_VERSION: 3.4.6
+    HELM_VERSION: 3.5.0
+    HELMSMAN_VERSION: 3.6.3
     INFLUXDB_DBNAME: homelab
-    INFLUXDB_URL: http://influxdb.tgp:8086
-    K3S_VERSION: v1.20.0+k3s2
+    INFLUXDB_URL: http://influxdb.tgp
+    K3S_INGRESS: k3s-ingress.tgp
     K3S_MASTER: k8s-node-1.tgp
+    K3S_VERSION: v1.20.0+k3s2
     K9S_VERSION: 0.24.2
+    MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     PIHOLE_SERVER_IP: 192.168.1.11
     UNATTENDED_UPGRADES_STATE: absent

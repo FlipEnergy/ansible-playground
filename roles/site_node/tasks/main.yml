@@ -20,17 +20,13 @@
   when: '"nginx_blink" in ADD_ROLES'
   become: yes
 
-- import_tasks: k8s_node.yml
+- import_tasks: disable_swap.yml
   become: yes
-  when: '"k3s_node" in ADD_ROLES or "k8s_node" in ADD_ROLES'
+  when: '"k3s_node" in ADD_ROLES'
 
 - import_tasks: k3s.yml
   become: yes
   when: '"k3s_node" in ADD_ROLES'
-
-- import_tasks: microk8s.yml
-  become: yes
-  when: '"k8s_node" in ADD_ROLES'
 
 - import_tasks: backups.yml
   become: yes

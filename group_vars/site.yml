@@ -38,7 +38,6 @@ all:
                   install_canonical_livepatch: True
               vars:
                 ADD_ROLES:
-                  - k8s_node
                   - k3s_node
                   - nfs
             arm64:
@@ -62,17 +61,8 @@ all:
     INFLUXDB_DBNAME: homelab
     INFLUXDB_URL: http://influxdb.tgp:8086
     K3S_VERSION: v1.20.0+k3s2
-    K3S_MASTER: k8s-node-2.tgp
-    K8S_MASTER: k8s-node-1.tgp
+    K3S_MASTER: k8s-node-1.tgp
     K9S_VERSION: 0.24.2
-    METALLB_IP_RANGE: 192.168.1.50-192.168.1.254
-    MICROK8S_ADDONS:
-      - dns
-      - metrics-server
-      - metallb
-      - storage
-    MICROK8S_CHANNEL: 1.20/stable
-    MICROK8S_SNAP_REFRESH_TIME: fri,16:00
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     PIHOLE_SERVER_IP: 192.168.1.11
     UNATTENDED_UPGRADES_STATE: absent

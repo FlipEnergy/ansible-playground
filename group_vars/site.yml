@@ -33,7 +33,7 @@ all:
             WIREGUARD_TRAFFIC_IP: 192.168.1.250
         kubernetes:
           children:
-            large:
+            x86:
               hosts:
                 k8s-node-1.tgp:
                   install_canonical_livepatch: True
@@ -41,7 +41,7 @@ all:
                 ADD_ROLES:
                   - k8s_node
                   - nfs
-            small:
+            arm64:
               hosts:
                 k8s-node-2.tgp:
                 k8s-node-3.tgp:
@@ -49,13 +49,11 @@ all:
   # Defaults
   vars:
     ADD_ROLES: []
-    MY_EMAIL: dennis.zhang.nrg@gmail.com
     ansible_python_interpreter: /usr/bin/python3
     BAT_VERSION: 0.17.1
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
-    UNATTENDED_UPGRADES_STATE: absent
     HELM_VERSION: 3.4.2
     HELMSMAN_VERSION: 3.4.6
     INFLUXDB_DBNAME: homelab
@@ -65,10 +63,12 @@ all:
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.254
     MICROK8S_ADDONS:
       - dns
-      # - fluentd
       - metrics-server
       - metallb
       - storage
-    MICROK8S_CHANNEL: 1.19/stable
+    MICROK8S_CHANNEL: 1.20/stable
+    MICROK8S_SNAP_REFRESH_TIME: fri,16:00
+    MY_EMAIL: dennis.zhang.nrg@gmail.com
     PIHOLE_SERVER_IP: 192.168.1.11
+    UNATTENDED_UPGRADES_STATE: absent
     USER: dennis

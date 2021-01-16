@@ -3,9 +3,6 @@
 - import_tasks: microk8s.yml
   become: yes
 
-- import_tasks: telegraf.yml
-  become: yes
-
 - import_tasks: nginx.yml
   become: yes
 

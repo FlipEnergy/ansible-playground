@@ -26,7 +26,6 @@ all:
             KUBE_OPS_VIEW_IP: 192.168.1.51
             MY_DOMAIN: pleasenoddos.com
             MATTERMOST_IP: 192.168.1.251
-            NEXTCLOUD_IP: 192.168.1.XX
             NAVIDROME_IP: 192.168.1.248
             OWNCAST_IP: 192.168.1.246
             SEARX_IP: 192.168.1.252
@@ -45,6 +44,9 @@ all:
               hosts:
                 k8s-node-2.tgp:
                 k8s-node-3.tgp:
+              vars:
+                ADD_ROLES:
+                  - k3s_node
 
   # Defaults
   vars:
@@ -58,6 +60,8 @@ all:
     HELMSMAN_VERSION: 3.4.6
     INFLUXDB_DBNAME: homelab
     INFLUXDB_URL: http://influxdb.tgp:8086
+    K3S_VERSION: v1.20.0+k3s2
+    K3S_MASTER: k8s-node-2.tgp
     K8S_MASTER: k8s-node-1.tgp
     K9S_VERSION: 0.24.2
     METALLB_IP_RANGE: 192.168.1.50-192.168.1.254

@@ -1,8 +1,5 @@
 ---
 
-- import_tasks: telegraf.yml
-  become: yes
-
 - import_tasks: lets_encrypt.yml
   become: yes
   when: '"nginx" in ADD_ROLES'
@@ -22,6 +19,10 @@
 - import_tasks: nginx_blink.yml
   when: '"nginx_blink" in ADD_ROLES'
   become: yes
+
+- import_tasks: k3s.yml
+  become: yes
+  when: '"k3s_node" in ADD_ROLES'
 
 - import_tasks: k8s_node.yml
   become: yes

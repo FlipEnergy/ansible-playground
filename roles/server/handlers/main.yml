@@ -7,3 +7,6 @@
 
 - import_tasks: unattended-upgrades.yml
   become: yes
+
+- import_tasks: telegraf.yml
+  become: yes

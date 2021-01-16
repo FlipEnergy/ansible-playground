@@ -1,0 +1,44 @@
+---
+
+- name: Check if K3s version is installed
+  command: k3s --version
+  register: k3s_version_command
+  ignore_errors: yes
+  changed_when: False
+
+- name: set K3s version fact
+  set_fact:
+    k3s_version: "{{ k3s_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: 'v[0-9]+\.[0-9]+\.[0-9]+\+k3s[0-9]'
+    cacheable: yes
+  when: k3s_version_command.rc == 0
+
+# - name: print version
+#   debug:
+#     msg: "{{ k3s_version }}"
+
+- name: install k3s via official script (master)
+  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} sh -
+  when:
+    - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
+    - inventory_hostname == K3S_MASTER
+  args:
+    warn: False
+
+- name: Get K3s token from Master
+  command: cat /var/lib/rancher/k3s/server/node-token
+  register: k3s_token_command
+  when: inventory_hostname == K3S_MASTER
+
+# - name: print token
+#   debug:
+#     msg: "{{ hostvars[K3S_MASTER]['k3s_token_command'].stdout }}"
+
+- name: install k3s via official script (nodes)
+  shell: "curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_URL=https://{{ K3S_MASTER }}:6443 K3S_TOKEN={{ hostvars[K3S_MASTER]['k3s_token_command'].stdout }} sh -"
+  when:
+    - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
+    - inventory_hostname != K3S_MASTER
+  args:
+    warn: False

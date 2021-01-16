@@ -39,6 +39,7 @@ all:
               vars:
                 ADD_ROLES:
                   - k8s_node
+                  - k3s_node
                   - nfs
             arm64:
               hosts:

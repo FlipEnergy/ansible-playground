@@ -14,5 +14,3 @@
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
-
-- import_tasks: microk8s.yml

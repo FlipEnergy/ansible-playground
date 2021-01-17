@@ -20,7 +20,7 @@ all:
             ADD_ROLES:
               - nginx
               - nginx_stats_lcd
-            WIREGUARD_TRAFFIC_IP: 192.168.1.250
+            WIREGUARD_TRAFFIC_HOST: k8s-node-1.tgp
         kubernetes:
           children:
             x86:
@@ -34,7 +34,6 @@ all:
             arm64:
               hosts:
                 k8s-node-2.tgp:
-                k8s-node-3.tgp:
               vars:
                 ADD_ROLES:
                   - k3s_node

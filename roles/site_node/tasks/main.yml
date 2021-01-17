@@ -20,7 +20,7 @@
   when: '"nginx_blink" in ADD_ROLES'
   become: yes
 
-- import_tasks: disable_swap.yml
+- import_tasks: prereq.yml
   become: yes
   when: '"k3s_node" in ADD_ROLES'
 

@@ -14,3 +14,8 @@
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
+
+- name: Install NFS common
+  apt:
+    name: nfs-common
+    update_cache: yes

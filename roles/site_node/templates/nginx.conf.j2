@@ -243,21 +243,6 @@ http {
                 }
         }
 
-        # Searx
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name searx.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/searx.{{ MY_DOMAIN }}.access.log;
-
-                location / {
-                        proxy_pass http://{{ K3S_INGRESS }}:80;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                }
-        }
-
         # My site and default
         server {
                 listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;

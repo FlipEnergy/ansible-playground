@@ -49,7 +49,6 @@ all:
     HELMSMAN_VERSION: 3.6.3
     INFLUXDB_DBNAME: homelab
     INFLUXDB_URL: http://influxdb.tgp
-    K3S_INGRESS: k3s-ingress.tgp
     K3S_MASTER: k8s-node-1.tgp
     K3S_VERSION: v1.20.0+k3s2
     K9S_VERSION: 0.24.2

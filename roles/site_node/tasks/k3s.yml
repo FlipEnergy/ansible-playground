@@ -19,7 +19,7 @@
 #     msg: "{{ k3s_version }}"
 
 - name: install k3s via official script (master)
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} sh -
+  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} sh -s - --disable=traefik
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname == K3S_MASTER

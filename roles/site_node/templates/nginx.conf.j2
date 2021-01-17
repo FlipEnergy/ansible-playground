@@ -286,7 +286,7 @@ stream {
                 listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:51820 udp;
                 error_log /var/log/nginx/wireguard.error.log;
 
-                proxy_pass      {{ WIREGUARD_TRAFFIC_HOST }}:51820;
+                proxy_pass      {{ K3S_INGRESS }}:51820;
                 proxy_timeout   1s;
         }
 }

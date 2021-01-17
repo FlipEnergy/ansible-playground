@@ -10,9 +10,9 @@ all:
         pihole:
           hosts:
             pi.hole:
-          vars:
-            ADD_ROLES:
-              - pihole_blink
+          # vars:
+          #   ADD_ROLES:
+          #     - pihole_blink
         loadbalancer:
           hosts:
             load-balancer-1.tgp:
@@ -20,7 +20,6 @@ all:
             ADD_ROLES:
               - nginx
               - nginx_stats_lcd
-            WIREGUARD_TRAFFIC_HOST: k8s-node-1.tgp
         kubernetes:
           children:
             x86:

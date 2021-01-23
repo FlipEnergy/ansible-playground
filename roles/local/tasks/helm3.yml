@@ -20,14 +20,14 @@
   args:
     warn: False
 
-- name: Check if helm secrets is installed
-  shell: helm plugin list | grep secrets
+- name: Check if helm secrets version is installed
+  shell: helm plugin list | grep secrets | grep {{ HELM_SECRETS_VERSION }}
   register: helm_secrets_installed
   ignore_errors: yes
   changed_when: False
 
 - name: Install helm secrets
-  command: helm plugin install https://github.com/jkroepke/helm-secrets
+  command: helm plugin install https://github.com/jkroepke/helm-secrets --version {{ HELM_SECRETS_VERSION }}
   when: helm_secrets_installed.rc !=0
 
 - name: Install my .sops.yaml
@@ -36,13 +36,13 @@
     dest: /home/dennis/.sops.yaml
 
 - name: Check if helm diff is installed
-  shell: helm plugin list | grep diff
+  shell: helm plugin list | grep diff | grep {{ HELM_DIFF_VERSION }}
   register: helm_diff_installed
   ignore_errors: yes
   changed_when: False
 
 - name: Install helm diff
-  command: helm plugin install https://github.com/databus23/helm-diff --version master
+  command: helm plugin install https://github.com/databus23/helm-diff --version {{ HELM_DIFF_VERSION }}
   when: helm_diff_installed.rc !=0
 
 - name: Check if Helmsman is installed

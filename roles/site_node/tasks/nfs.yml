@@ -51,8 +51,8 @@
   file:
     path: /mnt/data/firefly-iii-mysql
     state: directory
-    owner: '999'
-    group: '999'
+    owner: '2003'
+    group: '2003'
     recurse: yes
     force: yes
 

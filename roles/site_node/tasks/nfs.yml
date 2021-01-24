@@ -38,38 +38,21 @@
     recurse: yes
     force: yes
 
-- name: Populate Persistent Volume for syncthing
-  copy:
-    src: config
-    dest: /mnt/data/syncthing-data/config
-    force: no
-    owner: '1000'
-    group: '1000'
-
-- name: Set permissions for syncthing volume
-  file:
-    path: /mnt/data/syncthing-data
-    state: directory
-    owner: '1000'
-    group: '1000'
-    recurse: yes
-    force: yes
-
-- name: Set permissions for navidrome volume
-  file:
-    path: /mnt/data/navidrome-data
-    state: directory
-    owner: '1000'
-    group: '1000'
-    recurse: yes
-    force: yes
-
 - name: Set permissions for influxdb volume
   file:
     path: /mnt/data/influxdb
     state: directory
     owner: '501'
     group: '501'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for firefly-iii mysql volume
+  file:
+    path: /mnt/data/firefly-iii-mysql
+    state: directory
+    owner: '999'
+    group: '999'
     recurse: yes
     force: yes
 
@@ -91,5 +74,31 @@
     state: directory
     owner: '2001'
     group: '2001'
+    recurse: yes
+    force: yes
+
+- name: Set permissions for navidrome volume
+  file:
+    path: /mnt/data/navidrome-data
+    state: directory
+    owner: '1000'
+    group: '1000'
+    recurse: yes
+    force: yes
+
+- name: Populate Persistent Volume for syncthing
+  copy:
+    src: config
+    dest: /mnt/data/syncthing-data/config
+    force: no
+    owner: '1000'
+    group: '1000'
+
+- name: Set permissions for syncthing volume
+  file:
+    path: /mnt/data/syncthing-data
+    state: directory
+    owner: '1000'
+    group: '1000'
     recurse: yes
     force: yes

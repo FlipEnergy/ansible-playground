@@ -1,4 +1,3 @@
----
 # install helm3 and plugins
 
 - name: Check if helm is installed

@@ -1,5 +1,3 @@
----
-
 - name: Check if K3s version is installed
   command: k3s --version
   register: k3s_version_command

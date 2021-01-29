@@ -1,4 +1,3 @@
----
 # Install and setup docker. Must run with become
 # modified from https://www.rechberger.io/tutorial-install-docker-using-ansible-on-a-remote-server/
 

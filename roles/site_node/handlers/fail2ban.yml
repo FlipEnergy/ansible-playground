@@ -1,5 +1,3 @@
----
-
 - name: Restart fail2ban service
   service:
     name: fail2ban

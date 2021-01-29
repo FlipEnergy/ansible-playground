@@ -1,4 +1,3 @@
----
 # Install kubectl
 
 - name: Add an apt signing key for kubectl

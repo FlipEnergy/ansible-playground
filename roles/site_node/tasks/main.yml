@@ -1,5 +1,3 @@
----
-
 - import_tasks: lets_encrypt.yml
   become: yes
   when: '"nginx" in ADD_ROLES'

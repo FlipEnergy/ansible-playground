@@ -1,5 +1,3 @@
----
-
 - name: Install mailx
   apt:
     pkg: bsd-mailx

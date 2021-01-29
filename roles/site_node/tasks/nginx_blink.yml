@@ -1,5 +1,3 @@
----
-
 - name: Install blink1-tool
   unarchive:
     src: https://github.com/todbot/blink1-tool/releases/download/v2.1.0/blink1-tool-v2.1.0-linux-x86_64.zip

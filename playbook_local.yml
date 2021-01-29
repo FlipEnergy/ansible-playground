@@ -1,4 +1,3 @@
----
 # This Playbook will setup my local shell the way I like
 
 - hosts: localhost

@@ -36,6 +36,10 @@
   become: yes
   when: '"nfs" in ADD_ROLES'
 
+- import_tasks: pihole.yml
+  become: yes
+  when: '"pihole" in ADD_ROLES'
+
 - import_tasks: pihole_blink.yml
   become: yes
   when: '"pihole_blink" in ADD_ROLES'

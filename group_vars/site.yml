@@ -10,9 +10,9 @@ all:
         pihole:
           hosts:
             pi.hole:
-          # vars:
-          #   ADD_ROLES:
-          #     - pihole_blink
+          vars:
+            ADD_ROLES:
+              - pihole
         loadbalancer:
           hosts:
             load-balancer-1.tgp:

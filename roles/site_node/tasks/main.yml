@@ -38,6 +38,10 @@
   become: yes
   when: '"pihole" in ADD_ROLES'
 
+- import_tasks: pihole_stats_lcd.yml
+  become: yes
+  when: '"pihole_stats_lcd" in ADD_ROLES'
+
 - import_tasks: pihole_blink.yml
   become: yes
   when: '"pihole_blink" in ADD_ROLES'

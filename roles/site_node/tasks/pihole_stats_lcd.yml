@@ -1,0 +1,18 @@
+- import_tasks: lcd_base.yml
+
+- name: Copy pihole_stats_lcd.py script
+  copy:
+    src: pihole_stats_lcd/pihole_stats_lcd.py
+    dest: /opt/lcd/pihole_stats_lcd.py
+  notify: Restart pihole_stats_lcd service
+
+- name: Copy pihole_stats_lcd service
+  copy:
+    src: pihole_stats_lcd/pihole_stats_lcd.service
+    dest: /etc/systemd/system/pihole_stats_lcd.service
+
+- name: Start and enable pihole_stats_lcd service
+  service:
+    name: pihole_stats_lcd
+    state: started
+    enabled: yes

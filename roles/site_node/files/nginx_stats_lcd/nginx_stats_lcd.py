@@ -4,6 +4,9 @@ import requests
 from RPLCD.i2c import CharLCD
 from time import sleep
 
+# Find the address (0x27) with `sudo i2cdetect 1`
+LCD_ADDR = 0x27
+
 # Nginx status endpoint
 NGINX_STATUS_URL = 'http://localhost:9090/nginx_status'
 
@@ -17,6 +20,7 @@ LJUST_SIZE = 4
 def _get_nginx_stats():
     try:
         resp = requests.get(NGINX_STATUS_URL)
+        resp.raise_for_status()
         return resp.text.split('\n')[-2].split()
     except Exception as e:
         return e.__class__.__name__
@@ -24,7 +28,7 @@ def _get_nginx_stats():
 
 if __name__ == "__main__":
     # Find the address (0x27) with `sudo i2cdetect 1`
-    lcd = CharLCD('PCF8574', 0x27)
+    lcd = CharLCD('PCF8574', LCD_ADDR)
 
     while True:
         lcd.clear()

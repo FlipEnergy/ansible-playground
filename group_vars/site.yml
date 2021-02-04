@@ -11,6 +11,7 @@ all:
           vars:
             ADD_ROLES:
               - pihole
+              - pihole_stats_lcd
         loadbalancer:
           hosts:
             load-balancer-1.tgp:

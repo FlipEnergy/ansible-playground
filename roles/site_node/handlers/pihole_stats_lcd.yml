@@ -1,0 +1,4 @@
+- name: Restart pihole_stats_lcd service
+  service:
+    name: pihole_stats_lcd
+    state: restarted

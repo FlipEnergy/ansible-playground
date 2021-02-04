@@ -1,0 +1,4 @@
+- name: Restart node_stats_lcd service
+  service:
+    name: node_stats_lcd
+    state: restarted

@@ -1,0 +1,11 @@
+# /etc/systemd/system/node_stats_lcd.service
+
+[Unit]
+Description=Run node_stats_lcd.py script as service
+
+[Service]
+Type=simple
+ExecStart=/opt/lcd/venv/bin/python /opt/lcd/node_stats_lcd.py
+
+[Install]
+WantedBy=multi-user.target

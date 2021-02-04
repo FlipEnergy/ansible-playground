@@ -1,0 +1,18 @@
+- import_tasks: lcd_base.yml
+
+- name: Copy node_stats_lcd.py script
+  copy:
+    src: node_stats_lcd/node_stats_lcd.py
+    dest: /opt/lcd/node_stats_lcd.py
+  notify: Restart node_stats_lcd service
+
+- name: Copy node_stats_lcd service
+  copy:
+    src: node_stats_lcd/node_stats_lcd.service
+    dest: /etc/systemd/system/node_stats_lcd.service
+
+- name: Start and enable node_stats_lcd service
+  service:
+    name: node_stats_lcd
+    state: started
+    enabled: yes

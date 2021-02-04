@@ -10,7 +10,7 @@
 
 - name: place exports file
   copy:
-    src: exports
+    src: nfs/exports
     dest: /etc/exports
   notify: Update Exports
 
@@ -77,7 +77,7 @@
 
 - name: Populate Persistent Volume for syncthing
   copy:
-    src: config
+    src: syncthing/config
     dest: /mnt/data/syncthing-data/config
     force: no
     owner: '1000'

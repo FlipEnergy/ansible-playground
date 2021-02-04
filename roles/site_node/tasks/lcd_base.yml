@@ -1,0 +1,15 @@
+- name: Install i2c dependencies tools
+  apt:
+    pkg:
+      - python3-venv
+      - i2c-tools
+    update_cache: yes
+
+- name: Install i2c pip dependencies
+  pip:
+    name:
+      - RPLCD==1.3.0
+      - smbus2==0.3.0
+      - requests
+    virtualenv: /opt/lcd/venv
+    virtualenv_command: /usr/bin/python3 -m venv

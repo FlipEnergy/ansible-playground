@@ -1,5 +1,5 @@
 site:
-	cd roles/site_node/files && gpg-zip --decrypt syncthing_config_dir
+	cd roles/site_node/files/syncthing && gpg-zip --decrypt syncthing_config_dir
 	sops -d group_vars/secrets.yml > group_vars/secrets.dec.yml
 	-ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml -l servers $(options) -K playbook_site.yml
 	rm -f group_vars/secrets.dec.yml

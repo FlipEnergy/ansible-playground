@@ -11,12 +11,12 @@
 
 - name: Place nginx_blink.sh script
   copy:
-    src: nginx_blink.sh
+    src: nginx_blink/nginx_blink.sh
     dest: /opt/blink1/nginx_blink.sh
 
 - name: Place nginx_blink.service
   copy:
-    src: nginx_blink.service
+    src: nginx_blink/nginx_blink.service
     dest: /etc/systemd/system/nginx_blink.service
 
 - name: Enable and start nginx_blink service

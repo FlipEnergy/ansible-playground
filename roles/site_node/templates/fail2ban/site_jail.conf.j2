@@ -1,8 +1,8 @@
-[dennis_site]
+[site]
 enabled  = true
 bantime  = 1200
 findtime = 120
 maxretry = 6
-filter   = dennis_site_filter
+filter   = site_filter
 action = iptables-multiport[name=ReqLimit, port="http,https,51820", protocol="tcp,udp"]
 logpath  = /var/log/nginx/*error.log

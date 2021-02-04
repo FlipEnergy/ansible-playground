@@ -20,7 +20,7 @@
 
 - name: Place conf file
   template:
-    src: nginx.conf.j2
+    src: nginx/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
   notify: Restart nginx service
 

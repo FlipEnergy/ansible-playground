@@ -5,7 +5,7 @@
 
 - name: Setup unbound conf for pihole
   copy:
-    src: unbound_pihole_conf
+    src: pihole/unbound_pihole_conf
     dest: /etc/unbound/unbound.conf.d/pi-hole.conf
     owner: root
     group: root
@@ -36,7 +36,7 @@
 
 - name: Create pihole configuration
   template:
-    src: pihole_setupVars.conf
+    src: pihole/pihole_setupVars.conf
     dest: /etc/pihole/setupVars.conf
     owner: root
     group: root
@@ -49,7 +49,7 @@
 
 - name: Setup crontab config
   copy:
-    src: pihole_cron_config
+    src: pihole/pihole_cron_config
     dest: /etc/cron.d/pihole
     owner: root
     group: root

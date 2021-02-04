@@ -7,7 +7,7 @@
 
 - name: Place backup script
   copy:
-    src: backup_to_syncthing.sh
+    src: syncthing/backup_to_syncthing.sh
     dest: /opt/admin/backup_to_syncthing.sh
     owner: root
     group: root

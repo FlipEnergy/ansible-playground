@@ -5,14 +5,14 @@
 
 - name: Place filter file
   template:
-    src: dennis_site_filter.conf.j2
-    dest: /etc/fail2ban/filter.d/dennis_site_filter.conf
+    src: fail2ban/site_filter.conf.j2
+    dest: /etc/fail2ban/filter.d/site_filter.conf
   notify: Restart fail2ban service
 
 - name: Place jail file
   template:
-    src: dennis_site_jail.conf.j2
-    dest: /etc/fail2ban/jail.d/dennis_site_jail.conf
+    src: fail2ban/site_jail.conf.j2
+    dest: /etc/fail2ban/jail.d/site_jail.conf
   notify: Restart fail2ban service
 
 - name: Start and enable

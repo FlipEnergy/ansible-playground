@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
         resp_dict = _get_pihole_summary()
 
-        lcd.write_string('BQs: {} {}%'.format(resp_dict['ads_blocked_today'].ljust(6), resp_dict['ads_percentage_today'].rjust(4)))
+        lcd.write_string('BQs: {} {}%'.format(resp_dict['ads_blocked_today'].ljust(6), resp_dict['ads_percentage_today']))
         lcd.cursor_pos = (1, 0)
-        lcd.write_string('TQs: {}'.format(resp_dict['dns_queries_today'].rjust(10)))
+        lcd.write_string('TQs: {}'.format(resp_dict['dns_queries_today'].rjust(11)))
         sleep(UPDATE_EVERY)

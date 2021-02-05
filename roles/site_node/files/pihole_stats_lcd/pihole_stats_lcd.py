@@ -20,7 +20,7 @@ def _get_pihole_summary():
         resp.raise_for_status()
         return resp.json()
     except Exception as e:
-        return e.__class__.__name__
+        return {}
 
 
 if __name__ == "__main__":
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
         resp_dict = _get_pihole_summary()
 
-        lcd.write_string('BQs: {} {}%'.format(resp_dict['ads_blocked_today'].ljust(6), resp_dict['ads_percentage_today']))
+        lcd.write_string('BQs: {} {}%'.format(resp_dict.get('ads_blocked_today', 'n/a').ljust(6), resp_dict.get('ads_percentage_today', 'n/a')))
         lcd.cursor_pos = (1, 0)
-        lcd.write_string('TQs: {}'.format(resp_dict['dns_queries_today'].rjust(11)))
+        lcd.write_string('TQs: {}'.format(resp_dict.get('dns_queries_today', 'n/a').rjust(11)))
         sleep(UPDATE_EVERY)

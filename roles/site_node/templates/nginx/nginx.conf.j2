@@ -102,6 +102,29 @@ http {
                 return 301 https://$host$request_uri;
         }
 
+        
+        # Archivy
+        upstream archivy_k8s {
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:80;
+{% endfor %}
+                keepalive 32;
+        }
+
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
+                server_name archivy.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/archivy.{{ MY_DOMAIN }}.access.log upstream_time;
+
+                location / {
+                        proxy_pass http://archivy_k8s;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+        }
+
         # Bitwarden
         upstream bitwarden_k8s {
 {% for host in groups['kubernetes'] %}

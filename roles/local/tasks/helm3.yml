@@ -8,13 +8,14 @@
 
 - name: set helm version fact
   set_fact:
-    helm_version: "{{ helm_version_command.stdout | default('0.0.0') | regex_search(regexp) }}"
+    helm_version: "{{ helm_version_command.stdout | regex_search(regexp) }}"
   vars:
     regexp: '[0-9]+\.[0-9]+\.[0-9]+'
     cacheable: yes
+  when: helm_version_command.rc == 0
 
 - name: Install Helm3
-  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sh -s - --version v{{ HELM_VERSION }}
   when: helm_version_command.rc != 0 or HELM_VERSION != helm_version
   args:
     warn: False

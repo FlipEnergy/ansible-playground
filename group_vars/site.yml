@@ -56,6 +56,5 @@ all:
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     PIHOLE_SERVER_IP: 192.168.1.11
-    SPURCE_VERSION: 1.27.0
     UNATTENDED_UPGRADES_STATE: absent
     USER: dennis

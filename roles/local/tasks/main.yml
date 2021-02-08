@@ -31,7 +31,3 @@
 - import_tasks: helm3.yml
 
 - import_tasks: hstr.yml
-  become: yes
-
-- import_tasks: spruce.yml
-  become: yes

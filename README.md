@@ -2,8 +2,8 @@
 Repo for my Ansible stuff.
 
 # requirements
-Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
-Sops (installed with Helm Secrets plugin): https://github.com/mozilla/sops
+- Ansible: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
+- Sops (installed with Helm Secrets plugin): https://github.com/mozilla/sops
 
 # Installing Ansible
 ```

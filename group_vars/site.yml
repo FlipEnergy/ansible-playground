@@ -28,10 +28,6 @@ all:
                   ADD_ROLES:
                     - nfs
                     - k3s_node
-                k8s-node-3.tgp:
-              vars:
-                ADD_ROLES:
-                  - k3s_node
             arm64:
               hosts:
                 k8s-node-2.tgp:

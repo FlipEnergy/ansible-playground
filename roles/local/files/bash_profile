@@ -2,6 +2,8 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+export PATH="$HOME/bin:$PATH"
+
 # This must be set for PGP decryption
 export GPG_TTY=$(tty)
 

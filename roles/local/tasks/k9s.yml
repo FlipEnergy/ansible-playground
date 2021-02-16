@@ -25,6 +25,4 @@
   file:
     path: /usr/local/bin/k9s
     mode: u+x
-    modification_time: preserve
-    access_time: preserve
   when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version

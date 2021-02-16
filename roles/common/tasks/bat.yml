@@ -51,5 +51,3 @@
   file:
     path: /usr/local/bin/bat
     mode: a+x
-    modification_time: preserve
-    access_time: preserve

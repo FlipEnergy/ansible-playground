@@ -60,4 +60,4 @@ all:
     PIHOLE_SERVER_IP: 192.168.1.11
     SOPS_VERSION: 3.6.1
     UNATTENDED_UPGRADES_STATE: absent
-    USER: denniszh
+    USER: ubuntu

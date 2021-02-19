@@ -46,6 +46,11 @@
     groups: docker
     append: yes
 
+- name: Run newgrp docker
+  command: newgrp docker
+  become: yes
+  become_user: "{{ USER }}"
+
 - name: Install Docker Compose
   get_url:
     url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64

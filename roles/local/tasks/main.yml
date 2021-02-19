@@ -2,7 +2,7 @@
 - name: Install my bash_profile
   copy:
     src: bash_profile
-    dest: /home/dennis/.bash_profile
+    dest: /home/{{ USER }}/.bash_profile
 
 - import_tasks: sops.yml
   become: yes

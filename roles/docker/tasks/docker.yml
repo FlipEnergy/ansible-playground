@@ -1,0 +1,59 @@
+# Install and setup docker. Must run with become
+# modified from https://www.rechberger.io/tutorial-install-docker-using-ansible-on-a-remote-server/
+
+- name: Install packages needed for Docker
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg-agent
+      - software-properties-common
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Save the current Ubuntu release version into a variable
+  command: lsb_release -cs
+  register: ubuntu_version
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Start and enable
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Create docker group
+  group:
+    name: docker
+    state: present
+
+- name: Adding user {{ USER }} to docker group
+  user:
+    name: "{{ USER }}"
+    groups: docker
+    append: yes
+
+- name: Install Docker Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
+
+- name: Install Ctop
+  get_url:
+    url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
+    dest: /usr/local/bin/ctop
+    mode: 0755

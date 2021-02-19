@@ -4,16 +4,16 @@
     src: bash_profile
     dest: /home/{{ USER }}/.bash_profile
 
-- import_tasks: sops.yml
-  become: yes
+# - import_tasks: sops.yml
+#   become: yes
 
-- import_tasks: kubectl.yml
-  become: yes
+# - import_tasks: kubectl.yml
+#   become: yes
 
-- import_tasks: k9s.yml
-  become: yes
+# - import_tasks: k9s.yml
+#   become: yes
 
-- import_tasks: helm3.yml
+# - import_tasks: helm3.yml
 
 - import_tasks: ctop.yml
   become: yes

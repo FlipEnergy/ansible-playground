@@ -7,10 +7,7 @@ export PATH="$HOME/bin:$PATH"
 # This must be set for PGP decryption
 export GPG_TTY=$(tty)
 
-alias k='kubectl'
-alias a='ansible -i group_vars/site.yml'
 alias b='bat'
-alias f='fly -t homelab'
 
 cheat() {
     curl cheat.sh/${1}

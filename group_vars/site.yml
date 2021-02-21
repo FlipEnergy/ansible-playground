@@ -5,6 +5,9 @@ all:
         localhost:
     servers:
       children:
+        sandbox:
+          hosts:
+            surface.tgp
         pihole:
           hosts:
             pi.hole:

@@ -1,9 +1,23 @@
 site:
 	cd roles/site_node/files/syncthing && gpg-zip --decrypt syncthing_config_dir
-	sops -d group_vars/secrets.yml > group_vars/secrets.dec.yml
+	make dec-secrets
 	-ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml -l servers $(options) -K playbook_site.yml
-	rm -f group_vars/secrets.dec.yml
+	make del-dec-secrets
 	rm -rf roles/site_node/files/config
+
+local:
+	ansible-playbook --connection=local -i group_vars/site.yml -l local $(options) -K playbook_local.yml
+
+sandbox:
+	make dec-secrets
+	ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml $(options) -K playbook_sandbox.yml
+	make del-dec-secrets
+
+dec-secrets:
+	sops -d group_vars/secrets.yml > group_vars/secrets.dec.yml
+
+del-dec-secrets:
+	rm -f group_vars/secrets.dec.yml
 
 init:
 	sudo apt update
@@ -25,6 +39,3 @@ reboot-servers:
 
 shutdown-servers:
 	ansible servers -i group_vars/site.yml -m command -K -ba "shutdown now"
-
-local:
-	ansible-playbook --connection=local -i group_vars/site.yml -l local $(options) -K playbook_local.yml

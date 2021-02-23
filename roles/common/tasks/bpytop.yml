@@ -1,4 +1,4 @@
-- name: install dependencies
+- name: install bpytop dependencies
   apt:
     pkg:
       - gcc

@@ -12,3 +12,6 @@
 
 - import_tasks: hstr.yml
   when: ansible_architecture == 'x86_64'
+
+- import_tasks: bpytop.yml
+  become: yes

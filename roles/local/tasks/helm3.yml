@@ -32,7 +32,7 @@
 - name: Install my .sops.yaml
   copy:
     src: sops.yaml
-    dest: /home/dennis/.sops.yaml
+    dest: /home/{{ USER }}/.sops.yaml
 
 - name: Check if helm diff is installed
   shell: helm plugin list | grep diff | grep {{ HELM_DIFF_VERSION }}

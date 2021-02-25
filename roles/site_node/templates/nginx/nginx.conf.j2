@@ -309,6 +309,28 @@ http {
                 }
         }
 
+        # Whoogle
+        upstream whoogle_k8s {
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:80;
+{% endfor %}
+                keepalive 32;
+        }
+
+        server {
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
+                server_name whoogle.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/whoogle.{{ MY_DOMAIN }}.access.log upstream_time;
+
+                location / {
+                        proxy_pass http://whoogle_k8s;
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+        }
+
         # My site and default
         upstream my_site_k8s {
 {% for host in groups['kubernetes'] %}

@@ -27,15 +27,6 @@
     - /mnt/data/wireguard
     - /mnt/data/freshrss-data
 
-- name: Set permissions for concourse postgresql volume
-  file:
-    path: /mnt/data/concourse-postgresql
-    state: directory
-    owner: '1001'
-    group: '1001'
-    recurse: yes
-    force: yes
-
 - name: Set permissions for influxdb volume
   file:
     path: /mnt/data/influxdb
@@ -83,6 +74,7 @@
     recurse: yes
     force: yes
   with_items:
+    - /mnt/data/postgresql
     - /mnt/data/navidrome-data
     - /mnt/data/syncthing-data
     - /mnt/data/archivy-elasticsearch

@@ -309,6 +309,30 @@ http {
                 }
         }
 
+        # Wikijs
+        upstream wikijs_k8s {
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:80;
+{% endfor %}
+                keepalive 32;
+        }
+
+        server {
+                listen {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
+                server_name  wiki.{{ MY_DOMAIN }};
+                access_log  /var/log/nginx/wiki.{{ MY_DOMAIN }}.access.log upstream_time;
+
+                location / {
+                        proxy_set_header Host $http_host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_pass http://wikijs_k8s;
+                        proxy_http_version 1.1;
+                        proxy_set_header Upgrade $http_upgrade;
+                        proxy_set_header Connection "upgrade";
+                        proxy_next_upstream error timeout http_502 http_503 http_504;
+                }
+        }
+
         # Whoogle
         upstream whoogle_k8s {
 {% for host in groups['kubernetes'] %}

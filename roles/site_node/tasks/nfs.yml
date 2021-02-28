@@ -23,7 +23,6 @@
     recurse: yes
     force: yes
   with_items:
-    - /mnt/data/bitwarden
     - /mnt/data/wireguard
     - /mnt/data/freshrss-data
 
@@ -74,7 +73,5 @@
     recurse: yes
     force: yes
   with_items:
-    - /mnt/data/postgresql
     - /mnt/data/navidrome-data
     - /mnt/data/syncthing-data
-    - /mnt/data/archivy-elasticsearch

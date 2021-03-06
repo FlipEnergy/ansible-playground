@@ -2,13 +2,12 @@
 
 # Run in WSL2
 
-SOURCE_DIR='/mnt/d/Syncthing Data'
-DEST_DIR='/mnt/e/Syncthing Data'
+DEST_DIR='/mnt/e'
 
 echo 'Music...'
 echo '========='
-rsync -rP '/mnt/c/Users/denni/Music/' '/mnt/e/Music'
+rsync -avh --delete '/mnt/c/Users/denni/Music/' "${DEST_DIR%/}/Music"
 
 echo 'Syncthing Data...'
 echo '========='
-rsync -rP "${SOURCE_DIR%/}/" "${DEST_DIR}"
+rsync -avh --delete '/mnt/d/Syncthing Data' "${DEST_DIR%/}/Syncthing Data"

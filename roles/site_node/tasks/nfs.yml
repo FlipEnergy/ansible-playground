@@ -25,6 +25,7 @@
   with_items:
     - /mnt/data/wireguard
     - /mnt/data/freshrss-data
+    - /mnt/data/owncast-data
 
 - name: Set permissions for influxdb volume
   file:

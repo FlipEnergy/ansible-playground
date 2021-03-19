@@ -14,3 +14,6 @@
   become: yes
 
 - import_tasks: helm3.yml
+
+- import_tasks: ctop.yml
+  become: yes

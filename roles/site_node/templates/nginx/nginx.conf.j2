@@ -10,7 +10,6 @@ events {
 }
 
 http {
-
         ##
         # Basic Settings
         ##
@@ -28,20 +27,6 @@ http {
 
         include /etc/nginx/mime.types;
         default_type application/octet-stream;
-
-        ##
-        # SSL Settings
-        ##
-
-        ssl_protocols TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
-        ssl_prefer_server_ciphers on;
-
-        ssl_ecdh_curve prime256v1:secp384r1:secp521r1;
-        ssl_session_cache   shared:SSL:10m;
-        ssl_session_timeout 24h;
-        ssl_buffer_size 4k;
-        ssl_certificate     /etc/letsencrypt/live/{{ MY_DOMAIN }}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/{{ MY_DOMAIN }}/privkey.pem;
 
         ##
         # Logging Settings
@@ -84,7 +69,6 @@ http {
         ##
 
         server {
-
                 listen 127.0.0.1:9090;
                 location /nginx_status {
                         stub_status on;
@@ -101,292 +85,33 @@ http {
 
                 return 301 https://$host$request_uri;
         }
+}
 
-        # Bitwarden
-        upstream bitwarden_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name bitwarden.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/bitwarden.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://bitwarden_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                }
-        }
-
-        # FreshRSS
-        upstream freshrss_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name freshrss.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/freshrss.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://freshrss_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                }
-        }
-
-        # Kanboard
-        upstream kanboard_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name kanboard.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/kanboard.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://kanboard_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                }
-        }
-
-        # Kube Ops View
-        upstream kube_ops_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name kube.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/kube.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://kube_ops_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                        proxy_set_header Connection '';
-                        proxy_http_version 1.1;
-                        chunked_transfer_encoding off;
-                        proxy_buffering off;
-                        proxy_cache off;
-                }
-        }
-
-        # Mattermost
-        upstream mattermost_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        proxy_cache_path /var/cache/nginx/mattermost levels=1:2 keys_zone=mattermost_cache:10m max_size=3g inactive=120m use_temp_path=off;
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name mattermost.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/mattermost.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location ~ /api/v[0-9]+/(users/)?websocket$ {
-                        proxy_set_header Upgrade $http_upgrade;
-                        proxy_set_header Connection "upgrade";
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                        proxy_set_header X-Frame-Options SAMEORIGIN;
-                        proxy_buffers 256 16k;
-                        proxy_buffer_size 16k;
-                        client_body_timeout 60;
-                        send_timeout 300;
-                        lingering_timeout 5;
-                        proxy_connect_timeout 90;
-                        proxy_send_timeout 300;
-                        proxy_read_timeout 90s;
-                        proxy_pass http://mattermost_k8s;
-                }
-
-                location / {
-                        proxy_set_header Connection "";
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                        proxy_set_header X-Frame-Options SAMEORIGIN;
-                        proxy_buffers 256 16k;
-                        proxy_buffer_size 16k;
-                        proxy_read_timeout 600s;
-                        proxy_cache mattermost_cache;
-                        proxy_cache_revalidate on;
-                        proxy_cache_min_uses 2;
-                        proxy_cache_use_stale timeout;
-                        proxy_cache_lock on;
-                        proxy_http_version 1.1;
-                        proxy_pass http://mattermost_k8s;
-                }
-        }
-
-        # Navidrome
-        upstream navidrome_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name navidrome.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/navidrome.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://navidrome_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                        proxy_max_temp_file_size           0;
-                }
-        }
-
-        # Owncast
-        upstream owncast_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        proxy_cache_path /var/cache/nginx/owncast levels=1:2 keys_zone=owncast_cache:10m max_size=3g inactive=120m use_temp_path=off;
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name owncast.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/owncast.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_set_header Upgrade $http_upgrade;
-                        proxy_set_header Connection "upgrade";
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                        proxy_set_header X-Frame-Options SAMEORIGIN;
-                        proxy_buffers 256 16k;
-                        proxy_buffer_size 16k;
-                        client_body_timeout 60;
-                        send_timeout 300;
-                        lingering_timeout 5;
-                        proxy_connect_timeout 90;
-                        proxy_send_timeout 300;
-                        proxy_read_timeout 90s;
-                        proxy_pass http://owncast_k8s;
-                }
-        }
-
-        # Wikijs
-        upstream wikijs_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
-                server_name wiki.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/wiki.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_pass http://wikijs_k8s;
-                        proxy_http_version 1.1;
-                        proxy_set_header Upgrade $http_upgrade;
-                        proxy_set_header Connection "upgrade";
-                        proxy_next_upstream error timeout http_502 http_503 http_504;
-                }
-        }
-
-        # Whoogle
-        upstream whoogle_k8s {
-{% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
-{% endfor %}
-                keepalive 32;
-        }
-
-        server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name whoogle.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/whoogle.{{ MY_DOMAIN }}.access.log upstream_time;
-
-                location / {
-                        proxy_pass http://whoogle_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
-                }
-        }
-
-        # My site and default
+stream {
         upstream my_site_k8s {
 {% for host in groups['kubernetes'] %}
                 server {{ host }}:80;
 {% endfor %}
-                keepalive 32;
         }
 
         server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl http2;
-                server_name {{ MY_DOMAIN }} *.{{ MY_DOMAIN }};
-                access_log  /var/log/nginx/{{ MY_DOMAIN }}.access.log upstream_time;
+                listen     {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:443 ssl;
+                error_log  /var/log/nginx/{{ MY_DOMAIN }}.error.log;
+                proxy_pass my_site_k8s;
 
-                location / {
-                        proxy_pass http://my_site_k8s;
-                        proxy_set_header Host $http_host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                        proxy_set_header X-Forwarded-Proto $scheme;
+                ##
+                # SSL Settings
+                ##
 
-                        # kill cache
-                        add_header Last-Modified $date_gmt;
-                        add_header Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
-                        if_modified_since off;
-                        expires off;
-                        etag off;
-                }
+                ssl_protocols TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+                ssl_session_cache   shared:SSL:10m;
+                ssl_session_timeout 24h;
+                ssl_handshake_timeout 30s;
+                ssl_certificate     /etc/letsencrypt/live/{{ MY_DOMAIN }}/fullchain.pem;
+                ssl_certificate_key /etc/letsencrypt/live/{{ MY_DOMAIN }}/privkey.pem;
         }
-}
 
 # Wireguard traffic
-
-stream {
         upstream wireguard_k8s {
 {% for host in groups['kubernetes'] %}
                 server {{ host }}:51820;

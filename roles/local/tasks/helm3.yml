@@ -25,6 +25,11 @@
   ignore_errors: yes
   changed_when: False
 
+- name: Uninstall old helm secrets
+  command: helm plugin uninstall secrets
+  when: helm_secrets_installed.rc !=0
+  ignore_errors: yes
+
 - name: Install helm secrets
   command: helm plugin install https://github.com/jkroepke/helm-secrets --version {{ HELM_SECRETS_VERSION }}
   when: helm_secrets_installed.rc !=0
@@ -39,6 +44,11 @@
   register: helm_diff_installed
   ignore_errors: yes
   changed_when: False
+
+- name: Uninstall old helm diff
+  command: helm plugin uninstall diff
+  when: helm_diff_installed.rc !=0
+  ignore_errors: yes
 
 - name: Install helm diff
   command: helm plugin install https://github.com/databus23/helm-diff --version {{ HELM_DIFF_VERSION }}

@@ -36,27 +36,6 @@
     recurse: yes
     force: yes
 
-- name: Set permissions for mattermost
-  file:
-    path: '{{ item }}'
-    state: directory
-    owner: '2000'
-    group: '2000'
-    recurse: yes
-    force: yes
-  with_items:
-    - /mnt/data/mattermost-data
-    - /mnt/data/mattermost-plugins
-
-- name: Set permissions for mattermost mysql volume
-  file:
-    path: /mnt/data/mattermost-mysql
-    state: directory
-    owner: '2001'
-    group: '2001'
-    recurse: yes
-    force: yes
-
 - name: Populate Persistent Volume for syncthing
   copy:
     src: syncthing/config

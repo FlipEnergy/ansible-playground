@@ -54,7 +54,7 @@ all:
     INFLUXDB_URL: http://influxdb.tgp
     K3S_MASTER: k8s-node-1.tgp
     K3S_VERSION: v1.20.0+k3s2
-    K9S_VERSION: 0.24.7
+    K9S_VERSION: 0.24.8
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     PIHOLE_SERVER_IP: 192.168.1.11

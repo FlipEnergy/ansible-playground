@@ -16,12 +16,6 @@ cheat() {
     curl cheat.sh/${1}
 }
 
-mount_offsite() {
-  sudo mkdir -p /mnt/f
-  sudo mount -t drvfs F: /mnt/f
-}
-
-
 # Git branch in prompt.
 
 parse_git_branch() {

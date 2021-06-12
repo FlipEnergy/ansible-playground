@@ -6,10 +6,6 @@
   become: yes
   when: '"nginx" in ADD_ROLES'
 
-- import_tasks: fail2ban.yml
-  become: yes
-  when: '"nginx" in ADD_ROLES'
-
 - import_tasks: nginx_stats_lcd.yml
   when: '"nginx_stats_lcd" in ADD_ROLES'
   become: yes

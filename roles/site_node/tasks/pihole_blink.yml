@@ -26,6 +26,12 @@
     - ansible_architecture == 'armv6l'
     - blink_version_command.rc != 0 or BLINK_VERSION != blink_version
 
+- name: Fail for aarch64
+  fail:
+    msg: Blink1 does not support aarch64
+  when:
+    - ansible_architecture == 'aarch64'
+
 - name: Install blink1-tool
   command: mv -f /tmp/blink1-tool /usr/local/bin/blink1-tool
   when:

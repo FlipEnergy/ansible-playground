@@ -34,9 +34,23 @@
 #     msg: "{{ hostvars[K3S_MASTER]['k3s_token_command'].stdout }}"
 
 - name: install k3s via official script (nodes)
-  shell: "curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_URL=https://{{ K3S_MASTER }}:6443 K3S_TOKEN={{ hostvars[K3S_MASTER]['k3s_token_command'].stdout }} sh -"
+  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_URL=https://{{ K3S_MASTER }}:6443 K3S_TOKEN={{ hostvars[K3S_MASTER]['k3s_token_command'].stdout }} sh -
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname != K3S_MASTER
   args:
     warn: False
+
+- name: Check if coredns configmap is updated
+  shell: kubectl get configmap -n kube-system coredns -o json | grep /etc/resolv.conf
+  register: coredns_pihole_server_grep
+  ignore_errors: yes
+  changed_when: False
+  when:
+    - inventory_hostname == K3S_MASTER
+
+- name: set dns nameserver for coredns
+  shell: kubectl get configmap -n kube-system coredns -o json | sed 's+/etc/resolv.conf+{{ PIHOLE_SERVER_IP }}+g' | kubectl apply -f -
+  when:
+    - inventory_hostname == K3S_MASTER
+    - coredns_pihole_server_grep.rc == 0

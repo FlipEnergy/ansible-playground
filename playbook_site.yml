@@ -3,6 +3,7 @@
 - hosts:
     - pihole
     - loadbalancer
+    - nfs
     - kubernetes
   roles:
     - common

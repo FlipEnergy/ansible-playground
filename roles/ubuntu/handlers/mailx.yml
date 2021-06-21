@@ -1,8 +1,0 @@
-- name: Restart postfix service
-  service:
-    name: postfix
-    state: restarted
-
-- name: New Alias handler
-  command: newaliases
-  notify: Restart postfix service

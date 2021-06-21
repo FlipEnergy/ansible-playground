@@ -15,6 +15,3 @@
     name: systemd-logind
     state: restarted
   become: yes
-
-- import_tasks: mailx.yml
-  become: yes

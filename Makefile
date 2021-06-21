@@ -25,7 +25,7 @@ init:
 	sudo apt-add-repository --yes --update ppa:ansible/ansible
 	sudo apt install ansible
 
-ping-servers:
+ping:
 	ansible servers -i group_vars/site.yml -m ping
 
 apt-upgrade-servers:

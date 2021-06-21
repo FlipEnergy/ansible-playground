@@ -23,7 +23,3 @@
     - install_canonical_livepatch|default(false)|bool
     - "'Machine is not enabled' in livepatch_status.stdout"
   become: yes
-
-- import_tasks: mailx.yml
-  when: ansible_distribution == 'Ubuntu'
-  become: yes

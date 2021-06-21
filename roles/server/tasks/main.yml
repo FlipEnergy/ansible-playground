@@ -47,6 +47,7 @@
       - iotop
       - screen
       - resolvconf
+      - procinfo
       - traceroute
     update_cache: yes
   become: yes

@@ -27,6 +27,15 @@
     - /mnt/data/freshrss-data
     - /mnt/data/owncast-data
 
+- name: Set permissions for haste volume
+  file:
+    path: /mnt/data/haste-data
+    state: directory
+    owner: '568'
+    group: '568'
+    recurse: yes
+    force: yes
+
 - name: Set permissions for influxdb volume
   file:
     path: /mnt/data/influxdb

@@ -55,9 +55,12 @@
 
 - name: Set permissions for user 1000 owned dirs
   file:
-    path: /mnt/data/syncthing-data
+    path: '{{ item }}'
     state: directory
     owner: '1000'
     group: '1000'
     recurse: yes
     force: yes
+  with_items:
+    - /mnt/data/syncthing-data
+    - /mnt/data/sharry-data

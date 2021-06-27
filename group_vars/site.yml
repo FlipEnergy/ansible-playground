@@ -37,13 +37,13 @@ all:
               vars:
                 ADD_ROLES:
                   - k3s_node
-            arm64:
-              hosts:
-                k8s-node-3:
-              vars:
-                ADD_ROLES:
-                  - k3s_node
-                  - node_stats_lcd
+            # arm64:
+            #   hosts:
+            #     k8s-node-3:
+            #   vars:
+            #     ADD_ROLES:
+            #       - k3s_node
+            #       - node_stats_lcd
 
   # Defaults
   vars:

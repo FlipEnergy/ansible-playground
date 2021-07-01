@@ -9,7 +9,7 @@
     key: '{{ item }}'
   with_items:
     - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCsVI8KsVO0yr+E3/Imc6K94wdsLTXk5xXMT8qEuZ3brsvWLVtbVbgDdPppWY5r/XzS6pPvyCAvcAg04fuBldrJOMNEQqSUzDe7Vz8EBbfUzHa6H3LIVPxhJ8uCa6+iwgAcc6nSU5NxqQkDbySRsE9MnfAHONplcjh6w6K1Ds5dPefddlKvZ/whl30EbRYwz53/vHck3t0xClhB4KsqIqLabXLmpW+8ObD0WkEARLirFNXl+UYQiDkmZYKSYq6cQHvpEeifIWZGdt61PolLiKZDoF3o51lnlWgx2C3XSnbE/cwI1JYZ84vpCRou4knKNVH9q0aTTFchzg1kiUt8qkgAyuYxlvgK6v8Aq6j9zpqcb+mhnswH2jhiCvKXemczFqTdXyif/eeHhjhvXFla2ePnr7cB/1emyuzWc4mmmZeaqYK3Yz4j/rkZk0w3HkG3FbBvvAYc9JBnpBS2/WwQfXb4h+6NZ/80J07wl/7qE/HxE15qvwSE31BgvJi+S9SvfxuO8oq+EZwSz6ngvgR2JZH++XoEZu9iLe25DF+MlIwpfo32lOeE/R/eFIbaZQrNiA7KL7vUctu/jH6pdR7BMnHUHYCnlU7UjrafI5Cn7XZQgqEB2JYZWN9ZAiaLi9irrMWdTNSU7t2Dsrpuv8ngJkLHJW+qYDuKCN9w14O4Uximew== my_desktop'
-    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBYUs8i6hhcSTT8mTDuByqSoznBrn9zfMr85XLw5ixKj surface2'
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBYUs8i6hhcSTT8mTDuByqSoznBrn9zfMr85XLw5ixKj surfacego2'
     - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILvkVEszd/+8vzRQtynb1HsE2keFWcAqI8gRRodboLB/ surface3'
 
 - name: Disable password ssh login

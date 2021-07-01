@@ -34,6 +34,10 @@ backup() {
   set +x
 }
 
+sync_picframe() {
+  rsync -avh --delete '/mnt/d/Syncthing Data/Camera' pi@piframe:/home/pi/Pictures/
+}
+
 if [ "$EUID" -ne 0 ]
   then echo "Run as root!"
   exit 1
@@ -46,6 +50,9 @@ case $1 in
     ;;
   -w|--warm)
     backup /mnt/e
+    ;;
+  -p|--picframe)
+    sync_picframe
     ;;
   -h|--help|*)
     usage

@@ -279,9 +279,4 @@
 # Read metrics of Nginx
 [[inputs.nginx]]
   urls = ["http://localhost:9090/nginx_status"]
-
-# Read metrics from fail2ban.
-[[inputs.fail2ban]]
-  ## Use sudo to run fail2ban-client
-  use_sudo = true
 {% endif %}

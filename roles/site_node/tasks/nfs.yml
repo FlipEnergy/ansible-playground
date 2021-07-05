@@ -64,3 +64,4 @@
   with_items:
     - /mnt/data/syncthing-data
     - /mnt/data/sharry-data
+    - /mnt/data/prometheus-data

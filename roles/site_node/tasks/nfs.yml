@@ -63,5 +63,6 @@
     force: yes
   with_items:
     - /mnt/data/syncthing-data
+    - /mnt/data/syncthing-data/gonic-data
     - /mnt/data/sharry-data
     - /mnt/data/prometheus-data/prometheus-db

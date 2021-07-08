@@ -33,13 +33,14 @@ all:
             x86:
               hosts:
                 k8s-node-1:
-                k8s-node-2:
+                # k8s-node-2:
+                k8s-node-3:
               vars:
                 ADD_ROLES:
                   - k3s_node
             # arm64:
             #   hosts:
-            #     k8s-node-3:
+            #     k8s-node-4:
             #   vars:
             #     ADD_ROLES:
             #       - k3s_node

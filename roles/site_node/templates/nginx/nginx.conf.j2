@@ -125,4 +125,19 @@ stream {
                 proxy_pass      wireguard_k8s;
                 proxy_timeout   1s;
         }
+
+# LAN traffic
+        upstream k3s_nodes {
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:6443;
+{% endfor %}
+        }
+
+        server {
+                listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:6443;
+                error_log /var/log/nginx/k3s.error.log;
+
+                proxy_pass      k3s_nodes;
+                proxy_timeout   10s;
+        }
 }

@@ -15,6 +15,10 @@ mount_offsite() {
   mount -t drvfs F: /mnt/f
 }
 
+unmount_offsite() {
+  umount /mnt/f
+}
+
 backup() {
   DEST_DIR=$1
   OPTIONS=$2
@@ -47,6 +51,7 @@ case $1 in
   -c|--cold)
     mount_offsite
     backup /mnt/f '--exclude Clare'
+    unmount_offsite
     ;;
   -w|--warm)
     backup /mnt/e

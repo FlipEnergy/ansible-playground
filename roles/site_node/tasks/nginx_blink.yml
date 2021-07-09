@@ -1,21 +1,21 @@
 - name: Install blink1-tool
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://github.com/todbot/blink1-tool/releases/download/v2.1.0/blink1-tool-v2.1.0-linux-x86_64.zip
     dest: /usr/local/bin
     remote_src: yes
 
 - name: Create /opt/blink1
-  file:
+  ansible.builtin.file:
     path: /opt/blink1
     state: directory
 
 - name: Place nginx_blink.sh script
-  copy:
+  ansible.builtin.copy:
     src: nginx_blink/nginx_blink.sh
     dest: /opt/blink1/nginx_blink.sh
 
 - name: Place nginx_blink.service
-  copy:
+  ansible.builtin.copy:
     src: nginx_blink/nginx_blink.service
     dest: /etc/systemd/system/nginx_blink.service
 

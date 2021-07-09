@@ -1,7 +1,7 @@
 # install helm3 and plugins
 
 - name: Check if helm is installed
-  command: helm version --short
+  ansible.builtin.command: helm version --short
   register: helm_version_command
   ignore_errors: yes
   changed_when: False
@@ -14,42 +14,42 @@
     cacheable: yes
 
 - name: Install Helm3
-  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
   when: helm_version_command.rc != 0 or HELM_VERSION != helm_version
   args:
     warn: False
 
 - name: Check if helm secrets version is installed
-  shell: helm plugin list | grep secrets | grep {{ HELM_SECRETS_VERSION }}
+  ansible.builtin.shell: helm plugin list | grep secrets | grep {{ HELM_SECRETS_VERSION }}
   register: helm_secrets_installed
   ignore_errors: yes
   changed_when: False
 
 - name: Uninstall old helm secrets
-  command: helm plugin uninstall secrets
+  ansible.builtin.command: helm plugin uninstall secrets
   when: helm_secrets_installed.rc !=0
   ignore_errors: yes
 
 - name: Install helm secrets
-  command: helm plugin install https://github.com/jkroepke/helm-secrets --version {{ HELM_SECRETS_VERSION }}
+  ansible.builtin.command: helm plugin install https://github.com/jkroepke/helm-secrets --version {{ HELM_SECRETS_VERSION }}
   when: helm_secrets_installed.rc !=0
 
 - name: Install my .sops.yaml
-  copy:
+  ansible.builtin.copy:
     src: sops.yaml
     dest: /home/{{ USER }}/.sops.yaml
 
 - name: Check if helm diff is installed
-  shell: helm plugin list | grep diff | grep {{ HELM_DIFF_VERSION }}
+  ansible.builtin.shell: helm plugin list | grep diff | grep {{ HELM_DIFF_VERSION }}
   register: helm_diff_installed
   ignore_errors: yes
   changed_when: False
 
 - name: Uninstall old helm diff
-  command: helm plugin uninstall diff
+  ansible.builtin.command: helm plugin uninstall diff
   when: helm_diff_installed.rc !=0
   ignore_errors: yes
 
 - name: Install helm diff
-  command: helm plugin install https://github.com/databus23/helm-diff --version {{ HELM_DIFF_VERSION }}
+  ansible.builtin.command: helm plugin install https://github.com/databus23/helm-diff --version {{ HELM_DIFF_VERSION }}
   when: helm_diff_installed.rc !=0

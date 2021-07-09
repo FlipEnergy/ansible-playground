@@ -1,10 +1,10 @@
 - name: Check if swap is enabled
-  command: swapon --show
+  ansible.builtin.command: swapon --show
   register: swap_files
   changed_when: False
 
 - name: Disable swap for k8s
-  command: swapoff -a
+  ansible.builtin.command: swapoff -a
   when: swap_files.stdout != ""
 
 - name: Remove swap from fstab
@@ -14,6 +14,6 @@
     replace: '# \1'
 
 - name: Install NFS common
-  apt:
+  ansible.builtin.apt:
     name: nfs-common
     update_cache: yes

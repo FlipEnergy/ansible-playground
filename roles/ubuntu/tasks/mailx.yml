@@ -1,38 +1,38 @@
 - name: Install mailx
-  apt:
+  ansible.builtin.apt:
     pkg: bsd-mailx
     update_cache: yes
 
 - name: Place mailrc
-  template:
+  ansible.builtin.template:
     src: mailrc
     dest: /root/.mailrc
     mode: 0600
 
 - name: Place postfix gmail token
-  template:
+  ansible.builtin.template:
     src: postfix_sasl_passwd
     dest: /etc/postfix/sasl_passwd
     mode: 0600
   notify: Restart postfix service
 
 - name: Check if postfix_sasl_passwd is hashsed
-  stat:
+  ansible.builtin.stat:
     path: /etc/postfix/sasl_passwd.db
   register: sasl_passwd_hashed
 
 - name: Hash postfix password
-  command: postmap /etc/postfix/sasl_passwd
+  ansible.builtin.command: postmap /etc/postfix/sasl_passwd
   when: not sasl_passwd_hashed.stat.exists
 
 - name: Place postfix main conf
-  template:
+  ansible.builtin.template:
     src: postfix_main.cf
     dest: /etc/postfix/main.cf
   notify: Restart postfix service
 
 - name: set default email for root
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/aliases
     line: "root: {{ MY_EMAIL }}"
   notify: New Alias handler

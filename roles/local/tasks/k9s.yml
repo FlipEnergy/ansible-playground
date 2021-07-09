@@ -1,7 +1,7 @@
 # Install and setup k9s
 
 - name: Check if K9s version is installed
-  shell: k9s version | grep Version
+  ansible.builtin.shell: k9s version | grep Version
   register: k9s_version_command
   ignore_errors: yes
   changed_when: False
@@ -15,14 +15,14 @@
   when: k9s_version_command.rc == 0
 
 - name: Install K9s
-  unarchive:
+  ansible.builtin.unarchive:
     src: "https://github.com/derailed/k9s/releases/download/v{{ K9S_VERSION }}/k9s_Linux_x86_64.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
   when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version
 
 - name: Set execute permissions for k9s
-  file:
+  ansible.builtin.file:
     path: /usr/local/bin/k9s
     mode: u+x
   when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version

@@ -1,13 +1,13 @@
 - import_tasks: lcd_base.yml
 
 - name: Copy nginx_stats_lcd.py script
-  copy:
+  ansible.builtin.copy:
     src: nginx_stats_lcd/nginx_stats_lcd.py
     dest: /opt/lcd/nginx_stats_lcd.py
   notify: Restart nginx_stats_lcd service
 
 - name: Copy nginx_stats_lcd service
-  copy:
+  ansible.builtin.copy:
     src: nginx_stats_lcd/nginx_stats_lcd.service
     dest: /etc/systemd/system/nginx_stats_lcd.service
 

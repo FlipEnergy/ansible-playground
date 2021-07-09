@@ -4,6 +4,7 @@ export EDITOR="$VISUAL"
 
 alias k='kubectl'
 alias b='bat'
+alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
 
 cheat() {
     curl cheat.sh/${1}

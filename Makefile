@@ -20,10 +20,7 @@ del-dec-secrets:
 	rm -f group_vars/secrets.dec.yml
 
 init:
-	sudo apt update
-	sudo apt install software-properties-common
-	sudo apt-add-repository --yes --update ppa:ansible/ansible
-	sudo apt install ansible=2.9.23-1ppa~bionic
+	python3.8 -m pip install --user ansible==4.2.0
 
 ping:
 	ansible servers -i group_vars/site.yml -m ping

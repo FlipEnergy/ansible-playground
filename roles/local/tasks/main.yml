@@ -1,6 +1,6 @@
 
 - name: Install my bash_profile
-  copy:
+  ansible.builtin.copy:
     src: bash_profile
     dest: /home/{{ USER }}/.bash_profile
 

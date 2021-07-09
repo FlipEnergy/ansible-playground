@@ -1,13 +1,13 @@
 - import_tasks: lcd_base.yml
 
 - name: Copy node_stats_lcd.py script
-  copy:
+  ansible.builtin.copy:
     src: node_stats_lcd/node_stats_lcd.py
     dest: /opt/lcd/node_stats_lcd.py
   notify: Restart node_stats_lcd service
 
 - name: Copy node_stats_lcd service
-  copy:
+  ansible.builtin.copy:
     src: node_stats_lcd/node_stats_lcd.service
     dest: /etc/systemd/system/node_stats_lcd.service
 

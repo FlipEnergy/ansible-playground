@@ -1,5 +1,5 @@
 - name: Check if sops version is installed
-  command: sops --version
+  ansible.builtin.command: sops --version
   register: sops_version_command
   ignore_errors: yes
   changed_when: False
@@ -13,7 +13,7 @@
   when: sops_version_command.rc == 0
 
 - name: Download sops x86_64
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/mozilla/sops/releases/download/v{{ SOPS_VERSION }}/sops-v{{ SOPS_VERSION }}.linux
     dest: /usr/local/bin/sops
     mode: '0755'

@@ -1,5 +1,5 @@
 - name: install bpytop dependencies
-  apt:
+  ansible.builtin.apt:
     pkg:
       - gcc
       - python3-dev
@@ -14,7 +14,7 @@
     virtualenv_command: /usr/bin/python3 -m venv
 
 - name: link bpytop
-  file:
+  ansible.builtin.file:
     src: /opt/bpytop/venv/bin/bpytop
     dest: /usr/local/bin/bpytop
     state: link

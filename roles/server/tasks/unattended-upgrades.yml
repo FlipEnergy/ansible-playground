@@ -1,31 +1,31 @@
 - name: Install unattended-upgrades
-  apt:
+  ansible.builtin.apt:
     name: unattended-upgrades
     state: '{{ UNATTENDED_UPGRADES_STATE }}'
     update_cache: yes
   become: yes
 
 - name: Place unattended-upgrades conf
-  template:
+  ansible.builtin.template:
     src: 50unattended-upgrades
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
   notify: Restart unattended-upgrades service
   when: UNATTENDED_UPGRADES_STATE == 'present'
 
 - name: Place apt conf
-  copy:
+  ansible.builtin.copy:
     src: 20auto-upgrades
     dest: /etc/apt/apt.conf.d/20auto-upgrades
   when: UNATTENDED_UPGRADES_STATE == 'present'
 
 - name: Remove unattended-upgrades conf
-  file:
+  ansible.builtin.file:
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
     state: absent
   when: UNATTENDED_UPGRADES_STATE == 'absent'
 
 - name: Remove apt conf
-  file:
+  ansible.builtin.file:
     dest: /etc/apt/apt.conf.d/20auto-upgrades
     state: absent
   when: UNATTENDED_UPGRADES_STATE == 'absent'

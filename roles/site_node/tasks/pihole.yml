@@ -1,10 +1,10 @@
 - name: Install unbound
-  apt:
+  ansible.builtin.apt:
     name: unbound
     update_cache: yes
 
 - name: Setup unbound conf for pihole
-  copy:
+  ansible.builtin.copy:
     src: pihole/unbound_pihole_conf
     dest: /etc/unbound/unbound.conf.d/pi-hole.conf
     owner: root
@@ -13,20 +13,20 @@
   notify: Restart unbound
 
 - name: Check if pihole is installed
-  command: pihole
+  ansible.builtin.command: pihole
   register: pihole_command
   ignore_errors: yes
   changed_when: False
 
 - name: "Download Pi-Hole installer"
-  get_url:
+  ansible.builtin.get_url:
     url: https://install.pi-hole.net
     dest: /tmp/install-pihole.sh
     mode: 0740
   when: pihole_command.rc != 0
 
 - name: Create pihole configuration directory
-  file:
+  ansible.builtin.file:
     name: /etc/pihole
     state: directory
     owner: pihole
@@ -35,7 +35,7 @@
   when: pihole_command.rc != 0
 
 - name: Create pihole configuration
-  template:
+  ansible.builtin.template:
     src: pihole/pihole_setupVars.conf
     dest: /etc/pihole/setupVars.conf
     owner: root
@@ -44,11 +44,11 @@
   when: pihole_command.rc != 0
 
 - name: Install Pi-Hole
-  shell: "/tmp/install-pihole.sh --unattended"
+  ansible.builtin.shell: "/tmp/install-pihole.sh --unattended"
   when: pihole_command.rc != 0
 
 - name: Setup crontab config
-  copy:
+  ansible.builtin.copy:
     src: pihole/pihole_cron_config
     dest: /etc/cron.d/pihole
     owner: root

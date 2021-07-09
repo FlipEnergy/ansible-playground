@@ -6,7 +6,7 @@
   become: yes
 
 - name: Install hstr
-  apt:
+  ansible.builtin.apt:
     name: hstr
     update_cache: yes
   become: yes

@@ -1,15 +1,15 @@
 - name: Install Nginx
-  apt:
+  ansible.builtin.apt:
     pkg: nginx
     update_cache: yes
 
 - name: remove default site
-  file:
+  ansible.builtin.file:
     dest: /etc/nginx/sites-enabled/default
     state: absent
 
 - name: update file descriptor limits
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/security/limits.conf
     line: '{{ item }}'
   with_items:
@@ -19,7 +19,7 @@
   become: yes
 
 - name: Place nginx conf file
-  template:
+  ansible.builtin.template:
     src: nginx/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
   notify: Restart nginx service
@@ -31,6 +31,6 @@
     enabled: yes
 
 - name: Chmod on logrorate
-  file:
+  ansible.builtin.file:
     dest: /etc/logrotate.d/nginx
     mode: 0644

@@ -2,7 +2,7 @@
 # modified from https://www.rechberger.io/tutorial-install-docker-using-ansible-on-a-remote-server/
 
 - name: Install packages needed for Docker
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - ca-certificates
@@ -16,7 +16,7 @@
     url: https://download.docker.com/linux/ubuntu/gpg
 
 - name: Save the current Ubuntu release version into a variable
-  command: lsb_release -cs
+  ansible.builtin.command: lsb_release -cs
   register: ubuntu_version
 
 - name: Add Docker Repository
@@ -24,7 +24,7 @@
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable
 
 - name: Install Docker
-  apt:
+  ansible.builtin.apt:
     name: docker-ce
     update_cache: yes
     force_apt_get: yes
@@ -47,13 +47,13 @@
     append: yes
 
 - name: Install Docker Compose
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 0755
 
 - name: Install Ctop
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
     dest: /usr/local/bin/ctop
     mode: 0755

@@ -1,5 +1,5 @@
 - name: Install software-properties-common
-  apt:
+  ansible.builtin.apt:
     pkg: software-properties-common
     update_cache: yes
 
@@ -8,7 +8,7 @@
     repo: ppa:certbot/certbot
 
 - name: Install certbot
-  apt:
+  ansible.builtin.apt:
     pkg: certbot
     update_cache: yes
 

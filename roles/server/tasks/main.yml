@@ -1,5 +1,5 @@
 - name: Install my bash_profile
-  copy:
+  ansible.builtin.copy:
     src: bash_profile
     dest: /home/{{ USER }}/.bash_profile
 
@@ -13,7 +13,7 @@
     - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILvkVEszd/+8vzRQtynb1HsE2keFWcAqI8gRRodboLB/ surface3'
 
 - name: Disable password ssh login
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^PasswordAuthentication yes'
     line: PasswordAuthentication no
@@ -21,21 +21,21 @@
   notify: Restart sshd service
 
 - name: Place logrotate conf
-  copy:
+  ansible.builtin.copy:
     src: logrotate.conf
     dest: /etc/logrotate.conf
     mode: 0644
   become: yes
 
 - name: Symlink python -> python3
-  file:
+  ansible.builtin.file:
     src: /usr/bin/python3
     dest: /usr/bin/python
     state: link
   become: yes
 
 - name: Install tools
-  apt:
+  ansible.builtin.apt:
     pkg:
       - curl
       - dnsutils
@@ -48,7 +48,7 @@
   become: yes
 
 - name: Place resolve conf
-  template:
+  ansible.builtin.template:
     src: resolvconf_head.j2
     dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
@@ -62,7 +62,7 @@
   become: yes
 
 - name: Disable sleep on lid close
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/systemd/logind.conf
     line: '{{ item }}'
   with_items:
@@ -72,7 +72,7 @@
   become: yes
 
 - name: Place rc.local
-  copy:
+  ansible.builtin.copy:
     src: rc.local
     dest: /etc/rc.local
     owner: root

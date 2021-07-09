@@ -1,5 +1,5 @@
 - name: Check if K3s version is installed
-  command: k3s --version
+  ansible.builtin.command: k3s --version
   register: k3s_version_command
   ignore_errors: yes
   changed_when: False
@@ -17,7 +17,7 @@
 #     msg: "{{ k3s_version }}"
 
 - name: install k3s via official script (first node)
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN={{ K3S_TOKEN }} INSTALL_K3S_EXEC="server --disable=traefik --cluster-init" sh -s -
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN={{ K3S_TOKEN }} INSTALL_K3S_EXEC="server --disable=traefik --cluster-init" sh -s -
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname == K3S_MASTER
@@ -25,7 +25,7 @@
     warn: False
 
 - name: install k3s via official script (rest of the nodes)
-  shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN={{ K3S_TOKEN }} K3S_URL=https://{{ K3S_MASTER }}:6443 INSTALL_K3S_EXEC="server --disable=traefik" sh -s -
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN={{ K3S_TOKEN }} K3S_URL=https://{{ K3S_MASTER }}:6443 INSTALL_K3S_EXEC="server --disable=traefik" sh -s -
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname != K3S_MASTER
@@ -33,7 +33,7 @@
     warn: False
 
 - name: Check if coredns configmap is updated
-  shell: kubectl get configmap -n kube-system coredns -o json | grep /etc/resolv.conf
+  ansible.builtin.shell: kubectl get configmap -n kube-system coredns -o json | grep /etc/resolv.conf
   register: coredns_pihole_server_grep
   ignore_errors: yes
   changed_when: False
@@ -41,7 +41,7 @@
     - inventory_hostname == K3S_MASTER
 
 - name: set dns nameserver for coredns
-  shell: kubectl get configmap -n kube-system coredns -o json | sed 's+/etc/resolv.conf+{{ PIHOLE_SERVER_IP }}+g' | kubectl apply -f -
+  ansible.builtin.shell: kubectl get configmap -n kube-system coredns -o json | sed 's+/etc/resolv.conf+{{ PIHOLE_SERVER_IP }}+g' | kubectl apply -f -
   when:
     - inventory_hostname == K3S_MASTER
     - coredns_pihole_server_grep.rc == 0

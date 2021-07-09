@@ -1,5 +1,5 @@
 - name: Install i2c dependencies tools
-  apt:
+  ansible.builtin.apt:
     pkg:
       - python3-venv
       - i2c-tools

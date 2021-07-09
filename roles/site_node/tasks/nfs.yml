@@ -1,21 +1,21 @@
 - name: Install NFS Server
-  apt:
+  ansible.builtin.apt:
     pkg: nfs-kernel-server
     update_cache: yes
 
 - name: Create /mnt/data
-  file:
+  ansible.builtin.file:
     path: /mnt/data
     state: directory
 
 - name: place exports file
-  copy:
+  ansible.builtin.copy:
     src: nfs/exports
     dest: /etc/exports
   notify: Update Exports
 
 - name: Set permissions for squash root nfs clients
-  file:
+  ansible.builtin.file:
     path: '{{ item }}'
     state: directory
     owner: nobody
@@ -28,7 +28,7 @@
     - /mnt/data/owncast-data
 
 - name: Set permissions for haste volume
-  file:
+  ansible.builtin.file:
     path: /mnt/data/haste-data
     state: directory
     owner: '568'
@@ -37,7 +37,7 @@
     force: yes
 
 - name: Set permissions for influxdb volume
-  file:
+  ansible.builtin.file:
     path: /mnt/data/influxdb
     state: directory
     owner: '501'
@@ -46,7 +46,7 @@
     force: yes
 
 - name: Populate Persistent Volume for syncthing
-  copy:
+  ansible.builtin.copy:
     src: syncthing/config
     dest: /mnt/data/syncthing-data/config
     force: no
@@ -54,7 +54,7 @@
     group: '1000'
 
 - name: Set permissions for user 1000 owned dirs
-  file:
+  ansible.builtin.file:
     path: '{{ item }}'
     state: directory
     owner: '1000'

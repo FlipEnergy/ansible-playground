@@ -1,4 +1,4 @@
-- name: Add Telegraf apt Key
+- name: Add Telegraf ansible.builtin.apt Key
   apt_key:
     url: https://repos.influxdata.com/influxdb.key
 
@@ -7,7 +7,7 @@
     repo: deb https://repos.influxdata.com/ubuntu bionic stable
 
 - name: Install Telegraf
-  apt:
+  ansible.builtin.apt:
     name: telegraf
     update_cache: yes
 
@@ -18,7 +18,7 @@
     enabled: yes
 
 - name: Copy Telegraf Conf
-  template:
+  ansible.builtin.template:
     src: telegraf.conf.j2
     dest: /etc/telegraf/telegraf.conf
     owner: root

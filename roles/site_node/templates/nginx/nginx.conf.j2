@@ -1,12 +1,11 @@
 user www-data;
-worker_processes auto;
+worker_processes 4;
 pid /run/nginx.pid;
-worker_rlimit_nofile 30000;
+worker_rlimit_nofile 40000;
 include /etc/nginx/modules-enabled/*.conf;
 
 events {
-        worker_connections 16384;
-        # multi_accept on;
+    worker_connections 8192;
 }
 
 http {
@@ -79,8 +78,9 @@ http {
                 }
         }
 
+        # Redirect 80 -> 443 (External)
         server {
-                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80 default_server;
+                listen      {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8080 default_server;
                 server_name _;
 
                 return 301 https://$host$request_uri;
@@ -88,9 +88,11 @@ http {
 }
 
 stream {
+        # HTTPS traffic (External)
         upstream my_site_k8s {
+                least_conn;
 {% for host in groups['kubernetes'] %}
-                server {{ host }}:80;
+                server {{ host }}:80 max_fails=3 fail_timeout=5s;
 {% endfor %}
         }
 
@@ -111,10 +113,11 @@ stream {
                 ssl_certificate_key /etc/letsencrypt/live/{{ MY_DOMAIN }}/privkey.pem;
         }
 
-# Wireguard traffic
+        # Wireguard traffic (External)
         upstream wireguard_k8s {
+                least_conn;
 {% for host in groups['kubernetes'] %}
-                server {{ host }}:51820;
+                server {{ host }}:51820 max_fails=3 fail_timeout=5s;
 {% endfor %}
         }
 
@@ -126,18 +129,67 @@ stream {
                 proxy_timeout   1s;
         }
 
-# LAN traffic
-        upstream k3s_nodes {
+        # LAN traffic
+        upstream k3s_nodes_http {
+                least_conn;
 {% for host in groups['kubernetes'] %}
-                server {{ host }}:6443;
+                server {{ host }}:80 max_fails=3 fail_timeout=5s;
+{% endfor %}
+        }
+
+        server {
+                listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:80;
+                error_log /var/log/nginx/k8s_http.error.log;
+
+                proxy_pass      k3s_nodes_http;
+                proxy_timeout   10s;
+        }
+
+        # Owncast RTMP traffic
+        upstream k3s_nodes_rtmp {
+                least_conn;
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:1935 max_fails=3 fail_timeout=5s;
+{% endfor %}
+        }
+
+        server {
+                listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:1935;
+                error_log /var/log/nginx/rtmp.error.log;
+
+                proxy_pass      k3s_nodes_rtmp;
+                proxy_timeout   10s;
+        }
+
+        # K8s API traffic
+        upstream k3s_nodes {
+                least_conn;
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:6443 max_fails=3 fail_timeout=5s;
 {% endfor %}
         }
 
         server {
                 listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:6443;
-                error_log /var/log/nginx/k3s.error.log;
+                error_log /var/log/nginx/k8s_api.error.log;
 
                 proxy_pass      k3s_nodes;
+                proxy_timeout   10s;
+        }
+
+        # Influx traffic
+        upstream k3s_nodes_influx {
+                least_conn;
+{% for host in groups['kubernetes'] %}
+                server {{ host }}:8086 max_fails=3 fail_timeout=5s;
+{% endfor %}
+        }
+
+        server {
+                listen    {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:8086;
+                error_log /var/log/nginx/influx.error.log;
+
+                proxy_pass      k3s_nodes_influx;
                 proxy_timeout   10s;
         }
 }

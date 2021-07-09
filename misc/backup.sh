@@ -39,7 +39,7 @@ backup() {
 }
 
 sync_picframe() {
-  rsync -avh --delete --exclude *panorama* --exclude *.mp4 --exclude *PANO* '/mnt/d/Syncthing Data/Camera' pi@piframe:/home/pi/Pictures/
+  rsync -avh --delete --exclude *panorama* --exclude *.mp4 --exclude *PANO* '/mnt/d/Syncthing Data/Camera' pi@piframe.tgp:/home/pi/Pictures/
 }
 
 if [ "$EUID" -ne 0 ]

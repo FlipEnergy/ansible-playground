@@ -126,7 +126,7 @@ stream {
                 error_log /var/log/nginx/wireguard.error.log;
 
                 proxy_pass      wireguard_k8s;
-                proxy_timeout   1s;
+                proxy_timeout   10s;
         }
 
         # LAN traffic
@@ -142,7 +142,7 @@ stream {
                 error_log /var/log/nginx/k8s_http.error.log;
 
                 proxy_pass      k3s_nodes_http;
-                proxy_timeout   10s;
+                proxy_timeout   10m;
         }
 
         # Owncast RTMP traffic
@@ -158,7 +158,7 @@ stream {
                 error_log /var/log/nginx/rtmp.error.log;
 
                 proxy_pass      k3s_nodes_rtmp;
-                proxy_timeout   10s;
+                proxy_timeout   10m;
         }
 
         # K8s API traffic
@@ -174,7 +174,7 @@ stream {
                 error_log /var/log/nginx/k8s_api.error.log;
 
                 proxy_pass      k3s_nodes;
-                proxy_timeout   10s;
+                proxy_timeout   10m;
         }
 
         # Influx traffic
@@ -190,6 +190,6 @@ stream {
                 error_log /var/log/nginx/influx.error.log;
 
                 proxy_pass      k3s_nodes_influx;
-                proxy_timeout   10s;
+                proxy_timeout   10m;
         }
 }

@@ -23,7 +23,6 @@
     recurse: yes
     force: yes
   with_items:
-    - /mnt/data/wireguard
     - /mnt/data/freshrss-data
     - /mnt/data/owncast-data
 

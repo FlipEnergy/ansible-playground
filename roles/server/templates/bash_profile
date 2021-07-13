@@ -2,6 +2,10 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
+{% if ansible_architecture == 'x86_64' %}
+alias ls='exa'
+{% endif %}
+
 alias k='kubectl'
 alias b='bat'
 alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"

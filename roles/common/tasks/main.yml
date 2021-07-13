@@ -11,6 +11,10 @@
 - import_tasks: bat.yml
   become: yes
 
+- import_tasks: exa.yml
+  when: ansible_architecture == 'x86_64'
+  become: yes
+
 - import_tasks: hstr.yml
   when: ansible_architecture == 'x86_64'
 

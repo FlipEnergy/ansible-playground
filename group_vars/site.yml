@@ -50,7 +50,7 @@ all:
   vars:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
-    BAT_VERSION: 0.18.1
+    BAT_VERSION: 0.18.2
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0

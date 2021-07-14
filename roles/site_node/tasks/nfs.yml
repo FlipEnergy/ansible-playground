@@ -25,6 +25,7 @@
   with_items:
     - /mnt/data/freshrss-data
     - /mnt/data/owncast-data
+    - /mnt/data/dynamic
 
 - name: Set permissions for haste volume
   ansible.builtin.file:

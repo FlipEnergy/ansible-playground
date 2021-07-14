@@ -16,7 +16,8 @@ mount_offsite() {
 }
 
 unmount_offsite() {
-  umount /mnt/f
+  sync
+  umount -l /mnt/f
 }
 
 backup() {

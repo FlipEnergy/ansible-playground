@@ -27,15 +27,6 @@
     - /mnt/data/owncast-data
     - /mnt/data/dynamic
 
-- name: Set permissions for haste volume
-  ansible.builtin.file:
-    path: /mnt/data/haste-data
-    state: directory
-    owner: '568'
-    group: '568'
-    recurse: yes
-    force: yes
-
 - name: Set permissions for influxdb volume
   ansible.builtin.file:
     path: /mnt/data/influxdb
@@ -64,5 +55,4 @@
   with_items:
     - /mnt/data/syncthing-data
     - /mnt/data/syncthing-data/gonic-data
-    - /mnt/data/sharry-data
     - /mnt/data/prometheus-data/prometheus-db

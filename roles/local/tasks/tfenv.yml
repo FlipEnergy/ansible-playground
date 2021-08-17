@@ -25,6 +25,9 @@
   ansible.builtin.file:
     path: /opt/tfenv
     state: directory
+    owner: "{{ USER }}"
+    group: "{{ USER }}"
+  become: yes
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
 
 - name: Download tfenv
@@ -40,6 +43,7 @@
     dest: /usr/local/bin/tfenv
     state: link
     mode: a+x
+  become: yes
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
 
 - name: Install terraform script
@@ -48,4 +52,5 @@
     dest: /usr/local/bin/terraform
     state: link
     mode: a+x
+  become: yes
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version

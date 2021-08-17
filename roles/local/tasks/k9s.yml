@@ -24,5 +24,5 @@
 - name: Set execute permissions for k9s
   ansible.builtin.file:
     path: /usr/local/bin/k9s
-    mode: u+x
+    mode: a+x
   when: k9s_version_command.rc != 0 or K9S_VERSION != k9s_version

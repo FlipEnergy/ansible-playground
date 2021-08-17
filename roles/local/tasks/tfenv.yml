@@ -1,0 +1,51 @@
+# Install and setup k9s
+
+- name: Check if tfenv version is installed
+  ansible.builtin.shell: tfenv 2>&1 | grep tfenv
+  register: tfenv_version_command
+  ignore_errors: yes
+  changed_when: False
+
+- name: set tfenv version fact
+  set_fact:
+    tfenv_version: "{{ tfenv_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: '[0-9]+\.[0-9]+\.[0-9]+'
+    cacheable: yes
+  when: tfenv_version_command.rc == 0
+
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: tfenv_{{ TFENV_VERSION }}
+  register: tfenv_tmpdir
+  when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
+
+- name: Create /opt/tfenv
+  ansible.builtin.file:
+    path: /opt/tfenv
+    state: directory
+  when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
+
+- name: Download tfenv
+  ansible.builtin.unarchive:
+    src: https://github.com/tfutils/tfenv/archive/refs/tags/v{{ TFENV_VERSION }}.zip
+    dest: /opt/tfenv
+    remote_src: yes
+  when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
+
+- name: Install tfenv script
+  ansible.builtin.file:
+    src: /opt/tfenv/tfenv-{{ TFENV_VERSION }}/bin/tfenv
+    dest: /usr/local/bin/tfenv
+    state: link
+    mode: a+x
+  when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
+
+- name: Install terraform script
+  ansible.builtin.file:
+    src: /opt/tfenv/tfenv-{{ TFENV_VERSION }}/bin/terraform
+    dest: /usr/local/bin/terraform
+    state: link
+    mode: a+x
+  when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version

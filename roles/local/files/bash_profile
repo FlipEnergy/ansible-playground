@@ -13,6 +13,7 @@ alias a='ansible -i group_vars/site.yml'
 alias b='bat'
 alias f='fly -t homelab'
 alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
+alias t='terraform'
 
 cheat() {
     curl cheat.sh/${1}

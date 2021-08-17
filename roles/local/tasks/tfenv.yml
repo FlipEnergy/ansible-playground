@@ -1,5 +1,3 @@
-# Install and setup k9s
-
 - name: Check if tfenv version is installed
   ansible.builtin.shell: tfenv 2>&1 | grep tfenv
   register: tfenv_version_command

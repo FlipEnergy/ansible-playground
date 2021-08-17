@@ -21,3 +21,6 @@
 - import_tasks: helm3.yml
 
 - import_tasks: tfenv.yml
+
+- import_tasks: yj.yml
+  become: yes

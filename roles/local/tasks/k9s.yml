@@ -1,5 +1,3 @@
-# Install and setup k9s
-
 - name: Check if K9s version is installed
   ansible.builtin.shell: k9s version | grep Version
   register: k9s_version_command

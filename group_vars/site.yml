@@ -3,11 +3,8 @@ all:
     local:
       hosts:
         localhost:
-    servers:
+    baremetal:
       children:
-        # sandbox:
-        #   hosts:
-        #     surface.tgp
         pihole:
           hosts:
             pi.hole:

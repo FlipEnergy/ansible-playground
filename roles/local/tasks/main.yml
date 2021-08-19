@@ -1,13 +1,13 @@
 - name: Download git-prompt.sh script
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-    dest: /home/{{ USER }}/.git-prompt.sh
+    dest: /home/{{ ansible_user }}/.git-prompt.sh
     mode: 0644
 
 - name: Install my bash_profile
   ansible.builtin.copy:
     src: bash_profile
-    dest: /home/{{ USER }}/.bash_profile
+    dest: /home/{{ ansible_user }}/.bash_profile
 
 - import_tasks: sops.yml
   become: yes

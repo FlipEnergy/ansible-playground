@@ -6,7 +6,7 @@ site:
 	rm -rf roles/site_node/files/config
 
 local:
-	ansible-playbook --connection=local -i group_vars/site.yml -l local $(options) -K playbook_local.yml
+	ansible-playbook --connection=local -i group_vars/site.yml $(options) -K playbook_local.yml
 
 sandbox:
 	make dec-secrets

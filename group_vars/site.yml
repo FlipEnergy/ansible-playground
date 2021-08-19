@@ -3,63 +3,72 @@ all:
     local:
       hosts:
         localhost:
-    baremetal:
+    servers:
       children:
-        pihole:
-          hosts:
-            pi.hole:
-          vars:
-            ADD_ROLES:
-              - pihole
-              - pihole_stats_lcd
-        loadbalancer:
-          hosts:
-            load-balancer-1.tgp:
-          vars:
-            ADD_ROLES:
-              - nginx
-              - nginx_stats_lcd
-        nfs:
-          hosts:
-            k8s-nfs-1.tgp:
-          vars:
-            ADD_ROLES:
-              - nfs
-        kubernetes:
+        baremetal:
           children:
-            x86:
+            pihole:
+              hosts:
+                pi.hole:
+              vars:
+                ADD_ROLES:
+                  - pihole
+                  - pihole_stats_lcd
+            loadbalancer:
+              hosts:
+                load-balancer-1.tgp:
+              vars:
+                ADD_ROLES:
+                  - nginx
+                  - nginx_stats_lcd
+            nfs:
+              hosts:
+                k8s-nfs-1.tgp:
+              vars:
+                ADD_ROLES:
+                  - nfs
+            k8s:
               hosts:
                 k8s-node-1.tgp:
                 k8s-node-2.tgp:
                 k8s-node-3.tgp:
               vars:
+                # K3S_MASTER is more just the first node since we're installing in a HA configuration
+                K3S_MASTER: k8s-node-1.tgp
                 ADD_ROLES:
                   - k3s_node
-            # arm64:
-            #   hosts:
-            #     k8s-node-4:
-            #   vars:
-            #     ADD_ROLES:
-            #       - k3s_node
-            #       - node_stats_lcd
+        oracle:
+          children:
+            ok8s:
+              children:
+                x86:
+                  hosts:
+                    140.238.130.72:
+                    140.238.139.27:
+                  vars:
+                    # K3S_MASTER is more just the first node since we're installing in a HA configuration
+                    K3S_MASTER: k8s-node-1.tgp
+                    # ADD_ROLES:
+                    #   - k3s_node
+          vars:
+            ansible_user: ubuntu
 
   # Defaults
   vars:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
+    ansible_user: dennis
     BAT_VERSION: 0.18.2
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_VERSION: 1.26.0
     EXA_VERSION: 0.10.1
-    HELM_VERSION: 3.6.3
-    HELM_SECRETS_VERSION: 3.8.3
     HELM_DIFF_VERSION: 3.1.3
-    INFLUXDB2_ORG: homelab
+    HELM_SECRETS_VERSION: 3.8.3
+    HELM_VERSION: 3.6.3
     INFLUXDB2_BUCKET: homelab
+    INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: http://influxdb2.tgp
-    # K3S_MASTER is more just the first node since we're installing in a HA configuration
-    K3S_MASTER: k8s-node-1.tgp
     K3S_VERSION: v1.21.1+k3s1
     K9S_VERSION: 0.24.15
     MY_DOMAIN: pleasenoddos.com
@@ -67,6 +76,4 @@ all:
     PIHOLE_SERVER_IP: 192.168.1.11
     SOPS_VERSION: 3.6.1
     TFENV_VERSION: 2.2.2
-    YJ_VERSION: 5.0.0
     UNATTENDED_UPGRADES_STATE: absent
-    USER: dennis

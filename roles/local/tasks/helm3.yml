@@ -37,7 +37,7 @@
 - name: Install my .sops.yaml
   ansible.builtin.copy:
     src: sops.yaml
-    dest: /home/{{ USER }}/.sops.yaml
+    dest: /home/{{ ansible_user }}/.sops.yaml
 
 - name: Check if helm diff is installed
   ansible.builtin.shell: helm plugin list | grep diff | grep {{ HELM_DIFF_VERSION }}

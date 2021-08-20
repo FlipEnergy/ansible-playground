@@ -4,7 +4,6 @@
   when:
     - ansible_distribution == 'Ubuntu'
     - install_canonical_livepatch|default(false)|bool
-  become: yes
 
 - name: Check if Canonical Livepatch is Enabled
   ansible.builtin.command: canonical-livepatch status
@@ -14,7 +13,6 @@
   when:
     - ansible_distribution == 'Ubuntu'
     - install_canonical_livepatch|default(false)|bool
-  become: yes
 
 - name: Enable Canonical Livepatch
   ansible.builtin.command: "canonical-livepatch enable {{ CANONICAL_LIVEPATCH_KEY }}"
@@ -22,4 +20,3 @@
     - ansible_distribution == 'Ubuntu'
     - install_canonical_livepatch|default(false)|bool
     - "'Machine is not enabled' in livepatch_status.stdout"
-  become: yes

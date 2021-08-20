@@ -25,16 +25,16 @@ init:
 	python3.8 -m pip install -vvv --user ansible==4.2.0
 
 ping:
-	ansible servers -i group_vars/site.yml -m ping
+	ansible servers -i group_vars/site.yml $(options) -m ping
 
 apt-upgrade-servers:
-	ansible servers -i group_vars/site.yml -m apt -K -ba "upgrade=yes update_cache=yes"
+	ansible servers -i group_vars/site.yml $(options) -m apt -K -ba "upgrade=yes update_cache=yes"
 
 check-need-reboot:
-	ansible servers -i group_vars/site.yml -m command -K -ba "bat /var/run/reboot-required"
+	ansible servers -i group_vars/site.yml $(options) -m command -K -ba "bat /var/run/reboot-required"
 
 reboot-servers:
-	ansible servers -i group_vars/site.yml -m command -K -ba "reboot"
+	ansible servers -i group_vars/site.yml $(options) -m command -K -ba "reboot"
 
 shutdown-servers:
-	ansible servers -i group_vars/site.yml -m command -K -ba "shutdown now"
+	ansible servers -i group_vars/site.yml $(options) -m command -K -ba "shutdown now"

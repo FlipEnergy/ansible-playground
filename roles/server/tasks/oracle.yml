@@ -1,0 +1,8 @@
+# Oracle specific tasks
+
+- name: Copy rules.v4
+  ansible.builtin.copy:
+    src: oracle/rules.v4
+    dest: /etc/iptables/rules.v4
+    mode: 0644
+  notify: Restore Iptables

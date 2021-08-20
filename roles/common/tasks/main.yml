@@ -2,9 +2,11 @@
   ansible.builtin.apt:
     pkg:
       - curl
+      - iputils-ping
+      - netcat
+      - ruby-dev
       - screen
       - unzip
-      - ruby-dev
     update_cache: yes
   become: yes
 

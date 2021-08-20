@@ -1,4 +1,4 @@
-- name: Check if swap is enabled
+- name: Check if swap is disabled
   ansible.builtin.command: swapon --show
   register: swap_files
   changed_when: False
@@ -17,3 +17,4 @@
   ansible.builtin.apt:
     name: nfs-common
     update_cache: yes
+  when: "'baremetal' in group_names"

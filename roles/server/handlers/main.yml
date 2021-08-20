@@ -8,3 +8,24 @@
 
 - import_tasks: telegraf.yml
   become: yes
+
+- name: Restart sshd service
+  service:
+    name: sshd
+    state: restarted
+  become: yes
+
+- name: Restart resolvconf service
+  service:
+    name: resolvconf
+    state: restarted
+  become: yes
+
+- name: Restart systemd-logind service
+  service:
+    name: systemd-logind
+    state: restarted
+  become: yes
+
+- import_tasks: oracle.yml
+  become: yes

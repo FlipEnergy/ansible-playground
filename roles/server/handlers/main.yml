@@ -26,6 +26,3 @@
     name: systemd-logind
     state: restarted
   become: yes
-
-- import_tasks: oracle.yml
-  become: yes

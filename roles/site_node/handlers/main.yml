@@ -1,7 +1,14 @@
+- name: Reload Iptables
+  shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
+  become: yes
+
 - import_tasks: nginx.yml
   become: yes
 
 - import_tasks: nfs.yml
+  become: yes
+
+- import_tasks: pihole.yml
   become: yes
 
 - import_tasks: node_stats_lcd.yml

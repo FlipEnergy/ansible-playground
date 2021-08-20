@@ -33,27 +33,27 @@ all:
                 k8s-node-2.tgp:
                 k8s-node-3.tgp:
               vars:
+                ADD_ROLES: [k3s_node]
+                K3S_EXTRA_OPTS: --cluster-init
                 # K3S_MASTER is more just the first node since we're installing in a HA configuration
                 K3S_MASTER: k8s-node-1.tgp
-                ADD_ROLES:
-                  - k3s_node
         oracle:
           children:
             ok8s:
-              children:
-                x86:
-                  hosts:
-                    140.238.137.31:
-                    140.238.130.62:
-                    140.238.135.142:
-                  vars:
-                    # K3S_MASTER is more just the first node since we're installing in a HA configuration
-                    K3S_MASTER: 140.238.137.31
-                    K3S_EXTRA_OPTS: --tls-san 140.238.137.114
-                    ADD_ROLES:
-                      - k3s_node
+              hosts:
+                140.238.137.31:
+              vars:
+                ADD_ROLES: [k3s_node]
+                K3S_EXTRA_OPTS: --tls-san 140.238.137.31
+                K3S_MASTER: 140.238.137.31
+            opihole:
+              hosts:
+                140.238.134.55
+              vars:
+                ADD_ROLES: [pihole]
           vars:
             ansible_user: ubuntu
+            DNS_SERVER: 140.238.134.55
 
   # Defaults
   vars:

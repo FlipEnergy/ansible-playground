@@ -53,7 +53,6 @@
     dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
   notify: Restart resolvconf service
-  when: "'oracle' not in group_names"
 
 - name: Start and enable resolvconf
   service:
@@ -61,7 +60,6 @@
     state: started
     enabled: yes
   become: yes
-  when: "'oracle' not in group_names"
 
 - name: Disable sleep on lid close
   ansible.builtin.lineinfile:
@@ -91,7 +89,4 @@
 
 - import_tasks: telegraf.yml
   become: yes
-
-- import_tasks: oracle.yml
-  become: yes
-  when: "'oracle' in group_names"
+  when: "'oracle' not in group_names"

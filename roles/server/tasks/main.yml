@@ -54,6 +54,10 @@
   become: yes
   notify: Restart resolvconf service
 
+- name: update resolvconf
+  ansible.builtin.command: sudo resolvconf -u
+  become: yes
+
 - name: Start and enable resolvconf
   service:
     name: resolvconf

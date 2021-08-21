@@ -1,4 +1,4 @@
-- name: Reload Iptables
+- name: Update Iptables
   shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
   become: yes
 

@@ -1,0 +1,6 @@
+- name: Open Oracle VM to subnet
+  ansible.builtin.lineinfile:
+    path: /etc/iptables/rules.v4
+    insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'
+    line: -I INPUT -i ens3 -p tcp -s 10.0.0.0/8  --dport 6443 -j ACCEPT
+  notify: Update Iptables

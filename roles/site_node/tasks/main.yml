@@ -1,4 +1,4 @@
-- import_tasks: oracle.yml
+- import_tasks: oracle_iptables.yml
   become: yes
   when: "'oracle' in group_names"
 

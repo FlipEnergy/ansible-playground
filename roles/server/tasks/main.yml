@@ -52,10 +52,12 @@
     src: resolvconf_head.j2
     dest: /etc/resolvconf/resolv.conf.d/head
   become: yes
+  register: resolvconf
   notify: Restart resolvconf service
 
 - name: update resolvconf
   ansible.builtin.command: sudo resolvconf -u
+  when: resolvconf.changed
   become: yes
 
 - name: Start and enable resolvconf

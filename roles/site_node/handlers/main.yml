@@ -1,7 +1,3 @@
-- name: Update Iptables
-  shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
-  become: yes
-
 - import_tasks: nginx.yml
   become: yes
 

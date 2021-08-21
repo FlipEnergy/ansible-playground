@@ -4,3 +4,12 @@
     insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'
     line: -I INPUT -i ens3 -p tcp -s 10.0.0.0/8  --dport 6443 -j ACCEPT
   notify: Update Iptables
+
+- name: Remove FORWARD Reject
+  ansible.builtin.lineinfile:
+    path: /etc/iptables/rules.v4
+    regex: '^-A FORWARD -j REJECT --reject-with icmp-host-prohibited$'
+    state: absent
+  become: yes
+  when: "'oracle' in group_names"
+  notify: Update Iptables

@@ -44,7 +44,7 @@
     - "'baremetal' in group_names"
     - coredns_pihole_server_grep.rc == 0
 
-- name: open oracle vm port 53
+- name: open oracle VM port 6443
   ansible.builtin.lineinfile:
     path: /etc/iptables/rules.v4
     insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'

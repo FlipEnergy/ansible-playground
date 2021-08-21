@@ -4,6 +4,12 @@
     dest: /home/{{ ansible_user }}/.git-prompt.sh
     mode: 0644
 
+- name: Install local tools
+  ansible.builtin.apt:
+    pkg:
+      - jq
+  become: yes
+
 - name: Install my bash_profile
   ansible.builtin.copy:
     src: bash_profile

@@ -2,10 +2,6 @@
   become: yes
   when: "'oracle' in group_names"
 
-- import_tasks: lets_encrypt.yml
-  become: yes
-  when: '"nginx" in ADD_ROLES'
-
 - import_tasks: nginx.yml
   become: yes
   when: '"nginx" in ADD_ROLES'

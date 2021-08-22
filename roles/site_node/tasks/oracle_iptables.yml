@@ -1,8 +1,8 @@
 - name: Open Oracle VM to subnet
   ansible.builtin.lineinfile:
     path: /etc/iptables/rules.v4
-    insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'
-    line: -I INPUT -i ens3 -p tcp -s 10.0.0.0/8  --dport 6443 -j ACCEPT
+    insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
+    line: -I INPUT -i ens3 -p tcp -s 10.0.0.0/8 --dport 6443 -j ACCEPT
   register: oip_subnet
 
 - name: Remove FORWARD Reject
@@ -16,19 +16,29 @@
 - name: open oracle VM port 6443
   ansible.builtin.lineinfile:
     path: /etc/iptables/rules.v4
-    insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'
+    insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
     line: -A INPUT -p tcp -m state --state NEW -m tcp --dport 6443 -j ACCEPT
-  when: '"k3s_node" in ADD_ROLES'
+  when:
+    - '"k3s_node" in ADD_ROLES'
+    - inventory_hostname == K3S_MASTER
   register: oip_k8s
+
+- name: open oracle VM port 80 to subnet
+  ansible.builtin.lineinfile:
+    path: /etc/iptables/rules.v4
+    insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
+    line: -A INPUT -i ens3 -p tcp -s 10.0.0.0/8 --dport 80 -j ACCEPT
+  when: '"k3s_node" in ADD_ROLES'
+  register: oip_http
 
 - name: open oracle vm port 53
   ansible.builtin.lineinfile:
     path: /etc/iptables/rules.v4
-    insertafter: '^-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT$'
+    insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
     line: -A INPUT -p udp -m state --state NEW -m udp --dport 53 -j ACCEPT
   when: '"pihole" in ADD_ROLES'
   register: oip_dns
 
 - name: Update Iptables
   shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
-  when: oip_subnet.changed or oip_forward.changed or oip_k8s.changed or oip_dns.changed
+  when: oip_subnet.changed or oip_forward.changed or oip_k8s.changed or oip_http.changed or oip_dns.changed

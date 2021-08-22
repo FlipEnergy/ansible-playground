@@ -27,19 +27,3 @@
     - inventory_hostname != K3S_MASTER
   args:
     warn: False
-
-- name: Check if coredns configmap is updated
-  ansible.builtin.shell: kubectl get configmap -n kube-system coredns -o json | grep /etc/resolv.conf
-  register: coredns_pihole_server_grep
-  ignore_errors: yes
-  changed_when: False
-  when:
-    - inventory_hostname == K3S_MASTER
-    - "'baremetal' in group_names"
-
-- name: set dns nameserver for coredns
-  ansible.builtin.shell: kubectl get configmap -n kube-system coredns -o json | sed 's+/etc/resolv.conf+{{ DNS_SERVER }}+g' | kubectl apply -f -
-  when:
-    - inventory_hostname == K3S_MASTER
-    - "'baremetal' in group_names"
-    - coredns_pihole_server_grep.rc == 0

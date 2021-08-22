@@ -34,23 +34,25 @@ all:
                 k8s-node-3.tgp:
               vars:
                 ADD_ROLES: [k3s_node]
-                K3S_EXTRA_OPTS: --cluster-init
                 # K3S_MASTER is more just the first node since we're installing in a HA configuration
                 K3S_MASTER: k8s-node-1.tgp
         oracle:
           children:
-            ok8s:
-              hosts:
-                140.238.137.31:
-              vars:
-                ADD_ROLES: [k3s_node]
-                K3S_EXTRA_OPTS: --tls-san 140.238.137.31
-                K3S_MASTER: 140.238.137.31
             opihole:
               hosts:
                 140.238.134.55
               vars:
                 ADD_ROLES: [pihole]
+            ok8s:
+              hosts:
+                140.238.137.31: # ARM 1
+                140.238.135.242: # ARM 2
+                140.238.149.23: # AMD 1
+              vars:
+                ADD_ROLES: [k3s_node]
+                K3S_CLUSTER_INIT: false
+                K3S_MASTER_EXTRA_OPTS: --tls-san 140.238.137.31
+                K3S_MASTER: 140.238.137.31
           vars:
             ansible_user: ubuntu
             DNS_SERVER: 140.238.134.55
@@ -72,6 +74,8 @@ all:
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: http://influxdb2.tgp
+    K3S_CLUSTER_INIT: true
+    K3S_MASTER_EXTRA_OPTS: ''
     K3S_VERSION: v1.21.1+k3s1
     K9S_VERSION: 0.24.15
     MY_DOMAIN: pleasenoddos.com

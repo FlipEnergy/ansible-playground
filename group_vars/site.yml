@@ -62,7 +62,7 @@ all:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: dennis
-    BAT_VERSION: 0.18.2
+    BAT_VERSION: 0.18.3
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
     DNS_SERVER: 192.168.1.11

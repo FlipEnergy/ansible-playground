@@ -47,7 +47,6 @@ all:
               hosts:
                 140.238.137.31: # ARM 1
                 140.238.135.242: # ARM 2
-                140.238.149.23: # AMD 1
               vars:
                 ADD_ROLES: [k3s_node]
                 K3S_CLUSTER_INIT: false

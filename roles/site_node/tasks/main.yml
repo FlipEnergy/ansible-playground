@@ -49,3 +49,7 @@
 - import_tasks: ctop.yml
   become: yes
   when: '"docker" in ADD_ROLES'
+
+- import_tasks: dc-services.yml
+  become: yes
+  when: '"dc-services" in ADD_ROLES'

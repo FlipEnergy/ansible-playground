@@ -11,12 +11,15 @@
     update_cache: yes
     force_apt_get: yes
 
-- name: Add Docker GPG apt Key
-  ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+- name: Add Docker GPG Key
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    creates: /usr/share/keyrings/docker-archive-keyring.gpg
 
 - name: Save the current Ubuntu release version into a variable
   ansible.builtin.command: lsb_release -cs
   register: ubuntu_version
+  changed_when: False
 
 - name: Add Docker Repository amd64
   apt_repository:
@@ -51,14 +54,36 @@
     groups: docker
     append: yes
 
-- name: Install Docker Compose
+- name: Install Docker Compose amd64
   ansible.builtin.get_url:
     url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 0755
+  when: ansible_architecture == 'x86_64'
 
-- name: Install Ctop
+- name: Create /root/.docker/cli-plugins/ dir
+  ansible.builtin.file:
+    path: /root/.docker/cli-plugins/
+    state: directory
+  when: ansible_architecture == 'aarch64'
+
+- name: Install Docker Compose-cli arm64
+  ansible.builtin.get_url:
+    url: https://github.com/docker/compose-cli/releases/download/{{ DOCKER_COMPOSE_CLI_VERSION }}/docker-compose-linux-arm64
+    dest: /root/.docker/cli-plugins/docker-compose
+    mode: 0755
+  when: ansible_architecture == 'aarch64'
+
+- name: Install Ctop amd64
   ansible.builtin.get_url:
     url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
     dest: /usr/local/bin/ctop
     mode: 0755
+  when: ansible_architecture == 'x86_64'
+
+- name: Install Ctop arm64
+  ansible.builtin.get_url:
+    url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-arm64
+    dest: /usr/local/bin/ctop
+    mode: 0755
+  when: ansible_architecture == 'aarch64'

@@ -1,0 +1,38 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - /opt/dc-services/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /opt/dc-services/ssl:/etc/nginx/ssl/:r
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - influxdb
+  influxdb:
+    image: influxdb:{{ DC_SERVICE_INFLUXDB2_TAG }}
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - /data/influxdb2:/var/lib/influxdb2:rw
+    ports:
+      - "8086"
+  # Use the influx cli to set up an influxdb instance.
+  influxdb_cli:
+    image: influxdb:{{ DC_SERVICE_INFLUXDB2_TAG }}
+    volumes:
+      # Mount for influxdb data directory and configuration
+      - /data/influxdb2:/var/lib/influxdb2:rw
+    environment:
+       # Use these same configurations parameters in your telegraf configuration, mytelegraf.conf.
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME={{ DC_SERVICES_CREDS.INFLUXDB2_USERNAME }}
+      - DOCKER_INFLUXDB_INIT_PASSWORD={{ DC_SERVICES_CREDS.INFLUXDB2_PASSWORD }}
+      - DOCKER_INFLUXDB_INIT_ORG=homelab
+      - DOCKER_INFLUXDB_INIT_BUCKET=homelab
+      - DOCKER_INFLUXDB_INIT_RETENTION=90d
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={{ INFLUXDB2_TOKEN }}
+    entrypoint: ["./entrypoint.sh"]
+    depends_on:
+      - influxdb

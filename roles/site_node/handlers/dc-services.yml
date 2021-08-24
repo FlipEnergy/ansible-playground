@@ -1,0 +1,4 @@
+- name: Restart dc-nginx service
+  ansible.builtin.command:
+    chdir: /opt/dc-services
+    cmd: docker compose restart nginx

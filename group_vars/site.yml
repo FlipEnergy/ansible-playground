@@ -50,7 +50,9 @@ all:
               hosts:
                 140.238.137.39:
               vars:
-                ADD_ROLES: [docker]
+                ADD_ROLES:
+                  - docker
+                  - dc-services
           vars:
             ansible_user: ubuntu
             DNS_SERVER: 140.238.134.55
@@ -63,6 +65,8 @@ all:
     BAT_VERSION: 0.18.3
     BLINK_VERSION: 2.1.0
     CTOP_VERSION: 0.7.3
+    DC_SERVICE_INFLUXDB2_TAG: 2.0.7
+    DOCKER_COMPOSE_CLI_VERSION: v2.0.0-rc.1
     DOCKER_COMPOSE_VERSION: 1.26.0
     EXA_VERSION: 0.10.1
     HELM_DIFF_VERSION: 3.1.3

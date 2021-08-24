@@ -1,5 +1,0 @@
-- import_tasks: docker.yml
-  become: yes
-
-- import_tasks: ctop.yml
-  become: yes

@@ -3,6 +3,6 @@
 - hosts:
     - servers
   roles:
-    # - common
-    # - server
+    - common
+    - server
     - site_node

@@ -1,17 +1,3 @@
-- name: Install unbound
-  ansible.builtin.apt:
-    name: unbound
-    update_cache: yes
-
-- name: Setup unbound conf for pihole
-  ansible.builtin.copy:
-    src: pihole/unbound_pihole_conf
-    dest: /etc/unbound/unbound.conf.d/pi-hole.conf
-    owner: root
-    group: root
-    mode: 0644
-  notify: Restart unbound
-
 - name: Check if pihole is installed
   ansible.builtin.command: pihole
   register: pihole_command
@@ -54,3 +40,24 @@
     owner: root
     group: root
     mode: 0644
+
+- name: Install unbound
+  ansible.builtin.apt:
+    name: unbound
+    update_cache: yes
+  register: install_unbound
+
+- name: Setup unbound conf for pihole
+  ansible.builtin.copy:
+    src: pihole/unbound_pihole_conf
+    dest: /etc/unbound/unbound.conf.d/pi-hole.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart unbound
+
+- name: restart Unbound
+  ansible.builtin.service:
+    name: unbound
+    state: restarted
+  when: install_unbound.changed

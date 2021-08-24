@@ -15,3 +15,6 @@
 
 - import_tasks: pihole_stats_lcd.yml
   become: yes
+
+- import_tasks: docker.yml
+  become: yes

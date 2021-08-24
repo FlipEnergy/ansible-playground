@@ -43,16 +43,12 @@ all:
                 140.238.134.55
               vars:
                 ADD_ROLES: [pihole]
-            ok8s:
+            odocker:
               hosts:
-                140.238.137.31: # ARM 1
-                140.238.135.242: # ARM 2
+                140.238.137.39:
               vars:
-                ADD_ROLES: [k3s_node]
-                K3S_CLUSTER_INIT: false
-                K3S_MASTER_EXTRA_OPTS: --tls-san 140.238.137.31
-                K3S_MASTER: 140.238.137.31
-                ORACLE_LB_IP: 140.238.133.42
+                ADD_ROLES: [docker]
+
           vars:
             ansible_user: ubuntu
             DNS_SERVER: 140.238.134.55
@@ -64,6 +60,7 @@ all:
     ansible_user: dennis
     BAT_VERSION: 0.18.3
     BLINK_VERSION: 2.1.0
+    CHANGE_DNS_SERVER: false
     CTOP_VERSION: 0.7.3
     DNS_SERVER: 192.168.1.11
     DOCKER_COMPOSE_VERSION: 1.26.0

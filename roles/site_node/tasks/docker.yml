@@ -19,9 +19,15 @@
   ansible.builtin.command: lsb_release -cs
   register: ubuntu_version
 
-- name: Add Docker Repository
+- name: Add Docker Repository amd64
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable
+  when: ansible_architecture == 'x86_64'
+
+- name: Add Docker Repository arm64
+  apt_repository:
+    repo: deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable
+  when: ansible_architecture == 'aarch64'
 
 - name: Install Docker
   ansible.builtin.apt:

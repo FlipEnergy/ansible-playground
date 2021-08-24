@@ -41,3 +41,11 @@
 - import_tasks: pihole_blink.yml
   become: yes
   when: '"pihole_blink" in ADD_ROLES'
+
+- import_tasks: docker.yml
+  become: yes
+  when: '"docker" in ADD_ROLES'
+
+- import_tasks: ctop.yml
+  become: yes
+  when: '"docker" in ADD_ROLES'

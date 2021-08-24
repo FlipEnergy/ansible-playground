@@ -28,7 +28,7 @@
   ansible.builtin.copy:
     content: "{{ LETSENCRYPT_PRIV_KEY }}"
     dest: /etc/nginx/ssl/privkey.pem
-    mode: 600
+    mode: 0600
   notify: Restart nginx service
   become: yes
 
@@ -36,7 +36,7 @@
   ansible.builtin.copy:
     content: "{{ LETSENCRYPT_CERT }}"
     dest: /etc/nginx/ssl/fullchain.pem
-    mode: 600
+    mode: 0600
   notify: Restart nginx service
   become: yes
 

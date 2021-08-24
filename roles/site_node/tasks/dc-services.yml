@@ -1,4 +1,4 @@
-- name: Create InfluxDB 2 directory
+- name: Create dc-services directories
   ansible.builtin.file:
     path: '{{ item }}'
     state: directory
@@ -6,13 +6,20 @@
     - /opt/dc-services
     - /opt/dc-services/ssl
     - /opt/dc-services/nginx
-    - /data/influxdb2
+
+- name: Create influxdb2 data dir
+  ansible.builtin.file:
+    path: /data/influxdb2
+    state: directory
+    owner: 1000
+    group: 1000
+    mode: 0600
 
 - name: Place Lets Encrypt Private Key
   ansible.builtin.copy:
     content: "{{ LETSENCRYPT_PRIV_KEY }}"
     dest: /opt/dc-services/ssl/privkey.pem
-    mode: 600
+    mode: 0600
   notify: Restart dc-nginx service
   become: yes
 
@@ -20,7 +27,7 @@
   ansible.builtin.copy:
     content: "{{ LETSENCRYPT_CERT }}"
     dest: /opt/dc-services/ssl/fullchain.pem
-    mode: 600
+    mode: 0600
   notify: Restart dc-nginx service
   become: yes
 
@@ -28,7 +35,7 @@
   ansible.builtin.template:
     src: dc-services/nginx.conf.j2
     dest: /opt/dc-services/nginx/nginx.conf
-    mode: 600
+    mode: 0600
   notify: Restart dc-nginx service
   become: yes
 

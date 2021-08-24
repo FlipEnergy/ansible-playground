@@ -4,18 +4,29 @@ services:
     image: nginx
     volumes:
       - /opt/dc-services/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /opt/dc-services/ssl:/etc/nginx/ssl/:r
+      - /opt/dc-services/ssl:/etc/nginx/ssl/:ro
     ports:
       - "80:80"
       - "443:443"
     restart: always
     depends_on:
+      - haste
       - influxdb
+
+  haste:
+    image: ghcr.io/k8s-at-home/haste-server:latest
+    restart: always
+    ports:
+      - "7777"
+    environment:
+      - STORAGE_FILEPATH=/app/data
+      - STORAGE_TYPE=file
+
   influxdb:
     image: influxdb:{{ DC_SERVICE_INFLUXDB2_TAG }}
     volumes:
       # Mount for influxdb data directory and configuration
-      - /data/influxdb2:/var/lib/influxdb2:rw
+      - /data/influxdb2:/var/lib/influxdb2:cached
     ports:
       - "8086"
   # Use the influx cli to set up an influxdb instance.

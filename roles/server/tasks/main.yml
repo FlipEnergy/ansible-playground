@@ -46,37 +46,6 @@
     update_cache: yes
   become: yes
 
-- name: Install tools
-  ansible.builtin.apt:
-    pkg:
-      - resolvconf
-  become: yes
-  when: CHANGE_DNS_SERVER
-
-- name: Place resolve conf
-  ansible.builtin.template:
-    src: resolvconf_head.j2
-    dest: /etc/resolvconf/resolv.conf.d/head
-  become: yes
-  register: resolvconf
-  notify: Restart resolvconf service
-  when: CHANGE_DNS_SERVER
-
-- name: update resolvconf
-  ansible.builtin.command: sudo resolvconf -u
-  when:
-    - CHANGE_DNS_SERVER
-    - resolvconf.changed
-  become: yes
-
-- name: Start and enable resolvconf
-  service:
-    name: resolvconf
-    state: started
-    enabled: yes
-  become: yes
-  when: CHANGE_DNS_SERVER
-
 - name: Disable sleep on lid close
   ansible.builtin.lineinfile:
     path: /etc/systemd/logind.conf

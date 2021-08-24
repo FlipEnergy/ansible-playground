@@ -18,8 +18,10 @@ services:
     ports:
       - "7777"
     environment:
-      - STORAGE_FILEPATH=/app/data
+      - STORAGE_FILEPATH=/data
       - STORAGE_TYPE=file
+    volumes:
+      - /data/haste:/data:cached
     restart: always
 
   influxdb:

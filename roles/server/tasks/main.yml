@@ -74,4 +74,3 @@
 
 - import_tasks: telegraf.yml
   become: yes
-  when: "'oracle' not in group_names"

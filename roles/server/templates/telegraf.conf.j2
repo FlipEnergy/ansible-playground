@@ -104,7 +104,7 @@
 # Configuration for sending metrics to InfluxDB2
 [[outputs.influxdb_v2]]
   urls = ["{{ INFLUXDB2_URL }}"]
-  token = "{{ INFLUXDB2_TOKEN }}"
+  token = "{{ DC_SERVICES_CREDS.INFLUXDB2_TOKEN }}"
   organization = "{{ INFLUXDB2_ORG }}"
   bucket = "{{ INFLUXDB2_BUCKET }}"
 

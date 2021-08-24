@@ -44,7 +44,6 @@
     recurse: yes
     force: yes
   with_items:
-    - /mnt/data/influxdb2
     - /mnt/data/syncthing-data
     - /mnt/data/syncthing-data/gonic-data
     - /mnt/data/prometheus-data/prometheus-db

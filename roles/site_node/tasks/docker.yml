@@ -12,8 +12,7 @@
     force_apt_get: yes
 
 - name: Add Docker GPG apt Key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
+  ansible.builtin.shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 - name: Save the current Ubuntu release version into a variable
   ansible.builtin.command: lsb_release -cs

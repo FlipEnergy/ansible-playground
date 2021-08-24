@@ -15,12 +15,12 @@ services:
 
   haste:
     image: ghcr.io/k8s-at-home/haste-server:latest
-    restart: always
     ports:
       - "7777"
     environment:
       - STORAGE_FILEPATH=/app/data
       - STORAGE_TYPE=file
+    restart: always
 
   influxdb:
     image: influxdb:{{ DC_SERVICE_INFLUXDB2_TAG }}
@@ -45,5 +45,6 @@ services:
       - DOCKER_INFLUXDB_INIT_RETENTION=90d
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={{ DC_SERVICES_CREDS.INFLUXDB2_TOKEN }}
     entrypoint: ["./entrypoint.sh"]
+    restart: on-failure:10
     depends_on:
       - influxdb

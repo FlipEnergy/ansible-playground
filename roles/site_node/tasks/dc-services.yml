@@ -9,12 +9,19 @@
 
 - name: Create influxdb2 data dir
   ansible.builtin.file:
-    path: '{{ item }}'
+    path: /data/influxdb2
     state: directory
-    mode: 0777
-  with_items:
-    - /data/influxdb2
-    - /data/haste
+    mode: 0700
+    owner: 1000
+    group: root
+
+- name: Create haste data dir
+  ansible.builtin.file:
+    path: /data/haste
+    state: directory
+    mode: 0700
+    owner: 568 # user kah in haste
+    group: root
 
 - name: Place Lets Encrypt Private Key
   ansible.builtin.copy:

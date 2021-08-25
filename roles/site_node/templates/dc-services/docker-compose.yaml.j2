@@ -12,6 +12,7 @@ services:
     depends_on:
       - haste
       - influxdb
+      - whoogle
 
   haste:
     image: ghcr.io/k8s-at-home/haste-server:latest
@@ -50,3 +51,13 @@ services:
     restart: on-failure:10
     depends_on:
       - influxdb
+
+  whoogle:
+    image: benbusby/whoogle-search:latest
+    ports:
+      - "5000"
+    environment:
+      - WHOOGLE_CONFIG_DARK=1
+      - WHOOGLE_CONFIG_URL=https://whoogle.{{ MY_DOMAIN }}/
+      - WHOOGLE_CONFIG_DISABLE=1
+    restart: always

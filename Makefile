@@ -27,6 +27,9 @@ init:
 ping:
 	ansible servers -i group_vars/site.yml $(options) -m ping
 
+neofetch-servers:
+	ansible servers -i group_vars/site.yml $(options) -m command -a "neofetch"
+
 apt-upgrade-servers:
 	ansible servers -i group_vars/site.yml $(options) -m apt -K -ba "upgrade=yes update_cache=yes"
 

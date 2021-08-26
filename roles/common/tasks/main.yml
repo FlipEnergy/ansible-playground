@@ -3,6 +3,7 @@
     pkg:
       - curl
       - iputils-ping
+      - neofetch
       - netcat
       - ruby-dev
       - screen

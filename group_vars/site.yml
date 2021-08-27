@@ -14,7 +14,7 @@ all:
                 ADD_ROLES:
                   - pihole
                   - pihole_stats_lcd
-                DNS_SERVER: 192.168.1.11
+                PIHOLE_LISTEN_ADDRESS: 192.168.1.11
                 PIHOLE_INTERFACE: eth0
             loadbalancer:
               hosts:
@@ -45,6 +45,7 @@ all:
                 140.238.134.55
               vars:
                 ADD_ROLES: [pihole]
+                PIHOLE_LISTEN_ADDRESS: 140.238.134.55
                 PIHOLE_INTERFACE: ens3
             odocker:
               hosts:
@@ -55,7 +56,6 @@ all:
                   - dc-services
           vars:
             ansible_user: ubuntu
-            DNS_SERVER: 140.238.134.55
 
   # Defaults
   vars:

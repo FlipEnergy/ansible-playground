@@ -3,7 +3,7 @@
     path: /etc/iptables/rules.v4
     insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
     line: -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
-  when: '"dc-services" in ADD_ROLES'
+  when: '"dc_services" in ADD_ROLES'
   register: oip_http
 
 - name: open oracle VM port 443
@@ -11,7 +11,7 @@
     path: /etc/iptables/rules.v4
     insertbefore: '^-A INPUT -j REJECT --reject-with icmp-host-prohibited$'
     line: -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
-  when: '"dc-services" in ADD_ROLES'
+  when: '"dc_services" in ADD_ROLES'
   register: oip_https
 
 - name: open oracle vm port 53

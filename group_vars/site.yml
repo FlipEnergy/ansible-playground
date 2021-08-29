@@ -53,7 +53,7 @@ all:
               vars:
                 ADD_ROLES:
                   - docker
-                  - dc-services
+                  - dc_services
           vars:
             ansible_user: ubuntu
 

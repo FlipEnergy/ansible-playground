@@ -47,13 +47,13 @@ all:
                 ADD_ROLES: [pihole]
                 PIHOLE_LISTEN_ADDRESS: 140.238.134.55
                 PIHOLE_INTERFACE: ens3
-            odocker:
+            ok8s:
               hosts:
                 140.238.137.39:
               vars:
-                ADD_ROLES:
-                  - docker
-                  - dc_services
+                ADD_ROLES: [k3s_node]
+                K3S_MASTER_EXTRA_OPTS: '--tls-san 140.238.137.39'
+                K3S_MASTER: 140.238.137.39
           vars:
             ansible_user: ubuntu
 

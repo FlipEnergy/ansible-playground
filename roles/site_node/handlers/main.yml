@@ -18,6 +18,3 @@
 
 - import_tasks: docker.yml
   become: yes
-
-- import_tasks: dc-services.yml
-  become: yes

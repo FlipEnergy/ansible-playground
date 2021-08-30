@@ -18,28 +18,6 @@
   notify: Restart nginx service
   become: yes
 
-- name: create /etc/nginx/ssl
-  ansible.builtin.file:
-    dest: /etc/nginx/ssl
-    state: directory
-  become: yes
-
-- name: Place Lets Encrypt Private Key
-  ansible.builtin.copy:
-    content: "{{ LETSENCRYPT_PRIV_KEY }}"
-    dest: /etc/nginx/ssl/privkey.pem
-    mode: 0600
-  notify: Restart nginx service
-  become: yes
-
-- name: Place Lets Encrypt Certs
-  ansible.builtin.copy:
-    content: "{{ LETSENCRYPT_CERT }}"
-    dest: /etc/nginx/ssl/fullchain.pem
-    mode: 0600
-  notify: Restart nginx service
-  become: yes
-
 - name: Place nginx conf file
   ansible.builtin.template:
     src: nginx/nginx.conf.j2

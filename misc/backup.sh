@@ -39,10 +39,6 @@ backup() {
   set +x
 }
 
-sync_picframe() {
-  rsync -avh --delete --exclude *panorama* --exclude *.mp4 --exclude *PANO* '/mnt/d/Syncthing Data/Camera' pi@piframe.tgp:/home/pi/Pictures/
-}
-
 if [ "$EUID" -ne 0 ]
   then echo "Run as root!"
   exit 1
@@ -56,9 +52,6 @@ case $1 in
     ;;
   -w|--warm)
     backup /mnt/e
-    ;;
-  -p|--picframe)
-    sync_picframe
     ;;
   -h|--help|*)
     usage

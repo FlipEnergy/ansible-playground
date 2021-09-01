@@ -1,2 +1,0 @@
-- name: Update Exports
-  ansible.builtin.command: exportfs -ra

@@ -33,7 +33,6 @@ all:
               hosts:
                 k8s-node-1.tgp:
                 k8s-node-2.tgp:
-                k8s-node-3.tgp:
               vars:
                 ADD_ROLES: [k3s_node]
                 # K3S_MASTER is more just the first node since we're installing in a HA configuration

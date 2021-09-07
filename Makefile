@@ -1,5 +1,4 @@
 site:
-	cd roles/site_node/files/syncthing && gpg-zip --decrypt syncthing_config_dir
 	make dec-secrets
 	-ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml $(options) -K playbook_site.yml
 	make del-dec-secrets

@@ -1,3 +1,2 @@
-roles/site_node/files/syncthing/config
 *.dec.yml
 *.retry

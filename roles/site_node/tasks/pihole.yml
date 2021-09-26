@@ -20,7 +20,7 @@
     mode: 0755
   when: pihole_command.rc != 0
 
-- name: Create pihole configuration
+- name: Place pihole Setup configuration
   ansible.builtin.template:
     src: pihole/pihole_setupVars.conf.j2
     dest: /etc/pihole/setupVars.conf
@@ -32,6 +32,17 @@
 - name: Install Pi-Hole
   ansible.builtin.shell: "/tmp/install-pihole.sh --unattended"
   when: pihole_command.rc != 0
+
+- name: Create pihole configuration
+  ansible.builtin.copy:
+    dest: /etc/pihole/pihole-FTL.conf
+    content: |
+      PRIVACYLEVEL=0
+      RATE_LIMIT=2000/60
+    owner: pihole
+    group: root
+    mode: 0664
+  notify: Restart pihole-FTL
 
 - name: Setup crontab config
   ansible.builtin.copy:

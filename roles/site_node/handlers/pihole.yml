@@ -1,3 +1,8 @@
+- name: Restart pihole-FTL
+  service:
+    name: pihole-FTL
+    state: restarted
+
 - name: Restart unbound
   service:
     name: unbound

@@ -23,3 +23,6 @@ make site
 
 make site options='-l kubernetes -v'
 ```
+
+# My homelab setup
+![Homelab DIagram](https://pleasenoddos.com/img/homelab.jpg)

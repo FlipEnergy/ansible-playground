@@ -37,7 +37,6 @@
 - name: Install tools
   ansible.builtin.apt:
     pkg:
-      - curl
       - dnsutils
       - iotop
       - screen

@@ -8,6 +8,7 @@
       - ruby-dev
       - screen
       - unzip
+      - vim
     update_cache: yes
   become: yes
 

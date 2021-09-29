@@ -35,7 +35,7 @@ all:
           children:
             opihole:
               hosts:
-                140.238.134.55
+                140.238.134.55:
               vars:
                 ADD_ROLES: [pihole]
                 PIHOLE_LISTEN_ADDRESS: 140.238.134.55

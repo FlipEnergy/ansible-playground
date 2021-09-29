@@ -19,6 +19,7 @@ del-dec-secrets:
 	rm -f group_vars/secrets.dec.yml
 
 init:
+	sudo apt-get install python3-distutils
 	wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
 	python3.8 /tmp/get-pip.py
 	python3.8 -m pip install -vvv --user ansible==4.2.0

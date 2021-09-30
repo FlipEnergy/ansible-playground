@@ -38,7 +38,7 @@
     dest: /etc/pihole/pihole-FTL.conf
     content: |
       PRIVACYLEVEL=0
-      RATE_LIMIT=2000/60
+      RATE_LIMIT=10000/60
     owner: pihole
     group: root
     mode: 0664

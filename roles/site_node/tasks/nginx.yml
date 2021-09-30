@@ -27,6 +27,7 @@
 - name: Test nginx conf
   ansible.builtin.command: nginx -t
   become: yes
+  changed_when: False
 
 - name: Start and enable
   service:

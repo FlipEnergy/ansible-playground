@@ -1,3 +1,5 @@
+python := python3.9
+
 site:
 	make dec-secrets
 	-ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml $(options) -K playbook_site.yml
@@ -21,8 +23,8 @@ del-dec-secrets:
 init:
 	sudo apt-get install python3-distutils
 	wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
-	python3.8 /tmp/get-pip.py
-	python3.8 -m pip install -vvv --user ansible==4.2.0
+	$(python) /tmp/get-pip.py
+	$(python) -m pip install -vvv --user ansible==4.2.0
 
 ping:
 	ansible servers -i group_vars/site.yml $(options) -m ping

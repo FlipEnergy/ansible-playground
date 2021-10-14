@@ -12,8 +12,8 @@
 
 - name: Install my bash_profile
   ansible.builtin.copy:
-    src: bash_profile
-    dest: /home/{{ ansible_user }}/.bash_profile
+    src: bash_aliases
+    dest: /home/{{ ansible_user }}/.bash_aliases
 
 - import_tasks: sops.yml
   become: yes

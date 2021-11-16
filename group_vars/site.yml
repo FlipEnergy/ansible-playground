@@ -70,7 +70,7 @@ all:
     K3S_CLUSTER_INIT: true
     K3S_MASTER_EXTRA_OPTS: ''
     K3S_VERSION: v1.21.1+k3s1
-    K9S_VERSION: 0.25.0
+    K9S_VERSION: 0.25.1
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     SOPS_VERSION: 3.6.1

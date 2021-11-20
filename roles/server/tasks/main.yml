@@ -8,8 +8,7 @@
     user: '{{ ansible_user }}'
     key: '{{ item }}'
   with_items:
-    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINuZWvtBoFxPP2nv6N13jtO3EazntuIHsaiH6Q1DbbKF MainKey'
-    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDSO0l5TQOEQ60qI4AtqREfm0aklRn/MiIfr2nBm5p+0 predator'
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINuZWvtBoFxPP2nv6N13jtO3EazntuIHsaiH6Q1DbbKF homelab'
 
 - name: remove old keys from authorized_keys
   authorized_key:
@@ -18,6 +17,7 @@
     state: absent
   with_items:
     - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILvkVEszd/+8vzRQtynb1HsE2keFWcAqI8gRRodboLB/ surface3'
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDSO0l5TQOEQ60qI4AtqREfm0aklRn/MiIfr2nBm5p+0 predator'
 
 - name: Disable password ssh login
   ansible.builtin.lineinfile:

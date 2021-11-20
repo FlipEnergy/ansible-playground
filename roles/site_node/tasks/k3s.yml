@@ -13,7 +13,7 @@
   when: k3s_version_command.rc == 0
 
 - name: install k3s via official script (first node)
-  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} {{ 'K3S_TOKEN={}'.format(K3S_TOKEN) if K3S_CLUSTER_INIT else '' }} INSTALL_K3S_EXEC="server --disable=traefik {{ '--cluster-init' if K3S_CLUSTER_INIT else '' }} {{ K3S_MASTER_EXTRA_OPTS }}" sh -s -
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} {{ 'K3S_TOKEN={}'.format(K3S_TOKEN) if K3S_CLUSTER_INIT else '' }} sh -s - server --disable traefik {{ '--cluster-init' if K3S_CLUSTER_INIT else '' }} {{ K3S_MASTER_EXTRA_OPTS }} {{ K3S_EXTRA_OPTS }}
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname == K3S_MASTER
@@ -29,7 +29,7 @@
   changed_when: False
 
 - name: install k3s via official script (rest of the nodes)
-  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN if K3S_CLUSTER_INIT else hostvars[K3S_MASTER]["k3s_token_command"].stdout }}' K3S_URL=https://{{ K3S_MASTER }}:6443 sh -s -
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN if K3S_CLUSTER_INIT else hostvars[K3S_MASTER]["k3s_token_command"].stdout }}' K3S_URL=https://{{ K3S_MASTER }}:6443 sh -s - server --disable traefik {{ K3S_EXTRA_OPTS }}
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname != K3S_MASTER

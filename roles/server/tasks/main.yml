@@ -59,6 +59,7 @@
   with_items:
     - HandleLidSwitch=ignore
     - HandleLidSwitchDocked=ignore
+    - LidSwitchIgnoreInhibited=no
   notify: Restart systemd-logind service
   become: yes
 
@@ -69,7 +70,6 @@
     owner: root
     group: root
     mode: 0777
-  notify: Restart host
   become: yes
 
 - import_tasks: live-patch.yml

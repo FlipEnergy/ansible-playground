@@ -63,7 +63,6 @@ all:
     ansible_user: dennis
     BAT_VERSION: 0.18.3
     BLINK_VERSION: 2.1.0
-    CTOP_VERSION: 0.7.3
     DOCKER_COMPOSE_CLI_VERSION: v2.0.0-rc.1
     DOCKER_COMPOSE_VERSION: 1.26.0
     EXA_VERSION: 0.10.1

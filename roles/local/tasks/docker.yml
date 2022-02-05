@@ -72,3 +72,9 @@
     dest: /home/{{ ansible_user }}/.docker/cli-plugins/docker-compose
     mode: 0755
   when: ansible_architecture == 'aarch64'
+
+- name: Enable buildkit
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: { "features": { "buildkit": true } }
+  notify: Restart docker service

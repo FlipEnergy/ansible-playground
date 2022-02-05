@@ -3,6 +3,9 @@ all:
     local:
       hosts:
         localhost:
+      vars:
+        ADD_ROLES:
+          - docker
     servers:
       children:
         baremetal:

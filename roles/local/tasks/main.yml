@@ -27,3 +27,7 @@
 - import_tasks: helm3.yml
 
 - import_tasks: tfenv.yml
+
+- import_tasks: docker.yml
+  become: yes
+  when: '"docker" in ADD_ROLES'

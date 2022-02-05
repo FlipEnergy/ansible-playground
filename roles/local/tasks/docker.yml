@@ -48,7 +48,7 @@
     name: docker
     state: present
 
-- name: Adding user {{ ansible_user }} to docker group
+- name: Adding user {{ ansible_user }} to docker group, run "newgrp docker" if needed
   user:
     name: "{{ ansible_user }}"
     groups: docker
@@ -71,19 +71,5 @@
   ansible.builtin.get_url:
     url: https://github.com/docker/compose-cli/releases/download/{{ DOCKER_COMPOSE_CLI_VERSION }}/docker-compose-linux-arm64
     dest: /root/.docker/cli-plugins/docker-compose
-    mode: 0755
-  when: ansible_architecture == 'aarch64'
-
-- name: Install Ctop amd64
-  ansible.builtin.get_url:
-    url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-amd64
-    dest: /usr/local/bin/ctop
-    mode: 0755
-  when: ansible_architecture == 'x86_64'
-
-- name: Install Ctop arm64
-  ansible.builtin.get_url:
-    url: https://github.com/bcicen/ctop/releases/download/v{{ CTOP_VERSION }}/ctop-{{ CTOP_VERSION }}-linux-arm64
-    dest: /usr/local/bin/ctop
     mode: 0755
   when: ansible_architecture == 'aarch64'

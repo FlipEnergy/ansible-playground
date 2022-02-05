@@ -47,7 +47,7 @@
 - name: Setup crontab config
   ansible.builtin.copy:
     src: pihole/pihole_cron_config
-    dest: /etc/cron.d/pihole
+    dest: /etc/cron.d/pihole-update
     owner: root
     group: root
     mode: 0644

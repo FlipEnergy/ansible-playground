@@ -23,7 +23,9 @@ all:
               hosts:
                 k8s-anode-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=low --node-label type=app
-                  ADD_ROLES: [k3s_node_worker]
+                  ADD_ROLES:
+                    - k3s_node_worker
+                    - node_stats_lcd
                 k8s-node-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=medium --node-label type=app
                   ADD_ROLES: [k3s_node_control]

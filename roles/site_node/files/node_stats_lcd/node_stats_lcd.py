@@ -14,7 +14,6 @@ UPDATE_EVERY = 5
 
 
 if __name__ == "__main__":
-    
     lcd = CharLCD('PCF8574', LCD_ADDR)
     getcontext().prec = 4
 

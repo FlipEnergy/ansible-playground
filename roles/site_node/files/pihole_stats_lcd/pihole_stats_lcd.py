@@ -24,7 +24,6 @@ def _get_pihole_summary():
 
 
 if __name__ == "__main__":
-    
     lcd = CharLCD('PCF8574', LCD_ADDR)
 
     while True:
@@ -34,7 +33,7 @@ if __name__ == "__main__":
 
         resp_dict = _get_pihole_summary()
 
-        lcd.write_string('BQs: {} {}%'.format(resp_dict.get('ads_blocked_today', 'n/a').ljust(6), resp_dict.get('ads_percentage_today', 'n/a')))
+        lcd.write_string('BQs: {} {}%'.format(str(resp_dict.get('ads_blocked_today', 'n/a')).ljust(6), resp_dict.get('ads_percentage_today', 'n/a')))
         lcd.cursor_pos = (1, 0)
-        lcd.write_string('TQs: {}'.format(resp_dict.get('dns_queries_today', 'n/a').rjust(11)))
+        lcd.write_string('TQs: {}'.format(str(resp_dict.get('dns_queries_today', 'n/a')).rjust(11)))
         sleep(UPDATE_EVERY)

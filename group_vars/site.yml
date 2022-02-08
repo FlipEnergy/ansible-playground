@@ -12,7 +12,7 @@ all:
           children:
             pihole:
               hosts:
-                pi.hole:
+                192.168.1.11:
               vars:
                 ADD_ROLES:
                   - pihole

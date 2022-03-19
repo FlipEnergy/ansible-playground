@@ -12,35 +12,35 @@ all:
           children:
             pihole:
               hosts:
-                192.168.1.11:
+                pi-hole:
               vars:
                 ADD_ROLES:
                   - pihole
                   - pihole_stats_lcd
-                PIHOLE_LISTEN_ADDRESS: 192.168.1.11
+                PIHOLE_LISTEN_ADDRESS: 10.69.1.2
                 PIHOLE_INTERFACE: eth0
             k8s:
               hosts:
-                k8s-anode-1.tgp:
-                  K3S_EXTRA_OPTS: --node-label performance=low --node-label type=app
+                k8s-high-1:
+                  K3S_EXTRA_OPTS: --node-label performance=high
+                  ADD_ROLES: [k3s_node_control]
+                k8s-med-1:
+                  K3S_EXTRA_OPTS: --node-label performance=medium
+                  ADD_ROLES: [k3s_node_control]
+                k8s-med-2:
+                  K3S_EXTRA_OPTS: --node-label performance=medium
+                  ADD_ROLES: [k3s_node_control]
+                k8s-low-1:
+                  K3S_EXTRA_OPTS: --node-label performance=low
+                  ADD_ROLES: [k3s_node_worker]
+                k8s-arm-1:
+                  K3S_EXTRA_OPTS: --node-label performance=low
                   ADD_ROLES:
                     - k3s_node_worker
                     - node_stats_lcd
-                k8s-node-1.tgp:
-                  K3S_EXTRA_OPTS: --node-label performance=medium --node-label type=app
-                  ADD_ROLES: [k3s_node_control]
-                k8s-node-2.tgp:
-                  K3S_EXTRA_OPTS: --node-label performance=medium --node-label type=app
-                  ADD_ROLES: [k3s_node_control]
-                k8s-node-3.tgp:
-                  K3S_EXTRA_OPTS: --node-label performance=low --node-label type=app
-                  ADD_ROLES: [k3s_node_control]
-                k8s-node-4.tgp:
-                  K3S_EXTRA_OPTS: --node-label performance=medium --node-label type=database
-                  ADD_ROLES: [k3s_node_control]
               vars:
                 # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
-                K3S_INIT_NODE: k8s-node-1.tgp
+                K3S_INIT_NODE: k8s-high-1
         oracle:
           children:
             opihole:
@@ -75,8 +75,9 @@ all:
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com
+    K3S_COMMON_SERVER_OPTS: --disable traefik
     K3S_EXTRA_OPTS: ''
-    K3S_VERSION: v1.21.1+k3s1
+    K3S_VERSION: v1.23.4+k3s1
     K9S_VERSION: 0.25.18
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com

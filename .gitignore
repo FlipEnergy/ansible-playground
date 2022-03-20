@@ -1,2 +1,3 @@
 *.dec.yml
 *.retry
+.vscode/

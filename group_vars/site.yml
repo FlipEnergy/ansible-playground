@@ -17,7 +17,7 @@ all:
                 ADD_ROLES:
                   - pihole
                   - pihole_stats_lcd
-                PIHOLE_LISTEN_ADDRESS: 10.69.1.2
+                PIHOLE_LISTEN_ADDRESS: 10.69.69.2
                 PIHOLE_INTERFACE: eth0
             k8s:
               hosts:

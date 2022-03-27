@@ -10,43 +10,43 @@ all:
       children:
         baremetal:
           children:
-            pihole:
-              hosts:
-                pi-hole:
-              vars:
-                ADD_ROLES:
-                  - pihole
-                  - pihole_stats_lcd
-                PIHOLE_LISTEN_ADDRESS: 10.69.69.2
-                PIHOLE_INTERFACE: eth0
+            # pihole:
+            #   hosts:
+            #     pi-hole:
+            #   vars:
+            #     ADD_ROLES:
+            #       - pihole
+            #       - pihole_stats_lcd
+            #     PIHOLE_LISTEN_ADDRESS: 10.69.69.2
+            #     PIHOLE_INTERFACE: eth0
             k8s:
               hosts:
-                k8s-high-1:
+                k8s-high-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=high
                   ADD_ROLES: [k3s_node_control]
-                k8s-med-1:
+                k8s-med-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=medium
                   ADD_ROLES: [k3s_node_control]
-                k8s-low-1:
+                k8s-low-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=low
                   ADD_ROLES: [k3s_node_control]
-                k8s-arm-1:
+                k8s-arm-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=low
                   ADD_ROLES:
                     - k3s_node_worker
                     - node_stats_lcd
               vars:
                 # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
-                K3S_INIT_NODE: k8s-high-1
+                K3S_INIT_NODE: k8s-high-1.tgp
         oracle:
           children:
-            opihole:
-              hosts:
-                140.238.134.55:
-              vars:
-                ADD_ROLES: [pihole]
-                PIHOLE_LISTEN_ADDRESS: 140.238.134.55
-                PIHOLE_INTERFACE: ens3
+            # opihole:
+            #   hosts:
+            #     140.238.134.55:
+            #   vars:
+            #     ADD_ROLES: [pihole]
+            #     PIHOLE_LISTEN_ADDRESS: 140.238.134.55
+            #     PIHOLE_INTERFACE: ens3
             ok8s:
               hosts:
                 140.238.137.39:

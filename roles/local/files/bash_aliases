@@ -16,6 +16,7 @@ alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
 alias g='git'
 alias gpr='g pull -r'
 alias gcan='g commit --amend --no-edit'
+alias gpf='g push -f'
 alias t='terraform'
 alias tp='t plan'
 alias ta='t apply'

@@ -10,7 +10,7 @@
       - jq
   become: yes
 
-- name: Install my bash_profile
+- name: Install my bash_aliases
   ansible.builtin.copy:
     src: bash_aliases
     dest: /home/{{ ansible_user }}/.bash_aliases

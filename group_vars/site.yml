@@ -27,6 +27,9 @@ all:
                 k8s-med-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=medium
                   ADD_ROLES: [k3s_node_control]
+                k8s-med-2.tgp:
+                  K3S_EXTRA_OPTS: --node-label performance=medium --node-label gpu=medium
+                  ADD_ROLES: [k3s_node_control]
                 k8s-low-1.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=low
                   ADD_ROLES: [k3s_node_control]

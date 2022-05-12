@@ -65,7 +65,7 @@ all:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: dennis
-    BAT_VERSION: 0.20.0
+    BAT_VERSION: 0.21.0
     BLINK_VERSION: 2.1.0
     DOCKER_COMPOSE_VERSION: 2.2.3
     EXA_VERSION: 0.10.1

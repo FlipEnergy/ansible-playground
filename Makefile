@@ -1,4 +1,4 @@
-python := python3.9
+python := python3
 
 site:
 	make dec-secrets
@@ -24,7 +24,7 @@ init:
 	sudo apt-get install python3-distutils
 	wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
 	$(python) /tmp/get-pip.py
-	$(python) -m pip install -vvv --user ansible==4.2.0
+	$(python) -m pip install --user ansible==4.2.0
 
 ping:
 	ansible servers -i group_vars/site.yml $(options) -m ping

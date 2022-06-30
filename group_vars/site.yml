@@ -78,7 +78,7 @@ all:
     K3S_COMMON_SERVER_OPTS: --disable traefik
     K3S_EXTRA_OPTS: ''
     K3S_VERSION: v1.23.4+k3s1
-    K9S_VERSION: 0.25.18
+    K9S_VERSION: 0.25.21
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     SOPS_VERSION: 3.6.1

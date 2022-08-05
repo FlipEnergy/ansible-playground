@@ -21,10 +21,7 @@ del-dec-secrets:
 	rm -f group_vars/secrets.dec.yml
 
 init:
-	sudo apt-get install python3-distutils
-	wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
-	$(python) /tmp/get-pip.py
-	$(python) -m pip install --user ansible==4.2.0
+	$(python) -m pip install --user ansible==6.2.0
 
 ping:
 	ansible servers -i group_vars/site.yml $(options) -m ping

@@ -1,10 +1,5 @@
 # install hstr
 
-- name: Add hstr Repository
-  apt_repository:
-    repo: ppa:ultradvorka/ppa
-  become: yes
-
 - name: Install hstr
   ansible.builtin.apt:
     name: hstr

@@ -71,7 +71,7 @@ all:
     EXA_VERSION: 0.10.1
     HELM_DIFF_VERSION: 3.2.0
     HELM_SECRETS_VERSION: 3.13.0
-    HELM_VERSION: 3.8.2
+    HELM_VERSION: 3.9.3
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com

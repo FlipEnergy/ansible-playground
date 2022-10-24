@@ -1,7 +1,0 @@
-# install hstr
-
-- name: Install hstr
-  ansible.builtin.apt:
-    name: hstr
-    update_cache: yes
-  become: yes

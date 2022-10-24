@@ -54,25 +54,6 @@
     groups: docker
     append: yes
 
-- name: Create /home/{{ ansible_user }}/.docker/cli-plugins/ dir
-  ansible.builtin.file:
-    path: /home/{{ ansible_user }}/.docker/cli-plugins/
-    state: directory
-
-- name: Install Docker Compose amd64
-  ansible.builtin.get_url:
-    url: https://github.com/docker/compose/releases/download/v{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
-    dest: /home/{{ ansible_user }}/.docker/cli-plugins/docker-compose
-    mode: 0755
-  when: ansible_architecture == 'x86_64'
-
-- name: Install Docker Compose-cli arm64
-  ansible.builtin.get_url:
-    url: https://github.com/docker/compose/releases/download/v{{ DOCKER_COMPOSE_VERSION }}/docker-compose-linux-arm64
-    dest: /home/{{ ansible_user }}/.docker/cli-plugins/docker-compose
-    mode: 0755
-  when: ansible_architecture == 'aarch64'
-
 - name: Enable buildkit
   ansible.builtin.copy:
     dest: /etc/docker/daemon.json

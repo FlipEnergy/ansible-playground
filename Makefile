@@ -21,6 +21,7 @@ del-dec-secrets:
 	rm -f group_vars/secrets.dec.yml
 
 init:
+	sudo apt-get install python3-pip -y
 	$(python) -m pip install --user ansible==6.2.0
 
 ping:

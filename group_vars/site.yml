@@ -67,7 +67,6 @@ all:
     ansible_user: dennis
     BAT_VERSION: 0.21.0
     BLINK_VERSION: 2.1.0
-    DOCKER_COMPOSE_VERSION: 2.2.3
     EXA_VERSION: 0.10.1
     HELM_DIFF_VERSION: 3.2.0
     HELM_SECRETS_VERSION: 3.13.0

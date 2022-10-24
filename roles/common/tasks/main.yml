@@ -1,7 +1,10 @@
 - name: Install tools
   ansible.builtin.apt:
     pkg:
+      - bat
       - curl
+      - exa
+      - hstr
       - iputils-ping
       - neofetch
       - netcat
@@ -11,16 +14,6 @@
       - vim
     update_cache: yes
   become: yes
-
-- import_tasks: bat.yml
-  become: yes
-
-- import_tasks: exa.yml
-  when: ansible_architecture == 'x86_64'
-  become: yes
-
-- import_tasks: hstr.yml
-  when: ansible_architecture == 'x86_64'
 
 - import_tasks: haste.yml
   become: yes

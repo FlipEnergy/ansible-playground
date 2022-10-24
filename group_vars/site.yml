@@ -62,6 +62,7 @@ all:
 
   # Defaults
   vars:
+    ansible_ssh_private_key_file: ~/.ssh/homelab
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: dennis

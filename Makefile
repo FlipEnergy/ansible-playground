@@ -25,7 +25,7 @@ init:
 	$(python) -m pip install --user ansible==6.2.0
 
 ping:
-	ansible servers -i group_vars/site.yml $(options) -m ping
+	ANSIBLE_HOST_KEY_CHECKING=False ansible servers -i group_vars/site.yml $(options) -m ping
 
 neofetch-servers:
 	ansible servers -i group_vars/site.yml $(options) -m command -a "neofetch"

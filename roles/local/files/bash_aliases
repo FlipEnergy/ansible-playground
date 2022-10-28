@@ -10,7 +10,7 @@ export GPG_TTY=$(tty)
 alias ls='exa'
 alias k='kubectl'
 alias a='ansible -i group_vars/site.yml'
-alias b='bat'
+alias b='batcat'
 alias f='fly -t homelab'
 alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
 alias g='git'

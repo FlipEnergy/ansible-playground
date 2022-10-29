@@ -67,12 +67,12 @@ all:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: dennis
-    BAT_VERSION: 0.21.0
+    BAT_VERSION: 0.22.1
     BLINK_VERSION: 2.1.0
     EXA_VERSION: 0.10.1
-    HELM_DIFF_VERSION: 3.2.0
-    HELM_SECRETS_VERSION: 3.13.0
-    HELM_VERSION: 3.9.3
+    HELM_DIFF_VERSION: 3.6.0
+    HELM_SECRETS_VERSION: 4.1.1
+    HELM_VERSION: 3.10.1
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com

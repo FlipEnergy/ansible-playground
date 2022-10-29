@@ -15,5 +15,5 @@
     update_cache: yes
   become: yes
 
-- import_tasks: haste.yml
+- import_tasks: live-patch.yml
   become: yes

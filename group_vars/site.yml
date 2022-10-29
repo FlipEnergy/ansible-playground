@@ -4,7 +4,7 @@ all:
       hosts:
         localhost:
       vars:
-        install_canonical_livepatch: true
+        ENABLE_CANONICAL_LIVEPATCH: true
         ADD_ROLES:
           - docker
     servers:

@@ -57,9 +57,6 @@
     mode: 0777
   become: yes
 
-- import_tasks: live-patch.yml
-  become: yes
-
 - import_tasks: unattended-upgrades.yml
   become: yes
 

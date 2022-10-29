@@ -12,7 +12,6 @@ alias k='kubectl'
 alias a='ansible -i group_vars/site.yml'
 alias b='batcat'
 alias f='fly -t homelab'
-alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
 alias g='git'
 alias gpr='g pull -r'
 alias gcan='g commit --amend --no-edit'

@@ -3,7 +3,7 @@
     pkg: bc
     update_cache: yes
 
-- name: Check if blink1-tool version is installed
+- name: Check if blink1-tool is installed
   ansible.builtin.command: blink1-tool --version
   register: blink_version_command
   ignore_errors: yes

@@ -7,7 +7,7 @@ alias ls='exa'
 {% endif %}
 
 alias k='kubectl'
-alias b='bat'
+alias b='batcat'
 alias h="HASTE_SERVER=https://haste.pleasenoddos.com haste"
 
 cheat() {

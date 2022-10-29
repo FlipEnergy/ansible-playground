@@ -26,13 +26,6 @@
     mode: 0644
   become: yes
 
-- name: Symlink python -> python3
-  ansible.builtin.file:
-    src: /usr/bin/python3
-    dest: /usr/bin/python
-    state: link
-  become: yes
-
 - name: Install tools
   ansible.builtin.apt:
     pkg:

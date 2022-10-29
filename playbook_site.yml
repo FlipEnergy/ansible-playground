@@ -4,5 +4,4 @@
     - servers
   roles:
     - common
-    - server
     - site_node

@@ -3,5 +3,4 @@
 - hosts: localhost
   roles:
     - common
-    # - local
-    # - server
+    - local

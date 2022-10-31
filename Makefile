@@ -4,7 +4,6 @@ site:
 	make dec-secrets
 	-ansible-playbook -i group_vars/site.yml -i group_vars/secrets.dec.yml $(options) -K playbook_site.yml
 	make del-dec-secrets
-	rm -rf roles/site_node/files/config
 
 local:
 	make dec-secrets

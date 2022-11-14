@@ -35,13 +35,6 @@ all:
                 K3S_INIT_NODE: k8s-high-1.tgp
         oracle:
           children:
-            # opihole:
-            #   hosts:
-            #     140.238.134.55:
-            #   vars:
-            #     ADD_ROLES: [pihole]
-            #     PIHOLE_LISTEN_ADDRESS: 140.238.134.55
-            #     PIHOLE_INTERFACE: ens3
             ok8s:
               hosts:
                 150.230.31.244:

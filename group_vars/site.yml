@@ -12,37 +12,27 @@ all:
         baremetal:
           children:
             k8s:
+              vars:
+                # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
+                K3S_INIT_NODE: k8s-arm-1.tgp
               children:
                 k8sMasters:
                   hosts:
                     k8s-arm-1.tgp:
-                      ADD_ROLES: [k3s_node_control]
                     k8s-arm-2.tgp:
-                      ADD_ROLES: [k3s_node_control]
                     k8s-arm-3.tgp:
-                      ADD_ROLES: [k3s_node_control]
+                  vars:
+                    ADD_ROLES: [k3s_node_control]
                 k8sAgents:
                   hosts:
                     k8s-high-1.tgp:
                       K3S_EXTRA_OPTS: --node-label performance=high
-                      ADD_ROLES: [k3s_node_control]
                     k8s-med-1.tgp:
                       K3S_EXTRA_OPTS: --node-label performance=medium
-                      ADD_ROLES: [k3s_node_control]
-                    # k8s-med-2.tgp:
-                    #   K3S_EXTRA_OPTS: --node-label performance=medium --node-label gpu=true
-                    #   ADD_ROLES: [k3s_node_control]
                     k8s-low-1.tgp:
                       K3S_EXTRA_OPTS: --node-label performance=low
-                      ADD_ROLES: [k3s_node_control]
-                    # k8s-arm-1.tgp:
-                    #   K3S_EXTRA_OPTS: --node-label performance=low
-                    #   ADD_ROLES:
-                    #     - k3s_node_worker
-                    #     - node_stats_lcd
-              vars:
-                # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
-                K3S_INIT_NODE: k8s-arm-1.tgp
+                  vars:
+                    ADD_ROLES: [k3s_node_worker]
         oracle:
           children:
             ok8s:

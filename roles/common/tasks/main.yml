@@ -17,7 +17,7 @@
       - procinfo
       - traceroute
     update_cache: yes
-  become: yes
+  become: true
 
 - name: add my pubkey to authorized_keys
   authorized_key:
@@ -32,7 +32,7 @@
     path: /etc/ssh/sshd_config
     regexp: '^PasswordAuthentication yes'
     line: PasswordAuthentication no
-  become: yes
+  become: true
   notify: Restart sshd service
 
 - name: Place logrotate conf
@@ -40,7 +40,7 @@
     src: logrotate.conf
     dest: /etc/logrotate.conf
     mode: 0644
-  become: yes
+  become: true
 
 - name: Disable sleep on lid close
   ansible.builtin.lineinfile:
@@ -51,7 +51,7 @@
     - HandleLidSwitchDocked=ignore
     - LidSwitchIgnoreInhibited=no
   notify: Restart systemd-logind service
-  become: yes
+  become: true
 
 - name: Place rc.local
   ansible.builtin.copy:
@@ -60,13 +60,13 @@
     owner: root
     group: root
     mode: 0777
-  become: yes
+  become: true
 
 - import_tasks: live-patch.yml
-  become: yes
+  become: true
 
 - import_tasks: unattended-upgrades.yml
-  become: yes
+  become: true
 
 - import_tasks: telegraf.yml
-  become: yes
+  become: true

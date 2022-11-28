@@ -13,8 +13,10 @@
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
 
-- name: Install NFS common
+- name: Install k3s prereq tools
   ansible.builtin.apt:
-    name: nfs-common
-    update_cache: yes
+    pkg:
+      - nfs-common
+      - apparmor-utils
+  become: true
   when: "'baremetal' in group_names"

@@ -16,7 +16,7 @@
     - nginx       soft    nofile  30000
     - nginx       hard    nofile  50000
   notify: Restart nginx service
-  become: yes
+  become: true
 
 - name: Place nginx conf file
   ansible.builtin.template:
@@ -26,7 +26,7 @@
 
 - name: Test nginx conf
   ansible.builtin.command: nginx -t
-  become: yes
+  become: true
   changed_when: False
 
 - name: Start and enable

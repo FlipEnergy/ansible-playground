@@ -3,7 +3,7 @@
     name: unattended-upgrades
     state: '{{ UNATTENDED_UPGRADES_STATE }}'
     update_cache: yes
-  become: yes
+  become: true
 
 - name: Place unattended-upgrades conf
   ansible.builtin.template:

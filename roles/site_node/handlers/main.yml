@@ -1,14 +1,14 @@
 - import_tasks: nginx.yml
-  become: yes
+  become: true
 
 - import_tasks: pihole.yml
-  become: yes
+  become: true
 
 - import_tasks: node_stats_lcd.yml
-  become: yes
+  become: true
 
 - import_tasks: nginx_stats_lcd.yml
-  become: yes
+  become: true
 
 - import_tasks: pihole_stats_lcd.yml
-  become: yes
+  become: true

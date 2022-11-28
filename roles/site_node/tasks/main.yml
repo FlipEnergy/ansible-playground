@@ -1,39 +1,39 @@
 - import_tasks: oracle_iptables.yml
-  become: yes
+  become: true
   when: "'oracle' in group_names"
 
 - import_tasks: nginx.yml
-  become: yes
+  become: true
   when: '"nginx" in ADD_ROLES'
 
 - import_tasks: nginx_stats_lcd.yml
   when: '"nginx_stats_lcd" in ADD_ROLES'
-  become: yes
+  become: true
 
 - import_tasks: nginx_blink.yml
   when: '"nginx_blink" in ADD_ROLES'
-  become: yes
+  become: true
 
 - import_tasks: prereq.yml
-  become: yes
+  become: true
   when: '"k3s_node_control" in ADD_ROLES or "k3s_node_worker" in ADD_ROLES'
 
 - import_tasks: k3s.yml
-  become: yes
+  become: true
   when: '"k3s_node_control" in ADD_ROLES or "k3s_node_worker" in ADD_ROLES'
 
 - import_tasks: node_stats_lcd.yml
-  become: yes
+  become: true
   when: '"node_stats_lcd" in ADD_ROLES'
 
 - import_tasks: pihole.yml
-  become: yes
+  become: true
   when: '"pihole" in ADD_ROLES'
 
 - import_tasks: pihole_stats_lcd.yml
-  become: yes
+  become: true
   when: '"pihole_stats_lcd" in ADD_ROLES'
 
 - import_tasks: pihole_blink.yml
-  become: yes
+  become: true
   when: '"pihole_blink" in ADD_ROLES'

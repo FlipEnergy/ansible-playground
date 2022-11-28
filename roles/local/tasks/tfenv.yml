@@ -25,7 +25,7 @@
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-  become: yes
+  become: true
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
 
 - name: Download tfenv
@@ -41,7 +41,7 @@
     dest: /usr/local/bin/tfenv
     state: link
     mode: a+x
-  become: yes
+  become: true
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version
 
 - name: Install terraform script
@@ -50,5 +50,5 @@
     dest: /usr/local/bin/terraform
     state: link
     mode: a+x
-  become: yes
+  become: true
   when: tfenv_version_command.rc != 0 or TFENV_VERSION != tfenv_version

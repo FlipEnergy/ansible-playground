@@ -16,6 +16,7 @@
     name: telegraf
     state: started
     enabled: yes
+  ignore_errors: yes
 
 - name: Copy Telegraf Conf
   ansible.builtin.template:

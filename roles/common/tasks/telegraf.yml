@@ -1,6 +1,6 @@
 - name: Add Telegraf ansible.builtin.apt Key
   apt_key:
-    url: https://repos.influxdata.com/influxdb.key
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
 
 - name: Add Telegraf Repository
   apt_repository:

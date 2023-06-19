@@ -1,0 +1,18 @@
+- import_tasks: lcd_base.yml
+
+- name: Copy k8s_stats_lcd.py script
+  ansible.builtin.copy:
+    src: k8s_stats_lcd/k8s_stats_lcd.py
+    dest: /opt/lcd/k8s_stats_lcd.py
+  notify: Restart k8s_stats_lcd service
+
+- name: Copy k8s_stats_lcd service
+  ansible.builtin.template:
+    src: k8s_stats_lcd/k8s_stats_lcd.service.j2
+    dest: /etc/systemd/system/k8s_stats_lcd.service
+
+- name: Start and enable k8s_stats_lcd service
+  service:
+    name: k8s_stats_lcd
+    state: started
+    enabled: yes

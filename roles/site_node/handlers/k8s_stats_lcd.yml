@@ -1,0 +1,4 @@
+- name: Restart k8s_stats_lcd service
+  service:
+    name: k8s_stats_lcd
+    state: restarted

@@ -1,0 +1,11 @@
+# /etc/systemd/system/k8s_stats_lcd.service
+
+[Unit]
+Description=Run k8s_stats_lcd.py script as service
+
+[Service]
+Type=simple
+ExecStart=/opt/lcd/venv/bin/python /opt/lcd/k8s_stats_lcd.py {{k8s_stats_lcd_stats}}
+
+[Install]
+WantedBy=multi-user.target

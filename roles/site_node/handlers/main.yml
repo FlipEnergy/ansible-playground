@@ -12,3 +12,6 @@
 
 - import_tasks: pihole_stats_lcd.yml
   become: true
+
+- import_tasks: k8s_stats_lcd.yml
+  become: true

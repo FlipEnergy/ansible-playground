@@ -37,3 +37,7 @@
 - import_tasks: pihole_blink.yml
   become: true
   when: '"pihole_blink" in ADD_ROLES'
+
+- import_tasks: k8s_stats_lcd.yml
+  when: '"k8s_stats_lcd" in ADD_ROLES'
+  become: true

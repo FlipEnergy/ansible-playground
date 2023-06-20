@@ -3,19 +3,30 @@
 import os
 import requests
 
-from argparse import ArgumentParser
-from decimal import Decimal, getcontext
-from RPLCD.i2c import CharLCD
 from time import sleep
+from argparse import ArgumentParser
 
-# Find the address (0x3f) with `sudo i2cdetect 1`
-LCD_ADDR = 0x27
+from smbus2 import SMBus
+from RPLCD.i2c import CharLCD
 
 # in seconds
 UPDATE_EVERY = 5
 
-# chars per column
-LJUST_SIZE = 4
+
+def scan_i2c_bus():
+    bus = SMBus(1)
+    for address in range(0, 128):
+        try:
+            bus.read_byte(address)
+            return address
+        except IOError:
+            pass
+
+
+def clear_screen(lcd):
+    lcd.clear()
+    lcd.cursor_pos = (0, 0)
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(
@@ -24,22 +35,32 @@ if __name__ == "__main__":
     parser.add_argument('stats', choices=['pods', 'nodes'], help='the stats to display')
     args = parser.parse_args()
 
-    lcd = CharLCD('PCF8574', LCD_ADDR)
-    getcontext().prec = 4
+    lcd = CharLCD('PCF8574', scan_i2c_bus())
+    clear_screen(lcd)
 
     while True:
-        lcd.clear()
-        sleep(0.1)
-        lcd.cursor_pos = (0, 0)
-
-        counts = []
         if args.stats == 'pods':
-            headers = ['Run ', 'Pend', 'Fail']
+            ljust_size = 4
+            data = []
+            headers = ['Run', 'Pend', 'Fail']
             for status in ['Running', 'Pending', 'Failed']:
                 output = os.popen(f'k3s kubectl get --no-headers -A --field-selector=status.phase={status} pods').read()
-                counts.append(str(output.count('\n')).ljust(LJUST_SIZE))
+                data.append(str(output.count('\n')))
+        elif args.stats == 'nodes':
+            ljust_size = 6
+            headers = ['CPU', 'RAM']
+            output = os.popen(f'k3s kubectl top node --no-headers').read()
+            cpu = []
+            ram = []
+            for line in output.split('\n'):
+                split_line = line.split()
+                if len(split_line) > 0 and split_line[2] != '<unknown>':
+                    cpu.append(int(split_line[2].replace('%', '')))
+                    ram.append(int(split_line[4].replace('%', '')))
+            data = ["{:.2f}%".format(sum(cpu)/len(cpu)), "{:.2f}%".format(sum(ram)/len(ram))]
 
-        lcd.write_string(' '.join(headers))
+        clear_screen(lcd)
+        lcd.write_string(' '.join([h.ljust(ljust_size) for h in headers]))
         lcd.cursor_pos = (1, 0)
-        lcd.write_string(' '.join(counts))
+        lcd.write_string(' '.join([d.ljust(ljust_size) for d in data]))
         sleep(UPDATE_EVERY)

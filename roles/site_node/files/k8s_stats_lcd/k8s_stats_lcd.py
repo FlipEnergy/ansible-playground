@@ -10,7 +10,7 @@ from smbus2 import SMBus
 from RPLCD.i2c import CharLCD
 
 # in seconds
-UPDATE_EVERY = 5
+UPDATE_EVERY = 900
 
 
 def scan_i2c_bus():

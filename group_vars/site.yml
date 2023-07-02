@@ -23,6 +23,7 @@ all:
                     k8s-arm-2.tgp:
                       k8s_stats_lcd_stats: nodes
                     k8s-arm-3.tgp:
+                      k8s_stats_lcd_stats: resources
                   vars:
                     ADD_ROLES: [k3s_node_control, k8s_stats_lcd]
                 k8sAgents:

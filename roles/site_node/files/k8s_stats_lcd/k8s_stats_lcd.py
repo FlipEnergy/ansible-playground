@@ -33,6 +33,7 @@ if __name__ == "__main__":
         prog='k8s_stats_lcd',
         description='Display k8s stats on an LCD display')
     parser.add_argument('stats', choices=['pods', 'nodes', 'resources'], help='the stats to display')
+    parser.add_argument('-S', '--single-run', action='store_true', help='just do a single run and exit')
     args = parser.parse_args()
 
     lcd = CharLCD('PCF8574', scan_i2c_bus())
@@ -77,4 +78,8 @@ if __name__ == "__main__":
         lcd.write_string(' '.join([h.ljust(ljust_size) for h in headers]))
         lcd.cursor_pos = (1, 0)
         lcd.write_string(' '.join([d.ljust(ljust_size) for d in data]))
+
+        if args.single_run:
+            exit()
+
         sleep(UPDATE_EVERY)

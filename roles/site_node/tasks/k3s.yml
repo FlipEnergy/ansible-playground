@@ -24,7 +24,7 @@
 # - debug: var=hostvars[K3S_INIT_NODE]['ansible_default_ipv4']['address']
 
 - name: install k3s via official script (rest of the control-plane nodes)
-  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN }}' K3S_URL=https://{{ hostvars[K3S_INIT_NODE]['ansible_default_ipv4']['address'] }}:6443 sh -s - server {{ K3S_COMMON_SERVER_OPTS }} {{ K3S_EXTRA_OPTS }}
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN }}' K3S_URL=https://k8s-ingress.tgp:6443 sh -s - server {{ K3S_COMMON_SERVER_OPTS }} {{ K3S_EXTRA_OPTS }}
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname != K3S_INIT_NODE
@@ -33,7 +33,7 @@
     warn: False
 
 - name: install k3s via official script (rest of the worker nodes)
-  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN }}' K3S_URL=https://{{ hostvars[K3S_INIT_NODE]['ansible_default_ipv4']['address'] }}:6443 sh -s - agent {{ K3S_EXTRA_OPTS }}
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ K3S_VERSION }} K3S_TOKEN='{{ K3S_TOKEN }}' K3S_URL=https://k8s-ingress.tgp:6443 sh -s - agent {{ K3S_EXTRA_OPTS }}
   when:
     - k3s_version_command.rc != 0 or k3s_version != K3S_VERSION
     - inventory_hostname != K3S_INIT_NODE

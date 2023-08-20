@@ -34,8 +34,6 @@ all:
                       K3S_EXTRA_OPTS: --node-label performance=medium
                     k8s-med-2.tgp:
                       K3S_EXTRA_OPTS: --node-label performance=medium
-                    k8s-low-1.tgp:
-                      K3S_EXTRA_OPTS: --node-label performance=low
                   vars:
                     ADD_ROLES: [k3s_node_worker]
         oracle:

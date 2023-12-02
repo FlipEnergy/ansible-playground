@@ -12,30 +12,18 @@ all:
         baremetal:
           children:
             k8s:
+              hosts:
+                k8s-high-1.tgp:
+                  K3S_EXTRA_OPTS: --node-label performance=high
+                k8s-med-1.tgp:
+                  K3S_EXTRA_OPTS: --node-label performance=medium
+                k8s-med-2.tgp:
+                  K3S_EXTRA_OPTS: --node-label performance=medium
               vars:
                 # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
-                K3S_INIT_NODE: k8s-arm-1.tgp
-              children:
-                k8sMasters:
-                  hosts:
-                    k8s-arm-1.tgp:
-                      k8s_stats_lcd_stats: pods
-                    k8s-arm-2.tgp:
-                      k8s_stats_lcd_stats: nodes
-                    k8s-arm-3.tgp:
-                      k8s_stats_lcd_stats: resources
-                  vars:
-                    ADD_ROLES: [k3s_node_control, k8s_stats_lcd]
-                k8sAgents:
-                  hosts:
-                    k8s-high-1.tgp:
-                      K3S_EXTRA_OPTS: --node-label performance=high
-                    k8s-med-1.tgp:
-                      K3S_EXTRA_OPTS: --node-label performance=medium
-                    k8s-med-2.tgp:
-                      K3S_EXTRA_OPTS: --node-label performance=medium
-                  vars:
-                    ADD_ROLES: [k3s_node_worker]
+                ADD_ROLES: [k3s_node_control]
+                K3S_EXTRA_OPTS: '--tls-san k8s-ingress.tgp'
+                K3S_INIT_NODE: k8s-high-1.tgp
         oracle:
           children:
             ok8s:
@@ -54,7 +42,7 @@ all:
     ADD_ROLES: []
     ansible_python_interpreter: /usr/bin/python3
     ansible_user: dennis
-    BAT_VERSION: 0.22.1
+    BAT_VERSION: 0.24.0
     BLINK_VERSION: 2.1.0
     ENABLE_CANONICAL_LIVEPATCH: false
     EXA_VERSION: 0.10.1
@@ -64,12 +52,12 @@ all:
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com
-    K3S_COMMON_SERVER_OPTS: --disable traefik
+    K3S_COMMON_SERVER_OPTS: --disable traefik --tls-san k8s-ingress.tgp
     K3S_EXTRA_OPTS: ''
-    K3S_VERSION: v1.25.4+k3s1
-    K9S_VERSION: 0.26.7
+    K3S_VERSION: v1.28.3+k3s2
+    K9S_VERSION: 0.28.2
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
-    SOPS_VERSION: 3.6.1
+    SOPS_VERSION: 3.8.1
     TFENV_VERSION: 2.2.2
     UNATTENDED_UPGRADES_STATE: absent

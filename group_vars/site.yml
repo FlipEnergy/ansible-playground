@@ -46,16 +46,16 @@ all:
     BLINK_VERSION: 2.1.0
     ENABLE_CANONICAL_LIVEPATCH: false
     EXA_VERSION: 0.10.1
-    HELM_DIFF_VERSION: 3.6.0
-    HELM_SECRETS_VERSION: 4.1.1
-    HELM_VERSION: 3.10.1
+    HELM_DIFF_VERSION: 3.8.1
+    HELM_SECRETS_VERSION: 4.5.1
+    HELM_VERSION: 3.13.3
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com
     K3S_COMMON_SERVER_OPTS: --disable traefik --tls-san k8s-ingress.tgp
     K3S_EXTRA_OPTS: ''
     K3S_VERSION: v1.28.3+k3s2
-    K9S_VERSION: 0.28.2
+    K9S_VERSION: 0.31.5
     MY_DOMAIN: pleasenoddos.com
     MY_EMAIL: dennis.zhang.nrg@gmail.com
     SOPS_VERSION: 3.8.1

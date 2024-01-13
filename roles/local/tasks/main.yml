@@ -28,6 +28,9 @@
 
 - import_tasks: tfenv.yml
 
+- import_tasks: helmsman.yml
+  become: true
+
 - import_tasks: docker.yml
   become: true
   when: '"docker" in ADD_ROLES'

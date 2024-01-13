@@ -1,0 +1,26 @@
+- name: Check if helmsman version is installed
+  ansible.builtin.shell: helmsman -v
+  register: helmsman_version_command
+  ignore_errors: yes
+  changed_when: False
+
+- name: set helmsman version fact
+  set_fact:
+    helmsman_version: "{{ helmsman_version_command.stdout | regex_search(regexp) }}"
+  vars:
+    regexp: '[0-9]+\.[0-9]+\.[0-9]+'
+    cacheable: yes
+  when: helmsman_version_command.rc == 0
+
+- name: Install helmsman
+  ansible.builtin.unarchive:
+    src: "https://github.com/Praqma/helmsman/releases/download/v{{HELMSMAN_VERSION}}/helmsman_{{HELMSMAN_VERSION}}_linux_amd64.tar.gz"
+    dest: /usr/local/bin
+    remote_src: yes
+  when: helmsman_version_command.rc != 0 or HELMSMAN_VERSION != helmsman_version
+
+- name: Set execute permissions for helmsman
+  ansible.builtin.file:
+    path: /usr/local/bin/helmsman
+    mode: a+x
+  when: helmsman_version_command.rc != 0 or HELMSMAN_VERSION != helmsman_version

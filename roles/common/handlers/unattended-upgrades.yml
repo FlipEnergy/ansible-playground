@@ -1,5 +1,0 @@
-  - name: Restart unattended-upgrades service
-    service:
-      name: unattended-upgrades
-      state: restarted
-    when: UNATTENDED_UPGRADES_STATE == 'present'

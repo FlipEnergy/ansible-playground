@@ -1,3 +1,29 @@
+- name: add my pubkey to authorized_keys
+  authorized_key:
+    user: '{{ ansible_user }}'
+    key: '{{ item }}'
+    exclusive: yes
+  with_items:
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINuZWvtBoFxPP2nv6N13jtO3EazntuIHsaiH6Q1DbbKF homelab'
+
+- name: Disable password ssh login
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication yes'
+    line: PasswordAuthentication no
+  become: true
+  notify: Restart sshd service
+
+- name: Place logrotate conf
+  ansible.builtin.copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.conf
+    mode: 0644
+  become: true
+
+- import_tasks: telegraf.yml
+  become: true
+
 - import_tasks: oracle_iptables.yml
   become: true
   when: "'oracle' in group_names"

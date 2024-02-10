@@ -4,9 +4,6 @@ all:
       hosts:
         localhost:
       vars:
-        ENABLE_CANONICAL_LIVEPATCH: true
-        ADD_ROLES:
-          - docker
     servers:
       children:
         baremetal:

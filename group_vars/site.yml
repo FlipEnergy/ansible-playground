@@ -39,14 +39,12 @@ all:
     ansible_python_interpreter: /usr/bin/python3
     ansible_ssh_private_key_file: ~/.ssh/homelab.pem
     ansible_user: dennis
-    BAT_VERSION: 0.24.0
     BLINK_VERSION: 2.1.0
     ENABLE_CANONICAL_LIVEPATCH: false
-    EXA_VERSION: 0.10.1
-    HELM_DIFF_VERSION: 3.8.1
-    HELM_SECRETS_VERSION: 4.5.1
-    HELM_VERSION: 3.13.3
-    HELMSMAN_VERSION: 3.17.0
+    HELM_DIFF_VERSION: 3.9.11
+    HELM_SECRETS_VERSION: 4.6.2
+    HELM_VERSION: 3.16.2
+    HELMSMAN_VERSION: 3.17.1
     INFLUXDB2_BUCKET: homelab
     INFLUXDB2_ORG: homelab
     INFLUXDB2_URL: https://influx.pleasenoddos.com

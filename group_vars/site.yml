@@ -16,6 +16,8 @@ all:
                   K3S_EXTRA_OPTS: --node-label performance=medium
                 k8s-med-2.tgp:
                   K3S_EXTRA_OPTS: --node-label performance=medium
+                k8s-nas-1.tgp:
+                  K3S_EXTRA_OPTS: --node-label performance=disk
               vars:
                 # K3S_INIT_NODE is more just the first node since we're installing in a HA configuration
                 ADD_ROLES: [k3s_node_control]
